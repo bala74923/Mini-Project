@@ -1,7 +1,10 @@
 if(process.env.NODE_ENV !== 'production'){
     require('dotenv').config()
 }
-
+ 
+// create Student model
+const Student = require('./models/student')
+//
 
 const express = require('express');
 const app = express();
@@ -11,58 +14,33 @@ const { redirect } = require('express/lib/response');
 const flash = require('express-flash')
 const session = require('express-session')
 
-//
-const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/";
-//
+// const MongoClient = require('mongodb').MongoClient;
+// const url = "mongodb://localhost:27017/";
+const mongoose =  require('mongoose');
+const url = "mongodb://localhost:27017/actrack"; //db name-  actrack
+mongoose.connect(url, { useNewUrlParser: true })
+const db = mongoose.connection
+db.on('error', error => console.error(error))
+db.once('open', () => console.log('Connected to Mongoose')) //open to openUri
 
-const initializePassport = require('./passport-config')
-initializePassport(
-    passport,
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id ===id )
-    
-)
-// function emailVerification(Email) {
-//     let emailVerified = false
-//     MongoClient.connect(url, function(err, db) {
-//         if (err) throw err;
-//         var dbo = db.db("mydb");
-//         dbo.collection("customers").find({email:Email}).toArray(function(err, result) {
-//           if (err) throw err;
-//           emailVerified = result.length>0
-//           db.close();
-//         });
-//     });
-//     return emailVerified
-// }
-// function idVerification(Id) {
-//     let idVerified = false
-//     MongoClient.connect(url, function(err, db) {
-//         if (err) throw err;
-//         var dbo = db.db("mydb");
-//         dbo.collection("customers").find({id:Id}).toArray(function(err, result) {
-//           if (err) throw err;
-//           idVerified = result.length>0
-//           db.close();
-//         });
-//     });
-//     return idVerified
-// }
+/*
+to kill port already in use
+sudo lsof -i :{portnumber}
+kill {pid}
 
-
-//let idVerified = false,emailVerified = false
-// const initializePassport = require('./passport-config')
-// initializePassport(
-//     passport,
-//     email => emailVerification(email),
-//     id => idVerification(id)
-    
-// )
+*/
 
 const users=[]
 
 app.set('view-engine', 'ejs')
+
+// edited
+app.set('views',__dirname+'/views')
+//app.set('layout', 'layouts/layout')
+//app.use(expressLayouts) ->not using this one
+app.use(express.static('public'))
+//
+
 app.use(express.urlencoded({extended : false}))
 app.use(flash())
 app.use(session({
@@ -71,6 +49,25 @@ app.use(session({
     saveUninitialized : false
 
 }))
+
+const initializePassport = require('./passport-config')
+initializePassport(
+    passport,
+     //email => users.find(user => user.email === email),
+    async function(email){
+        const mail = await Student.findOne({email:email});
+        console.log(mail+" is using email");
+       return mail;
+    },
+    //id => users.find(user => user.id ===id )
+    async function(id){
+        console.log(id);
+        const tval = await Student.findOne({id:id});
+        console.log(tval+" is using id");
+        return tval;
+    }
+)
+
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -102,32 +99,16 @@ app.get('/register', checkNotAuthenticated,(req, res)=>{
 app.post('/register',checkNotAuthenticated, async (req, res)=>{
     try{
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        users.push({
+        var myobj = {
             id : Date.now().toString(),
             name : req.body.name,
             email : req.body.email,
             password : hashedPassword
-        })
-
+        };
+        users.push(myobj)
+        const student = new Student(myobj)
+        const newStduent = await student.save();
         
-        MongoClient.connect(url, function(err, db) {
-            if (err) throw err;
-            var dbo = db.db("mydb");
-            var myobj = {
-                id : Date.now().toString(),
-                name : req.body.name,
-                email : req.body.email,
-                password : hashedPassword
-            };
-            dbo.collection("customers").insertOne(myobj, function(err, res) {
-              if (err) throw err;
-              console.log("1 document inserted");
-              db.close();
-            });
-            console.log(myobj);
-          });
-          
-        //
         res.redirect('/login')
     }catch{
         res.redirect('/register')
@@ -147,4 +128,6 @@ function checkNotAuthenticated(req, res, next){
     }
     return next()
 }
+
+
 app.listen(5000)

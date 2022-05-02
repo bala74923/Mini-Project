@@ -1,0 +1,12 @@
+npm init
+npm i express ejs
+npm i express-ejs-layouts
+npm i --save-dev nodemon dotenv
+npm i mongoose
+
+create .env file
+================
+SESSION_SECRET = secret
+
+
+//npm run devStart or nodemon server.js
