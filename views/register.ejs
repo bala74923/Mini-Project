@@ -1,21 +1,38 @@
-<h1>Register</h1>
-
-<form action="/register" method="POST">
-    <div>
+<header>
+    <nav class="logo-title">
+        <a href="/">
+            <img src="/image" alt="logo" class="logo">
+            <h1 id="page-title">AcTrak</h1>
+        </a>
+    </nav>
+</header>
+<h1 class="login-title">Register</h1>
+<link rel="stylesheet" href="/style">
+<form action="/register" method="POST" class="login-form">
+    <!-- <div class="login-box"> -->
         <label for="name">Name</label>
         <input type="text" name="name" id="name" required>
-    </div>
+    <!-- </div class="login-box"> -->
 
-    <div>
+    <!-- <div class="login-box"> -->
         <label for="email">Email</label>
         <input type="email" name="email" id="email" required>
-    </div>
+    <!-- </div> -->
 
-    <div>
+    <!-- <div class="login-box"> -->
         <label for="password">Password</label>
         <input type="password" name="password" id="password" required>
-    </div>
-    <button type="submit">Submit</button>
+    <!-- </div> -->
+        
+        <label for="college">Colleger/University</label>
+        <input type="text" name="college" id="college" required>
+        <br>
+        <label for="profType">Choose the Fields:</label>
+            <select name="profType" id="profType">
+                <option value="none" selected disabled hidden>Select the Field</option>
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+        </select>
+    <button type="submit" class="submit-btn">Submit</button>
 </form>
-
-<a href="/login">Login</a>
+<a class="centerLink" href="/login">Login</a>

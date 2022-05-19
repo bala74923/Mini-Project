@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="/style">
+<!-- <% for(let i=0; i < eventdetails.length; i++) { %>
+    <h3>Event <%= i+1%> </h3>
+    <ul><%= eventdetails[i].id %></ul>
+    <ul><%= eventdetails[i].title %></ul>
+    <ul><%= eventdetails[i].linkToEvent %></ul> 
+<% } %> -->
+<% for(let i=0; i < eventdetails.length; i++) { %>
+    <h3 class="centerLink">Event <%= i+1%> </h3>
+    <div class="event-box", id="customers">
+        
+        <table>
+            <tr>
+                <th>title</th>
+                <th><%=eventdetails[i]["_doc"]["title"]%> </th>
+            </tr>
+            <% for (const det in eventdetails[i]["_doc"]) {%>  
+                <%if(det!="__v" & det!="_id" & det!="title"){%> 
+                <tr>
+                    <td id="event-details-attributes"><%=det%> </td>
+                    <td> <%=eventdetails[i]["_doc"][det]%> </td>
+                </tr>
+                <%}%>
+            <%}%>
+        </table>
+        <br>
+    </div>
+<% } %>

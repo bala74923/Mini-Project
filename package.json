@@ -19,6 +19,7 @@
     "mongo": "^0.1.0",
     "mongoclient": "^1.0.3",
     "mongoose": "^4.13.21",
+    "node-schedule": "^2.1.0",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "session": "^0.1.0"

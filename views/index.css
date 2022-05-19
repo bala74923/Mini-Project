@@ -1,9 +1,16 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&display=swap');
+
+:root{
+    --primaryTheme :  #EFF6FB
+}
+
 
 *{
     box-sizing: border-box;
     padding: 0px 5px;
     margin: 0px;
+    background-color: var(--primaryTheme);
 }
 
 .logo{
@@ -52,8 +59,8 @@ a{
 }
 .student-login a{
     
-    align-items: ceter;
-    color: #EFF6FB;
+    align-items: center;
+    color : #EFF6FB;
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
@@ -78,8 +85,8 @@ a{
     color: #000000;
 }
 
-.login-form{
-    margin: 4rem;
+.login-form, .event-form{
+    margin: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,3 +110,56 @@ a{
 
     display: inline-block ;
 }
+
+.centerLink{
+    margin: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #3A5AFE;
+}
+#profType, #name, #college, #email, #password{
+    margin-top: 0.5rem;
+    padding: 0.3rem;
+}
+.login-box{
+    align-items: center;
+    align-content: center;
+}
+
+.event-box{
+    margin: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #customers tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  #event-details-attributes{
+      color : green;
+      text-decoration: solid;
+      text-shadow: #3A5AFE;
+  }
