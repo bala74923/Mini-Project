@@ -139,11 +139,12 @@ app.post('/register',checkNotAuthenticated, async (req, res)=>{
         };
         //users.push(myobj)
         console.log(myobj)
+        currentlyRegisteredUser = myobj;
         const student = new Student(myobj)
         await student.save();
         currentlyRegisteredUser = myobj;
-        sendOTPVerfificationEmail(currentlyRegisteredUser.id,currentlyRegisteredUser.email)
-        res.render('verifyMail.ejs',{user:currentlyRegisteredUser})
+        sendOTPVerfificationEmail(currentlyRegisteredUser)
+        res.render('verifyMail.ejs',{isfalse:false})
         //res.redirect('/login')
     }catch(err){
         console.log(err)
@@ -165,17 +166,7 @@ function checkNotAuthenticated(req, res, next){
     return next()
 }
 
-// node mailer transporter creation
-let transporter = nodemailer.createTransport({
-    host:'smtp.example.com',
-    port: 465,
-    secure: true, 
-    auth: {
-        user: process.env.AUTH_EMAIL,
-        pass: process.env.AUTH_PASS
-    }
 
-});
 
 
 
@@ -217,8 +208,12 @@ app.post('/verifyMail',async (req,res)=>{
 
     try {
         let gotOtp = req.body.otp; //need form
-        let userId = currentlyRegisteredUser.id;
-            const UserOTPVerificationRecords = await UserOTPVerification.find({userId});
+        console.log(gotOtp+" this is user giving otp");
+        //let userId = currentlyRegisteredUser.id;
+        console.log(currentlyRegisteredUser.id+" is the currently reigistered user id")
+        const UserOTPVerificationRecords = await UserOTPVerification.find({userId:currentlyRegisteredUser.id})//find({id:userId});
+        console.log("records found are")
+        console.log(UserOTPVerificationRecords);
             if(UserOTPVerificationRecords.length<=0) {
                 throw new Error(
                     "Account record doesn't exist or has been verified already.Please sign up or log in"
@@ -227,24 +222,28 @@ app.post('/verifyMail',async (req,res)=>{
                 const {expiresAt} = UserOTPVerificationRecords[0];
                 const hashedOTP = UserOTPVerificationRecords[0].otp;
                 if(expiresAt < Date.now()){
-                    UserOTPVerificationRecords.deleteMany({userId});
+                    await UserOTPVerification.deleteMany({userId:currentlyRegisteredUser.id});
                     // erase registered mail from db
-                    Student.find({ id:userId }).remove().exec();
+                    console.log("expired");
+                    Student.find({ id:currentlyRegisteredUser.id }).remove().exec();
                 } else {
                         const validOTP = await bcrypt.compare(gotOtp,hashedOTP);
                         if(!validOTP) {
                             //throw new Error("Invalid code");
                             // erase registered email
-                            Student.find({ id:userId }).remove().exec();
+                            console.log("not valid so removed");
+                            res.render('verifyMail.ejs',{isfalse:true})
+                            // Student.find({ id:currentlyRegisteredUser.id }).remove().exec();
 
                         } else {
                             //await User.updateOne({_id:userId},{verified: true});
-                            await UserOTPVerificationRecords.deleteMany({userId});
+                            await UserOTPVerification.deleteMany({userId:currentlyRegisteredUser.id});
                             // res.json({
                             //     status:"VERIFIED"
                             //     message:"User email verified"
                             // });
                             console.log("email verified successfully");
+                            res.redirect('/login')
                         }
                 }
 
@@ -254,7 +253,11 @@ app.post('/verifyMail',async (req,res)=>{
         //     status:"FAILED"
         //     message:error message,
         // });
+        currentlyRegisteredUser = null
+        res.render('register.ejs',{isDuplicateEmail:false})
+        console.log(error)
         console.log("failed due to some error");
+
     }
 
 })
@@ -369,8 +372,20 @@ function split_dates(obj,p) {
     }
     return parts
 }
+
+// node mailer transporter creation
+let transporter = nodemailer.createTransport({
+    service: 'Gmail', 
+    auth: {
+        user: process.env.AUTH_EMAIL,
+        pass: process.env.AUTH_PASS
+    }
+
+});
+
+
 // sending otp
-const sendOTPVerfificationEmail = async({_id,email},res)=>{
+const sendOTPVerfificationEmail = async(student,res)=>{
     try{
         var digits = '0123456789';
         var OTP = '';
@@ -378,32 +393,43 @@ const sendOTPVerfificationEmail = async({_id,email},res)=>{
              OTP += digits[Math.floor(Math.random() * 10)];
         }
         const otp = OTP;
+        const otpstring = " "+OTP+" "
+        const email = student.name+" "+student.email
         const mailOptions = {
-            from : process.env.AUTH_EMAIL,
+            from : 'actrak ' + process.env.AUTH_EMAIL,
             to: email, 
             subject: "Verify Your Email",
-            html: `<p>Enter<b>${otp}</b> in the app to verfiy your email address and complete the signup</p><p> This code <b>expires in 1 hour</b>.</p>`,
+            html: `<p>Enter<b>${otpstring}</b> in the app to verfiy your email address and complete the signup</p><p> This code <b>expires in 1 hour</b>.</p>`,
         }
 
 
     const saltRounds = 10;
-    const hashedOTP =  bcrypt.hash(otp,saltRounds);
+    const hashedOTP =  await bcrypt.hash(otp,saltRounds);
     
     const newOTPVerification = await new UserOTPVerification({ 
-        userId: _id,
+        userId: student.id,
         otp: hashedOTP,
         createdAt : Date.now(),
         expiresAt : Date.now() + 3600000,
         }
         );
 
-    console.log(otp);
+    //console.log(otp);
 
     await newOTPVerification.save();
-    await transporter.sendMail(mailOptions);
+    //await transporter.sendMail(mailOptions);
+     transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error +" is while transporting");
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      
+
     }catch(error){
         console.log(error);
-        Student.find({ id:_id }).remove().exec();
+        Student.deleteOne({id:student.id});
         console.log("some error otp cannot send")    
     }
 }
@@ -413,8 +439,8 @@ const sendOTPVerfificationEmail = async({_id,email},res)=>{
 app.get("/resendOTPVerificationCode", async(req,res)=> {
     try {
         let reuserid = currentlyRegisteredUser.id;
-            await UserOTPVerification.deleteMany({reuserid});
-            res.render('verifyMail.ejs',{user:currentlyRegisteredUser})
+            await UserOTPVerification.deleteMany({userid:reuserid});
+            res.render('verifyMail.ejs',{isfalse:false})
         }catch(error) {
         // res.json({
         //     status:"FAILED",

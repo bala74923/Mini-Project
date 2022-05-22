@@ -18,10 +18,14 @@
     </header>
     <div class="login-box">
         <h1 class="login-title">One to Step to Sign up</h1>
+
+        <% if (isfalse==true) { %>
+            <h4 style="color: red; margin : 1rem;">Pleae enter the right otp</h4>
+          <% } %>
         <form action="/verifyMail" method="POST" class="event-form">
             <!-- Title -->
             <label for="otp">Enter the otp</label>
-            <input type="text" id="otp" name="otp" required>
+            <input type="password" id="otp" name="otp" required>
             <br><br>
             <!-- submit -->
             <input type="submit" value="submit" class="submit-btn">
