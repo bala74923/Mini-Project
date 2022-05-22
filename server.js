@@ -1,8 +1,8 @@
 
 /*
 to kill port already in use
-sudo lsof -i :{portnumber}
-kill {pid}
+sudo lsof -i :5000
+sudo kill {pid}
 
 sudo -s
 date --set 2022-05-20
@@ -51,7 +51,6 @@ db.once('open', () => console.log('Connected to Mongoose')) //open to openUri
 
 
 const users=[]
-
 app.set('view-engine', 'ejs')
 
 // edited
@@ -76,6 +75,7 @@ let currentlyRegisteredUser;
 
 const initializePassport = require('./passport-config');
 const res = require('express/lib/response');
+const student = require('./models/student')
 initializePassport(
     passport,
      //email => users.find(user => user.email === email),
@@ -134,7 +134,7 @@ app.post('/register',checkNotAuthenticated, async (req, res)=>{
             name : req.body.name,
             email : req.body.email,
             college : req.body.college,
-            profType : req.body.profType,
+            profType : "Student",//req.body.profType,
             password : hashedPassword
         };
         //users.push(myobj)
@@ -156,7 +156,7 @@ function checkAuthenticated(req, res,next){
     if(req.isAuthenticated()){
         return next()
     }
-    res.redirect('/login')
+    res.redirect('/login');
 }
 
 function checkNotAuthenticated(req, res, next){
@@ -418,8 +418,15 @@ const sendOTPVerfificationEmail = async(student,res)=>{
 
     await newOTPVerification.save();
     //await transporter.sendMail(mailOptions);
-     transporter.sendMail(mailOptions, function(error, info){
+     transporter.sendMail(mailOptions, async function(error, info){
         if (error) {
+        try{
+            await Student.findOneAndDelete({id:student.id}); 
+            console.log(student.name+" is deleted successfully");
+        }catch(err){
+            console.log("cannot delete"+student.name);
+            console.log(err);
+        }
           console.log(error +" is while transporting");
         } else {
           console.log('Email sent: ' + info.response);
@@ -450,6 +457,52 @@ app.get("/resendOTPVerificationCode", async(req,res)=> {
     }
 })
 
+//add admin
+app.get('/addAdmin',(req, res)=>{
+    res.render('addAdmin.ejs');
+})
+
+app.post('/addAdmin',async (req,res)=>{
+    try{
+        let mail=req.body.email;
+        await Student.findOneAndUpdate({email:mail},{profType:"Admin"});
+        
+    } catch(err) {
+        console.log("cannot update")
+        console.log(err+" is the error")
+    }
+    res.render('manageAdmin.ejs');
+})
+
+//remove admin
+app.get('/removeAdmin',(req, res)=>{
+    res.render('removeAdmin.ejs')
+})
+
+app.post('/removeAdmin',async (req,res)=>{
+    try{
+        let mail=req.body.email;
+        await Student.findOneAndUpdate({email:mail},{profType:"Student"});
+        
+    } catch(err) {
+        console.log("cannot update")
+        console.log(err+" is the error")
+    }
+    res.render('manageAdmin.ejs');
+})
+
+app.get('/showAdmin',async(req,res)=>{
+    try{
+        Student.find({profType:"Admin"}, function(err, adminDetails) {
+            res.render('adminList.ejs', {adminDetails:adminDetails})
+         });
+    }catch(err){
+        console.log("some error while showing admins");
+        console.log(err);
+        res.render('manageAdmin.ejs')
+    }
+})
+
 app.get('/logout', (req, res) => {
     res.clearCookie('nToken');
     return res.redirect('/');
@@ -473,9 +526,6 @@ app.get("/profile", (req, res)=>{
     res.render("profile.ejs", {user :currUser})
 })
 
-app.get("/orgLogin", (req, res)=>{
-    res.render("orgLogin.ejs");
-})
 
 app.get("/collab", (req, res)=>{
     res.render("collab.ejs");
@@ -483,14 +533,54 @@ app.get("/collab", (req, res)=>{
 app.get("/edit", (req, res)=>{
     res.render("edit.ejs", {user : currUer});
 })
+
+app.get('/orgRegister', (req, res)=>{
+    res.render('orgRegister.ejs', {isDuplicateEmail : false})
+})
+app.post('/orgRegister',checkNotAuthenticated, async (req, res)=>{
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.orgPassword, 10);
+        var orgObj = {
+            id : Date.now().toString(),
+            name : req.body.orgName,
+            email : req.body.orgEmail,
+            domain : req.body.orgDomain,
+            workplace : req.body.workPlace,
+            link : req.body.orgLink,
+            phone : req.body.orgPhone,
+            address : req.body.orgAddress,
+            profType : "Organisation",
+            password : hashedPassword
+        };
+        //users.push(myobj)
+        console.log(orgObj);
+        //currentlyRegisteredUser = orgObj;
+        const student = new Student(orgObj);
+        await student.save();
+        //currentlyRegisteredUser = orgObj;
+        //sendOTPVerfificationEmail(currentlyRegisteredUser)
+        //res.render('verifyMail.ejs',{isfalse:false})
+        res.redirect('/login');
+    }catch(err){
+        console.log(err);
+        res.render('register.ejs',{isDuplicateEmail:true});
+    }
+    //console.log(users)
+})
+app.get('/manageAdmin', (req, res)=>{
+    res.render('manageAdmin.ejs');
+})
+app.get('/reactjs', (req, res)=>{
+    res.sendFile(__dirname+'/views/reactjs.jsx');
+})
 // 404 Page Not Found
 app.get("/pageNotFound", (req, res)=>{
-    res.render('pageNotFound.ejs')
+    res.render('pageNotFound.ejs');
 })
 app.use((req, res, next)=>{
-    res.status(404).redirect('/pageNotFound')
+    res.status(404).redirect('/pageNotFound');
 })
 
 
 
-app.listen(5000)
+app.listen(5000);

@@ -223,3 +223,33 @@ button:hover{
     cursor:pointer;
     text-shadow: #000000;
 }
+
+.inputBox{
+    padding: 0.7rem;
+    margin: 0.3rem;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    /* font-weight: 500; */
+}
+
+.inputBox label{
+    margin: 0.2rem;
+}
+.inputBox input{
+    margin: 02.rem;
+    padding: 0.2rem;
+    border-radius: 0.3rem;
+    box-shadow: #000000;
+}
+.inputBox input:hover{
+    background-color: #a7dbfe;
+}
+.inputBox input::after{
+    background-color: chocolate;
+}
+
+select{
+    padding: 0.5rem;
+    font-size: 1rem;
+}

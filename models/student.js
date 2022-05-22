@@ -14,20 +14,16 @@ studentSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    // email:{
-    //     type: String,
-    //     required: true
-    // }
     email: {
         type: String,
          index: {
               unique: true//,  dropDups: true
-            }
+            },
+            required: true
         }
     ,
     college:{
-        type: String,
-        required: true
+        type: String
     },
     profType:{
         type: String,
@@ -36,6 +32,17 @@ studentSchema = mongoose.Schema({
     password:{
         type: String,
         required: true
+    },domain:{
+        type: String,
+
+    },workplace:{
+        type:String
+    },phone:{
+        type: String
+    },address:{
+        type: String
+    },link: {
+        type: String
     }
 })
 studentSchema.plugin(uniqueValidator)

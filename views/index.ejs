@@ -16,7 +16,7 @@
         </nav>
     </header>
     <div class="indexBtns">
-        <h1>Hi <%= user.name %></h1>
+        <h1>Hi <%= user.name %>,You are an <%= user.profType%></h1>
         <%if(user.profType=="Student"){%>
             <h2>Find the right place to showcase your skill</h2>
         <%}%>
@@ -28,6 +28,11 @@
         <button class="indexBtn"><a href="/ongoingeventlist">Ongoing Events</a></button>
         <button class="indexBtn"><a href="/pasteventlist">Past Events</a></button>
         <button class="indexBtn"><a href="/profile">Profile</a></button>
+
+        <%if(user.profType=="Organisation"){%>
+            <button class="indexBtn"><a href="/manageAdmin">Admin Management</a></button>
+        <%}%>
+
         <button class="indexBtn logout-btn"><a href="/logout">Log Out</a></button>
     </div>
     
