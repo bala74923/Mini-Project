@@ -12,7 +12,11 @@
     margin: 0px;
     background-color: var(--primaryTheme);
 }
-
+body{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
 .logo{
     width: 100px;
 }
@@ -60,7 +64,7 @@ a{
 .student-login a{
     
     align-items: center;
-    color : #EFF6FB;
+    /* color : #EFF6FB; */
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
@@ -131,6 +135,7 @@ a{
 .event-box{
     margin: 2rem;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items:center;
 }
@@ -163,3 +168,58 @@ a{
       text-decoration: solid;
       text-shadow: #3A5AFE;
   }
+.profAtr{
+    color: #3A5AFE;
+}
+
+.profDet{
+    padding: 1rem;
+}
+
+#mainDialog{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 3.6rem;
+    text-align: center;
+    line-height: 8rem;
+    letter-spacing: 0.5rem    ;
+    padding: 2rem;
+    margin-top: 1rem;
+}
+
+#errorMsg{
+    text-align: center;
+    color: red;
+    justify-content: center;
+    justify-items: center;
+}
+
+.indexBtns{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.indexBtn{
+    margin: 1rem;
+    padding: 0.5rem;
+    background-color: #3A5AFE;
+    border-radius: 0.5rem;
+    border-width: 1px;
+}
+.indexBtn:hover, .indexBtn:hover a{
+    background-color: white;
+    color: black;
+}
+.indexBtn a{
+    background-color: transparent;
+    color: white;
+}
+.logout-btn{
+    background-color : red;
+}
+
+button:hover{
+    cursor:pointer;
+    text-shadow: #000000;
+}

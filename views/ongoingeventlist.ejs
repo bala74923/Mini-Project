@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="/style">
-<!-- <% for(let i=0; i < eventdetails.length; i++) { %>
+<!-- <% for(let i=0; i < ongoingeventdetails.length; i++) { %>
     <h3>Event <%= i+1%> </h3>
-    <ul><%= eventdetails[i].id %></ul>
-    <ul><%= eventdetails[i].title %></ul>
-    <ul><%= eventdetails[i].linkToEvent %></ul> 
+    <ul><%= ongoingeventdetails[i].id %></ul>
+    <ul><%= ongoingeventdetails[i].title %></ul>
+    <ul><%= ongoingeventdetails[i].linkToEvent %></ul> 
 <% } %> -->
 <header>
     <nav class="logo-title">
@@ -14,26 +14,30 @@
     </nav>
 </header>   
 <hr>
-<% for(let i=0; i < eventdetails.length; i++) { %>
+
+<%if(ongoingeventdetails.length!=0){%>
+    <h1>Events in Progress...</h1>
+<% } else{%>
+    <h1>No events in progress</h1>
+<% } %>
+
+<% for(let i=0; i < ongoingeventdetails.length; i++) { %>
     <h3 class="centerLink">Event <%= i+1%> </h3>
     <div class="event-box", id="customers">
         <table>
             <tr>
                 <th>title</th>
-                <th><%=eventdetails[i]["_doc"]["title"]%> </th>
+                <th><%=ongoingeventdetails[i]["_doc"]["title"]%> </th>
             </tr>
-            <% for (const det in eventdetails[i]["_doc"]) {%>  
+            <% for (const det in ongoingeventdetails[i]["_doc"]) {%>  
                 <%if(det!="__v" & det!="_id" & det!="title"){%> 
                 <tr>
                     <td id="event-details-attributes"><%=det%> </td>
-                    <td> <%=eventdetails[i]["_doc"][det]%> </td>
+                    <td> <%=ongoingeventdetails[i]["_doc"][det]%> </td>
                 </tr>
                 <%}%>
             <%}%>
         </table>
         <hr>
     </div>
-<% } %>
-<%if(eventdetails.length==0){%>
-    <h1>No upcoming events</h1>
 <% } %>

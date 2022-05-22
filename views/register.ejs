@@ -8,6 +8,10 @@
 </header>
 <h1 class="login-title">Register</h1>
 <link rel="stylesheet" href="/style">
+<% if (isDuplicateEmail) { %>
+    <h4 style="color: red; margin : 1rem;">email already taken</h4>
+  <% } %>
+
 <form action="/register" method="POST" class="login-form">
     <!-- <div class="login-box"> -->
         <label for="name">Name</label>
@@ -16,7 +20,8 @@
 
     <!-- <div class="login-box"> -->
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" required>
+        <input type="email" name="email" id="email" required> 
+
     <!-- </div> -->
 
     <!-- <div class="login-box"> -->
@@ -24,7 +29,7 @@
         <input type="password" name="password" id="password" required>
     <!-- </div> -->
         
-        <label for="college">Colleger/University</label>
+        <label for="college">College/University</label>
         <input type="text" name="college" id="college" required>
         <br>
         <label for="profType">Choose the Fields:</label>

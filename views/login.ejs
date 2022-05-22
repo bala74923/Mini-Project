@@ -1,6 +1,4 @@
-<% if (messages.error) { %>
-    <%= messages.error %>
-  <% } %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +20,9 @@
     </header>
     <div class="login-box">
         <h1 class="login-title">Student/Faculty Login</h1>
+        <% if (messages.error) { %>
+            <h4 style="color: red; margin : 1rem;"><%= messages.error %></h4>
+          <% } %>
         <form action="/login" method="POST" class="login-form">
             <label for="email">email:</label><br>
             <input type="text" id="email" name="email" required>

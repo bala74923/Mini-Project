@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="server.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form action="/edit" method="POST" class="login-form">
+        <!-- <div class="login-box"> -->
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" value="hell" required>
+            
+            <script type="text/javascript"></script>
+        <!-- </div class="login-box"> -->
+    
+        <!-- <div class="login-box"> -->
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+            <script type="text/javascript">document.getElementById('email').value=user.email</script>
+        <!-- </div> -->
+    
+        <!-- <div class="login-box"> -->
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+            <%%>
+            <script type="text/javascript">document.getElementById('password').value=user.password</script>
+        <!-- </div> -->
+            
+            <label for="college">College/University</label>
+            <input type="text" name="college" id="college" required>
+            <br>
+            <label for="profType">Choose the Fields:</label>
+                <select name="profType" id="profType">
+                    <option value="none" selected disabled hidden>Select the Field</option>
+                    <option value="Student">Student</option>
+                    <option value="Teacher">Teacher</option>
+                </select>
+            <script type="text/javascript">document.getElementById('profType').value=user.profType</script>
+
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+</body>
+</html>

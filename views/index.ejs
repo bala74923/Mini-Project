@@ -1,9 +1,35 @@
 <link rel="stylesheet" href="/style">
-<h1>Hi <%= name %></h1>
+
+<style>
+    *{
+        background-color:white;
+    }
+</style>
 
 <body>
-    <button class="student-login"><a href="/logout">Log Out</a></button>
-    <button><a href="/events">Create Event</a></button>
-    <button><a href="/eventlist">Upcoming Events</a></button>
+    <header>
+        <nav class="logo-title">
+            <a href="/">
+                <img src="/image" alt="logo" class="logo">
+                <h1 id="page-title">AcTrak</h1>
+            </a>
+        </nav>
+    </header>
+    <div class="indexBtns">
+        <h1>Hi <%= user.name %></h1>
+        <%if(user.profType=="Student"){%>
+            <h2>Find the right place to showcase your skill</h2>
+        <%}%>
+        
+        <%if(user.profType!="Student"){%>
+            <button class="indexBtn"><a href="/events">Create Event</a></button>
+        <%}%>
+        <button class="indexBtn"><a href="/eventlist">Upcoming Events</a></button>
+        <button class="indexBtn"><a href="/ongoingeventlist">Ongoing Events</a></button>
+        <button class="indexBtn"><a href="/pasteventlist">Past Events</a></button>
+        <button class="indexBtn"><a href="/profile">Profile</a></button>
+        <button class="indexBtn logout-btn"><a href="/logout">Log Out</a></button>
+    </div>
+    
 </body>
 
