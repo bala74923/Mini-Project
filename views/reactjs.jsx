@@ -44,17 +44,3 @@ ReactDOM.render(<MainNavBar />, document.getElementById("MainNavBar"))
 //         </>
 //     );
 // }
-
-
-
-// ReactDOM.render(<AddAdmin/>, document.getElementById("root"))
-// //ReactDOM.render(<Good/>, document.getElementById("root2"))
-// foqwfoiqwfoweokvnoknewvb
-// fwokpeqmfinewgvine
-// mfvwokpemvinw90vmfokwqm-fjq2
-// fkqwmfoqf-0k3-mfg3-m
-fkjsfjskfljdskf
-aksfjskafjaf
-lkfdsjfkljfk
-ok
-
