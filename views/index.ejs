@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style">
+    <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;"/>
+    <title>Index</title>
+</head>
+<body>
+    <!-- NavBar End -->
+    <header>
+        <nav class="navContainer">
+            <nav class="logo-title">
+                <a href="/">
+                    <img src="/image" alt="logo" class="logo" />
+                    <h1 id="page-title">AcTrak</h1>
+                </a>
+                
+            </nav>
+            <a href="/main"><i class="bi bi-house-door-fill"></i>Home</a>
+        </nav>
+        <a class="logout-btn" href="/logout">Log Out<i class="bi bi-arrow-bar-right"></i></a>
+    </header>
+    <!-- NavBar End -->
+
+    <h1 style="margin:2rem">Hi <inline style="color:rgb(43, 74, 177); text-transform: capitalize;"><%= user.name %></inline>,You are <inline style="color:rgb(43, 74, 177)"><%= user.profType %></inline></h1>
+    <%if(user.profType=="Student"){%>
+        <h2>Find the right place to showcase your skill</h2>
+    <%}%>
+
+    <div class="indexBtns">
+        
+        <%if(user.profType!="Student"){%>
+            <a class="indexBtn" href="/events">Create Event</a>
+        <%}%>
+        
+        <a class="indexBtn" href="/eventlist">Upcoming Events<i class="bi bi-calendar-week"></i></a>
+        <a class="indexBtn" href="/ongoingeventlist">Ongoing Events<i class="bi bi-broadcast"></i></a>
+        <a class="indexBtn" href="/pasteventlist">Past Events<i class="bi bi-calendar-x"></i></a>
+        <a class="indexBtn" href="/profile">Profile<i class="bi bi-person-circle"></i></a>
+
+        <%if(user.profType=="Organisation"){%>
+            <a class="indexBtn" href="/manageAdmin">Admin Management</a>
+        <%}%>
+
+
+    </div>
+</body>
+</html>
+
+
