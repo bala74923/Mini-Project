@@ -187,3 +187,58 @@ ReactDOM.render(<MainNavBar />, document.getElementById("MainNavBar"))
 //  Needleman, Rafe (November 2006). "Google Mail goes mobile. RSS too". Retrieved 2 November 2006.
 //  Rogers, Garett (January 2007). "Gmail lets you open Word attachments in Google Docs". Retrieved 24 November 2008.
 //  Murray, David (October 2007). "Sync your inbox across devices with free IMAP". Retrieved 24 November 2008.
+
+
+// ReactDOM.render(<AddAdmin/>, document.getElementById("root"))
+// //ReactDOM.render(<Good/>, document.getElementById("root2"))
+// foqwfoiqwfoweokvnoknewvb
+// fwokpeqmfinewgvine
+// mfvwokpemvinw90vmfokwqm-fjq2
+// fkqwmfoqf-0k3-mfg3-m
+fkjsfjskfljdskf
+aksfjskafjaf
+lkfdsjfkljfk
+ok
+
+function hello{
+    console.log("Hello")
+}
+
+
+
+<header>
+    <nav class="logo-title">
+        <a href="/">
+            <img src="/image" alt="logo" class="logo">
+            <h1 id="page-title">AcTrak</h1>
+        </a>
+    </nav>
+</header>   
+<hr></hr>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style">
+    <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;"/>
+
+    <title>AcTrak</title>
+    
+</head>
+
+
+
+<div class="inputBox">
+            <label for="workPlace">College/University/Company</label>
+                <select name="workPlace" id="workPlace">
+                    <option value="none" selected disabled hidden>Select the WorkPlace</option>
+                    <option value="College">College</option>
+                    <option value="University">University</option>
+                    <option value="Company">Company</option>
+            </select>
