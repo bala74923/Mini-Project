@@ -49,3 +49,8 @@ ReactDOM.render(<MainNavBar />, document.getElementById("MainNavBar"))
 
 // ReactDOM.render(<AddAdmin/>, document.getElementById("root"))
 // //ReactDOM.render(<Good/>, document.getElementById("root2"))
+fkjsfjskfljdskf
+aksfjskafjaf
+lkfdsjfkljfk
+ok
+
