@@ -32,10 +32,12 @@
                 </tr>
                 <% for (const det in eventdetails[i]["_doc"]) {%>  
                     <%if(det!="__v" & det!="_id" & det!="title"){%> 
-                    <tr>
-                        <td id="event-details-attributes"><%=det%> </td>
-                        <td> <%=eventdetails[i]["_doc"][det]%> </td>
-                    </tr>
+                        <%if((eventdetails[i]["_doc"]["eventJoinType"]=="outside")||(eventdetails[i]["_doc"]["organisationDomain"]== currDomain)){%> 
+                            <tr>
+                                <td id="event-details-attributes"><%=det%> </td>
+                                <td> <%=eventdetails[i]["_doc"][det]%> </td>
+                            </tr>
+                            <%}%>
                     <%}%>
                 <%}%>
             </table>
