@@ -337,7 +337,7 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
         console.log(eventObj)
         //new Eventinfo(eventObj).save();
         let p1 = split_dates(eventObj.date,"-");//split_dates(req.body.edate,"-");
-        let p2 = split_dates(eventObj.time,"-");//split_dates(req.body.etime,":");
+        let p2 = split_dates(eventObj.time,":");//split_dates(req.body.etime,":");
         const when = new Date(p1[0],p1[1]-1,p1[2],p2[0],p2[1],0,0);
         let ep1 = split_dates(req.body.edate,"-");
         let ep2 = split_dates(req.body.etime,":");

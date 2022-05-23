@@ -10,29 +10,29 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
-    "bcrypt": "^5.0.1",
     "bootstrap-icons": "^1.8.2",
-    "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
     "flash": "^1.1.0",
     "mongo": "^0.1.0",
     "mongoclient": "^1.0.3",
-    "mongoose-unique-validator": "^3.0.0",
-    "node-schedule": "^2.1.0",
     "nodemailer": "^6.7.5",
-    "passport": "^0.5.3",
-    "passport-local": "^1.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "session": "^0.1.0"
   },
   "devDependencies": {
+    "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-ejs-layouts": "^2.5.1",
+    "express-flash": "^0.0.2",
     "mongoose": "^6.3.4",
-    "nodemon": "^2.0.16"
+    "mongoose-unique-validator": "^3.0.0",
+    "node-schedule": "^2.1.0",
+    "nodemon": "^2.0.16",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
   },
   "repository": {
     "type": "git",
