@@ -407,25 +407,7 @@ let transporter = nodemailer.createTransport({
 
 });
 
-function sendMailUntilSuccess(mailOptions){
-    let flag = false;
-    transporter.sendMail(mailOptions, async function(error, info){
-        if (error) {
-        try{
-           // await Student.findOneAndDelete({id:student.id}); 
-            console.log(student.name+" is deleted successfully");
-        }catch(err){
-            console.log("cannot delete"+student.name);
-            console.log(err);
-        }
-          console.log(error +" is while transporting");
-        } else {
-          console.log('Email sent: ' + info.response);
-          flag = true;
-        }
-      });
-      return flag;
-}
+
 
 // sending otp
 const sendOTPVerfificationEmail = async(student,res)=>{
@@ -457,14 +439,28 @@ const sendOTPVerfificationEmail = async(student,res)=>{
         }
         );
 
-    //console.log(otp);
+    console.log(otp);
 
     await newOTPVerification.save();
     //await transporter.sendMail(mailOptions);
     // while(sendMailUntilSuccess(mailOptions)==false){
     //     console.log("worked multiple times to send mail");
     // }
-    sendMailUntilSuccess(mailOptions);
+    transporter.sendMail(mailOptions, async function(error, info){
+        if (error) {
+        try{
+           // await Student.findOneAndDelete({id:student.id}); 
+            console.log(student.name+" is deleted successfully");
+        }catch(err){
+            console.log("cannot delete"+student.name);
+            console.log(err);
+        }
+          console.log(error +" is while transporting");
+        } else {
+          console.log('Email sent: ' + info.response);
+          flag = true;
+        }
+      });
       
 
     }catch(error){
@@ -574,6 +570,11 @@ app.get("/profile", (req, res)=>{
     res.render("profile.ejs", {user :currUser})
 })
 
+app.get('/logout', function (req, res){
+  req.session.destroy(function (err) {
+    res.redirect('/'); //Inside a callback… bulletproof!
+  });
+});
 
 app.get("/collab", (req, res)=>{
     res.render("collab.ejs");
