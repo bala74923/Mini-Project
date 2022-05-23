@@ -117,10 +117,7 @@ app.post('/login', checkNotAuthenticated,passport.authenticate('local',
         failureFlash : true
     }
 ))
-app.get("/logout",(req,res)=>{
-    req.logout();
-    res.redirect("/");
-});
+
 
 app.get('/register', checkNotAuthenticated,(req, res)=>{
     res.render('register.ejs',{isDuplicateEmail:false})
@@ -437,7 +434,7 @@ const sendOTPVerfificationEmail = async(student,res)=>{
      transporter.sendMail(mailOptions, async function(error, info){
         if (error) {
         try{
-            await Student.findOneAndDelete({id:student.id}); 
+            //await Student.findOneAndDelete({id:student.id}); 
             console.log(student.name+" is deleted successfully");
         }catch(err){
             console.log("cannot delete"+student.name);
@@ -538,10 +535,6 @@ app.post('/changeName',async(req,res)=>{
 })
 
 
-app.get('/logout', (req, res) => {
-    res.clearCookie('nToken');
-    return res.redirect('/');
-});
 
 
 app.get("/main", (req, res)=>{
