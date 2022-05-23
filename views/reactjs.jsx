@@ -58,3 +58,45 @@ aksfjskafjaf
 lkfdsjfkljfk
 ok
 
+function hello{
+    console.log("Hello")
+}
+
+
+
+<header>
+    <nav class="logo-title">
+        <a href="/">
+            <img src="/image" alt="logo" class="logo">
+            <h1 id="page-title">AcTrak</h1>
+        </a>
+    </nav>
+</header>   
+<hr></hr>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style">
+    <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;"/>
+
+    <title>AcTrak</title>
+    
+</head>
+
+
+
+<div class="inputBox">
+            <label for="workPlace">College/University/Company</label>
+                <select name="workPlace" id="workPlace">
+                    <option value="none" selected disabled hidden>Select the WorkPlace</option>
+                    <option value="College">College</option>
+                    <option value="University">University</option>
+                    <option value="Company">Company</option>
+            </select>
