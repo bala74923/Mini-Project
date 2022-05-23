@@ -52,6 +52,14 @@ eventinfoSchema = mongoose.Schema({
     description:{
         type: String,
         required: true
+    },organisation:{
+        type:String,
+        required: true
+    },eventJoinType:{
+        type: String,
+        required: true
+    },organisationDomain:{
+        type: String
     }
     // organiser:{
     //     type: String,

@@ -19,6 +19,11 @@
     <div class="login-box">
         <h1 class="login-title">Create New Event!</h1>
         <form action="/events" method="POST" class="event-form"> 
+            <!-- Organisation name -->
+            <label for="orgName">Title</label>
+            <input type="text" id="orgName" name="orgName" required>
+            <br><br>
+
             <!-- Title -->
             <label for="title">Title</label>
             <input type="text" id="title" name="title" required>
@@ -67,6 +72,14 @@
                 <option value="WebDevelopment">WebDevelopment</option>
                 <option value="AppDevelopment">AppDevelopment</option>
                 <option value="MachineLearning">MachineLearning</option>
+            </select>
+            <br><br>
+
+            <!-- Related Fields -->
+            <label for="eventJoinType">Choose the Event Joining Type:</label>
+            <select name="eventJoinType" id="eventJoinType">
+                <option value="inside">Inside Organisation</option>
+                <option value="outside">Open to All</option>
             </select>
             <br><br>
 

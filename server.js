@@ -176,7 +176,8 @@ app.get('/eventlist', function(req, res) {
     // });
     
     Eventinfo.find({}, function(err, eventdetails) {
-        res.render('eventlist.ejs', {eventdetails:eventdetails})
+
+        res.render('eventlist.ejs', {eventdetails:eventdetails,currDomain:currUser.Domain})
         //console.log("sending the page");
         // for(const i in eventdetails[0]){
         //     console.log(i)
@@ -295,10 +296,22 @@ app.get('/events', checkAuthenticated,(req, res)=>{
 //     }
 //     //console.log(users)
 // })
-app.post('/events', checkAuthenticated, (req, res)=>{
+function isNotVerifiedFromSameOrganisation(adminEmail,orgObj){
+    let adminDom = adminEmail.split('@');
+    return adminDom[1]!=orgObj.domain;
+}
+
+app.post('/events', checkAuthenticated, async(req, res)=>{
     try{
+        let givenOrg = await Student.findOne({name:req.body.orgName,profType:"Organisation"});
+        if(isNotVerifiedFromSameOrganisation(currUser.email,givenOrg)){
+            throw "not from same orgainsation";
+        }
+        let orgDom = givenOrg.domain;
         const eventObj = {
             id : Date.now().toString(),
+            organisation:req.body.orgName,
+            eventJoinType: req.body.eventJoinType,
             title : req.body.title,
             date  : req.body.date,
             time : req.body.time,
@@ -310,6 +323,9 @@ app.post('/events', checkAuthenticated, (req, res)=>{
             prizes : req.body.prizes,
             takeaways : req.body.takeaways,
             sponsers : req.body.sponsers
+        }
+        if(eventObj.eventJoinType=="inside"){
+            eventObj.organisationDomain = givenOrg.domain;
         }
         console.log(eventObj)
         //new Eventinfo(eventObj).save();
