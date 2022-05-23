@@ -1,0 +1,10 @@
+npm init
+npm i express ejs express-ejs-layouts --save-dev nodemon dotenv mongoose passport passport-local bcrypt express-flash mongoose-unique-validator node-schedule
+
+
+create .env file
+================
+SESSION_SECRET = secret
+
+
+//npm run devStart or nodemon server.js

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;" />
+    <title>Register</title>
+</head>
+
+<body>
+    <!-- NavBarStart -->
+    <header>
+        <nav class="navContainer">
+            <nav class="logo-title">
+                <a href="/">
+                    <img src="/image" alt="logo" class="logo" />
+                    <h1 id="page-title">AcTrak</h1>
+                </a>
+            </nav>
+            <a href="/main"><i class="bi bi-house-door-fill"></i>Home</a>
+        </nav>
+      </header>
+    <!-- NavBarEnd -->
+    <h1 class="login-title">Register</h1>
+    <link rel="stylesheet" href="/style">
+    <% if (isDuplicateEmail) { %>
+        <h4 style="color: red; margin : 1rem;">Email already taken</h4>
+        <% } %>
+            <form action="/register" method="POST" class="login-form">
+
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" required>
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+
+
+                <label for="college">College/University</label>
+                <input type="text" name="college" id="college" required>
+
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+            <a class="centerLink" href="/login">Login</a>
+</body>
+
+</html>
