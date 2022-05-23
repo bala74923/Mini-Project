@@ -442,7 +442,7 @@ const sendOTPVerfificationEmail = async(student,res)=>{
         }
         );
 
-    //console.log(otp);
+    console.log(otp);
 
     await newOTPVerification.save();
     //await transporter.sendMail(mailOptions);
@@ -581,13 +581,16 @@ app.get("/profile", (req, res)=>{
     res.render("profile.ejs", {user :currUser})
 })
 
+app.get('/logout', function (req, res){
+  req.session.destroy(function (err) {
+    res.redirect('/'); //Inside a callback… bulletproof!
+  });
+});
 
 app.get("/collab", (req, res)=>{
     res.render("collab.ejs");
 })
-app.get("/edit", (req, res)=>{
-    res.render("edit.ejs", {user : currUer});
-})
+
 
 app.get('/orgRegister', (req, res)=>{
     res.render('orgRegister.ejs', {isDuplicateEmail : false})
