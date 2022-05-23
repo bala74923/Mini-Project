@@ -303,15 +303,18 @@ app.get('/events', checkAuthenticated,(req, res)=>{
 //     }
 //     //console.log(users)
 // })
-function isNotVerifiedFromSameOrganisation(adminEmail,orgObj){
-    let adminDom = adminEmail.split('@');
+function isNotVerifiedFromSameOrganisation(admin,orgObj){
+    let adminDom = admin.email.split('@');
+    if(admin.profType=='Organisation' && admin.domain==orgObj.domain){
+        return false;
+    }
     return adminDom[1]!=orgObj.domain;
 }
 
 app.post('/events', checkAuthenticated, async(req, res)=>{
     try{
         let givenOrg = await Student.findOne({name:req.body.orgName,profType:"Organisation"});
-        if(isNotVerifiedFromSameOrganisation(currUser.email,givenOrg)){
+        if(isNotVerifiedFromSameOrganisation(currUser,givenOrg)){
             throw "not from same orgainsation";
         }
         let orgDom = givenOrg.domain;
@@ -410,25 +413,7 @@ let transporter = nodemailer.createTransport({
 
 });
 
-function sendMailUntilSuccess(mailOptions){
-    let flag = false;
-    transporter.sendMail(mailOptions, async function(error, info){
-        if (error) {
-        try{
-           // await Student.findOneAndDelete({id:student.id}); 
-            console.log(student.name+" is deleted successfully");
-        }catch(err){
-            console.log("cannot delete"+student.name);
-            console.log(err);
-        }
-          console.log(error +" is while transporting");
-        } else {
-          console.log('Email sent: ' + info.response);
-          flag = true;
-        }
-      });
-      return flag;
-}
+
 
 // sending otp
 const sendOTPVerfificationEmail = async(student,res)=>{
@@ -467,13 +452,35 @@ const sendOTPVerfificationEmail = async(student,res)=>{
     // while(sendMailUntilSuccess(mailOptions)==false){
     //     console.log("worked multiple times to send mail");
     // }
-    sendMailUntilSuccess(mailOptions);
+    transporter.sendMail(mailOptions, async function(error, info){
+        if (error) {
+        try{
+           // await Student.findOneAndDelete({id:student.id}); 
+            console.log(student.name+" is deleted successfully");
+            
+            
+        }catch(err){
+            console.log("cannot delete"+student.name);
+            console.log(err);
+        }
+          currentlyRegisteredUser = null;
+          
+          console.log(error +" is while transporting");
+          res.render('register.ejs',{isDuplicateEmail:false})
+        } else {
+          console.log('Email sent: ' + info.response);
+          flag = true;
+        }
+      });
       
 
     }catch(error){
         console.log(error);
         //Student.deleteOne({id:student.id});
-        console.log("some error otp cannot send")    
+        console.log("some error otp cannot send")   
+        console.log(error +" is while transporting"); 
+        res.render('register.ejs',{isDuplicateEmail:false})
+        
     }
 }
 
