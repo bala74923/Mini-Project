@@ -1,40 +1,53 @@
-<link rel="stylesheet" href="/style">
-<!-- <% for(let i=0; i < pasteventdetails.length; i++) { %>
-    <h3>Event <%= i+1%> </h3>
-    <ul><%= pasteventdetails[i].id %></ul>
-    <ul><%= pasteventdetails[i].title %></ul>
-    <ul><%= pasteventdetails[i].linkToEvent %></ul> 
-<% } %> -->
-<header>
-    <nav class="logo-title">
-        <a href="/">
-            <img src="/image" alt="logo" class="logo">
-            <h1 id="page-title">AcTrak</h1>
-        </a>
-    </nav>
-</header>   
-<hr>
-<h1>Past Events</h1>
-<% for(let i=0; i < pasteventdetails.length; i++) { %>
-    <h3 class="centerLink">Event <%= i+1%> </h3>
-    <div class="event-box", id="customers">
-        <table>
-            <tr>
-                <th>title</th>
-                <th><%=pasteventdetails[i]["_doc"]["title"]%> </th>
-            </tr>
-            <% for (const det in pasteventdetails[i]["_doc"]) {%>  
-                <%if(det!="__v" & det!="_id" & det!="title"){%> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style">
+    <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;"/>
+    <title>Past Event List</title>
+</head>
+<body>
+    <!-- NavBarStart -->
+    <header>
+        <nav class="navContainer">
+            <nav class="logo-title">
+                <a href="/">
+                    <img src="/image" alt="logo" class="logo" />
+                    <h1 id="page-title">AcTrak</h1>
+                </a>
+            </nav>
+            <a href="/main"><i class="bi bi-house-door-fill"></i>Home</a>
+        </nav>
+      </header>
+    <!-- NavBarEnd -->  
+    <hr>
+    <h1>Past Events</h1>
+    <% for(let i=0; i < pasteventdetails.length; i++) { %>
+        <h3 class="centerLink">Event <%= i+1%> </h3>
+        <div class="event-box", id="customers">
+            <table>
                 <tr>
-                    <td id="event-details-attributes"><%=det%> </td>
-                    <td> <%=pasteventdetails[i]["_doc"][det]%> </td>
+                    <th>title</th>
+                    <th><%=pasteventdetails[i]["_doc"]["title"]%> </th>
                 </tr>
+                <% for (const det in pasteventdetails[i]["_doc"]) {%>  
+                    <%if(det!="__v" & det!="_id" & det!="title"){%> 
+                    <tr>
+                        <td id="event-details-attributes"><%=det%> </td>
+                        <td> <%=pasteventdetails[i]["_doc"][det]%> </td>
+                    </tr>
+                    <%}%>
                 <%}%>
-            <%}%>
-        </table>
-        <hr>
-    </div>
-<% } %>
-<%if(pasteventdetails.length==0){%>
-    <h1>No past events found</h1>
-<% } %>
+            </table>
+            <hr>
+        </div>
+    <% } %>
+    <%if(pasteventdetails.length==0){%>
+        <h1>No past events found</h1>
+    <% } %>
+</body>
+</html>
+
+
