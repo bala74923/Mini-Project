@@ -117,10 +117,7 @@ app.post('/login', checkNotAuthenticated,passport.authenticate('local',
         failureFlash : true
     }
 ))
-app.get("/logout",(req,res)=>{
-    req.logout();
-    res.redirect("/");
-});
+
 
 app.get('/register', checkNotAuthenticated,(req, res)=>{
     res.render('register.ejs',{isDuplicateEmail:false})
@@ -565,10 +562,6 @@ app.post('/changeName',async(req,res)=>{
 })
 
 
-app.get('/logout', (req, res) => {
-    res.clearCookie('nToken');
-    return res.redirect('/');
-});
 
 
 app.get("/main", (req, res)=>{
