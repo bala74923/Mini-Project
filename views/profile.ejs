@@ -15,14 +15,35 @@
                 <h1 id="page-title">AcTrak</h1>
             </a>
         </nav>
+        <a href="/main">Home</a>
     </header>
     <div class="profileDetails">
         <h3 class="profDet">Profile</h3>
-        <h4 class="profDet"><inline class="profAtr">Name : </inline> <%=user["name"]%></h4>
+        <h4 class="profDet" style="display: inline;"><inline class="profAtr" >Name : </inline > <inline id="userName"><%=user["name"]%> </inline> </h4>
+        <div id="changeNameBox">Hello</div>
+        <button onclick="openInputBox()">Change Name</button>
+        
+        
+
         <h4 class="profDet"><inline class="profAtr">College :</inline> <%=user["college"]%></h4>
         <h4 class="profDet"><inline class="profAtr">email :</inline> <%=user["email"]%></h4>
         <h4 class="profDet"><inline class="profAtr">Profession Type : </inline>  <%=user["profType"]%></h4>
     </div>
     <a href="/edit">Edit Profile</a>
 </body>
+<script>
+    const openInputBox = ()=>{
+        document.getElementById("changeNameBox").innerHTML='<input type="text"><button onclick="changeName()">Submit</button>';
+    }
+    const changeName=()=>{
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            document.getElementById("userName").innerText =this.responseText;
+        }
+        let oldName = document.getElementById('userName'), newName;
+    
+        xhttp.open("GET", "server.js?uname=oldName&newName=newName");
+        xhttp.send();
+    }
+</script>
 </html>

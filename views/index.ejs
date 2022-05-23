@@ -1,40 +1,53 @@
-<link rel="stylesheet" href="/style">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style">
 
-<style>
-    *{
-        background-color:white;
-    }
-</style>
-
+    <title>Index</title>
+</head>
 <body>
+    <!-- NavBar End -->
     <header>
-        <nav class="logo-title">
-            <a href="/">
-                <img src="/image" alt="logo" class="logo">
-                <h1 id="page-title">AcTrak</h1>
-            </a>
+        <nav class="navContainer">
+            <nav class="logo-title">
+                <a href="/">
+                    <img src="/image" alt="logo" class="logo" />
+                    <h1 id="page-title">AcTrak</h1>
+                </a>
+                
+            </nav>
+            <a href="/main"><i class="bi bi-house-door-fill"></i>Home</a>
         </nav>
+        <a class="logout-btn" href="/logout">Log Out<i class="bi bi-arrow-bar-right"></i></a>
     </header>
+    <!-- NavBar End -->
+
+    <h1 style="margin:2rem">Hi <inline style="color:rgb(43, 74, 177); text-transform: capitalize;"><%= user.name %></inline>,You are <inline style="color:rgb(43, 74, 177)"><%= user.profType %></inline></h1>
+    <%if(user.profType=="Student"){%>
+        <h2>Find the right place to showcase your skill</h2>
+    <%}%>
+
     <div class="indexBtns">
-        <h1>Hi <%= user.name %>,You are an <%= user.profType%></h1>
-        <%if(user.profType=="Student"){%>
-            <h2>Find the right place to showcase your skill</h2>
-        <%}%>
         
         <%if(user.profType!="Student"){%>
-            <button class="indexBtn"><a href="/events">Create Event</a></button>
+            <a class="indexBtn" href="/events">Create Event</a>
         <%}%>
-        <button class="indexBtn"><a href="/eventlist">Upcoming Events</a></button>
-        <button class="indexBtn"><a href="/ongoingeventlist">Ongoing Events</a></button>
-        <button class="indexBtn"><a href="/pasteventlist">Past Events</a></button>
-        <button class="indexBtn"><a href="/profile">Profile</a></button>
+        
+        <a class="indexBtn" href="/eventlist">Upcoming Events<i class="bi bi-calendar-week"></i></a>
+        <a class="indexBtn" href="/ongoingeventlist">Ongoing Events<i class="bi bi-broadcast"></i></a>
+        <a class="indexBtn" href="/pasteventlist">Past Events<i class="bi bi-calendar-x"></i></a>
+        <a class="indexBtn" href="/profile">Profile<i class="bi bi-person-circle"></i></a>
 
         <%if(user.profType=="Organisation"){%>
-            <button class="indexBtn"><a href="/manageAdmin">Admin Management</a></button>
+            <a class="indexBtn" href="/manageAdmin">Admin Management</a>
         <%}%>
 
-        <button class="indexBtn logout-btn"><a href="/logout">Log Out</a></button>
+
     </div>
-    
 </body>
+</html>
+
 

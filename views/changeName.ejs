@@ -5,15 +5,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;"/>
-  <title>Add Admin</title>
+  <title>Edit name</title>
 </head>
 <body>
   <div class="login-box">
     <h1 class="login-title">Enter mail to add</h1>
-    <form action="/addAdmin" method="POST" class="event-form">
-      <!-- Email to add admin -->
-      <label for="title">Enter email</label>
-      <input type="email" id="email" name="email" required />
+    <form action="/changeName" method="POST" class="event-form">
+        <!-- email to edit name -->
+        <label for="email">Enter your email</label>
+        <input type="email" id="email" name="email" required />
+        <br /><br />
+
+      <!-- name to edit name -->
+      <label for="name">Enter New Name</label>
+      <input type="text" id="name" name="name" required />
       <br /><br />
 
       <!-- submit -->

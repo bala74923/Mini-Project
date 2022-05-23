@@ -6,23 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style">
+    <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;"/>
+
     <title>AcTrak</title>
     
 </head>
 <body>
     <header>
-        <nav class="logo-title">
-            <a href="/">
-                <img src="/image" alt="logo" class="logo">
-                <h1 id="page-title">AcTrak</h1>
-            </a>
+        <nav class="navContainer">
+            <nav class="logo-title">
+                <a href="/">
+                    <img src="/image" alt="logo" class="logo" />
+                    <h1 id="page-title">AcTrak</h1>
+                </a>
+                
+            </nav>
+            <a href="/main"><i class="bi bi-house-door-fill"></i>Home</a>
         </nav>
     </header>
     <div class="login-box">
-        <h1 class="login-title">Student/Faculty Login</h1>
+        <h1 class="login-title">Student / Teacher / Organisation <br>Login</h1>
         <% if (messages.error) { %>
             <h4 style="color: red; margin : 1rem;"><%= messages.error %></h4>
-          <% } %>
+        <% } %>
         <form action="/login" method="POST" class="login-form">
             <label for="email">email:</label><br>
             <input type="text" id="email" name="email" required>

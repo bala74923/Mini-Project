@@ -31,7 +31,7 @@ const express = require('express');
 const app = express();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const { redirect } = require('express/lib/response');
+const { redirect, append } = require('express/lib/response');
 const flash = require('express-flash')
 const session = require('express-session')
 const schedule = require('node-schedule')
@@ -503,10 +503,29 @@ app.get('/showAdmin',async(req,res)=>{
     }
 })
 
+app.get('/changeName',(req,res)=>{
+    res.render('changeName.ejs')
+})
+
+app.post('/changeName',async(req,res)=>{
+    try{
+        let newName = req.body.name;
+        let bodyEmail = req.body.email;
+        await Student.findOneAndUpdate({email:bodyEmail},{name:newName});
+        currUser.name = newName
+        res.render('profile.ejs',{user :currUser})
+    }catch(err){
+        console.log("cannot update to new name")
+        console.log(err)
+        res.render('changeName.ejs')
+    }
+})
+
+
 app.get('/logout', (req, res) => {
     res.clearCookie('nToken');
     return res.redirect('/');
-  });
+});
 
 
 app.get("/main", (req, res)=>{
@@ -567,6 +586,11 @@ app.post('/orgRegister',checkNotAuthenticated, async (req, res)=>{
     }
     //console.log(users)
 })
+app.get('/server.js', (req, res)=>{
+    let name = req.query.uname, newName = req.query.newName;
+    res.send(newName);
+})
+
 app.get('/manageAdmin', (req, res)=>{
     res.render('manageAdmin.ejs');
 })
