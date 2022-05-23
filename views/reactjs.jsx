@@ -100,3 +100,11 @@ function hello{
                     <option value="University">University</option>
                     <option value="Company">Company</option>
             </select>
+
+
+            option value="none" selected disabled hidden>Select the WorkPlace</option>
+                    <option value="College">College</option>
+                    <option value="University">University</option>
+                    <option value="Company">Company</option>
+            </select>
+
