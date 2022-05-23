@@ -141,7 +141,10 @@ app.post('/register',checkNotAuthenticated, async (req, res)=>{
         console.log(myobj)
         currentlyRegisteredUser = myobj;
         const student = new Student(myobj)
-        await student.save();
+        //await student.save();
+        if( await Student.findOne({email:myobj.email})){
+            throw err;
+        }
         currentlyRegisteredUser = myobj;
         sendOTPVerfificationEmail(currentlyRegisteredUser)
         res.render('verifyMail.ejs',{isfalse:false})
@@ -176,8 +179,11 @@ app.get('/eventlist', function(req, res) {
     // });
     
     Eventinfo.find({}, function(err, eventdetails) {
-
-        res.render('eventlist.ejs', {eventdetails:eventdetails,currDomain:currUser.Domain})
+        let  currUserDom = getDomainFromEmail(currUser.email)
+        if(currUser.profType=='Organisation'){
+            currUserDom = currUser.domain;
+        }
+        res.render('eventlist.ejs', {eventdetails:eventdetails,currDomain:currUserDom})
         //console.log("sending the page");
         // for(const i in eventdetails[0]){
         //     console.log(i)
@@ -226,7 +232,7 @@ app.post('/verifyMail',async (req,res)=>{
                     await UserOTPVerification.deleteMany({userId:currentlyRegisteredUser.id});
                     // erase registered mail from db
                     console.log("expired");
-                    Student.find({ id:currentlyRegisteredUser.id }).remove().exec();
+                    //Student.find({ id:currentlyRegisteredUser.id }).remove().exec();
                 } else {
                         const validOTP = await bcrypt.compare(gotOtp,hashedOTP);
                         if(!validOTP) {
@@ -243,6 +249,7 @@ app.post('/verifyMail',async (req,res)=>{
                             //     status:"VERIFIED"
                             //     message:"User email verified"
                             // });
+                            await new Student(currentlyRegisteredUser).save();
                             console.log("email verified successfully");
                             res.redirect('/login')
                         }
@@ -388,6 +395,10 @@ function split_dates(obj,p) {
     }
     return parts
 }
+function getDomainFromEmail(email){
+    let sobj = email.split("@")
+    return sobj[1];
+}
 
 // node mailer transporter creation
 let transporter = nodemailer.createTransport({
@@ -399,6 +410,25 @@ let transporter = nodemailer.createTransport({
 
 });
 
+function sendMailUntilSuccess(mailOptions){
+    let flag = false;
+    transporter.sendMail(mailOptions, async function(error, info){
+        if (error) {
+        try{
+           // await Student.findOneAndDelete({id:student.id}); 
+            console.log(student.name+" is deleted successfully");
+        }catch(err){
+            console.log("cannot delete"+student.name);
+            console.log(err);
+        }
+          console.log(error +" is while transporting");
+        } else {
+          console.log('Email sent: ' + info.response);
+          flag = true;
+        }
+      });
+      return flag;
+}
 
 // sending otp
 const sendOTPVerfificationEmail = async(student,res)=>{
@@ -434,25 +464,15 @@ const sendOTPVerfificationEmail = async(student,res)=>{
 
     await newOTPVerification.save();
     //await transporter.sendMail(mailOptions);
-     transporter.sendMail(mailOptions, async function(error, info){
-        if (error) {
-        try{
-            await Student.findOneAndDelete({id:student.id}); 
-            console.log(student.name+" is deleted successfully");
-        }catch(err){
-            console.log("cannot delete"+student.name);
-            console.log(err);
-        }
-          console.log(error +" is while transporting");
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
+    // while(sendMailUntilSuccess(mailOptions)==false){
+    //     console.log("worked multiple times to send mail");
+    // }
+    sendMailUntilSuccess(mailOptions)
       
 
     }catch(error){
         console.log(error);
-        Student.deleteOne({id:student.id});
+        //Student.deleteOne({id:student.id});
         console.log("some error otp cannot send")    
     }
 }
