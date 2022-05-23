@@ -374,3 +374,10 @@ function hello{
 // foqwfoiqwfoweokvnoknewvb
 // fwokpeqmfinewgvine
 // mfvwokpemvinw90vmfokwqm-fjq2
+
+            option value="none" selected disabled hidden>Select the WorkPlace</option>
+                    <option value="College">College</option>
+                    <option value="University">University</option>
+                    <option value="Company">Company</option>
+            </select>
+
