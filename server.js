@@ -143,7 +143,7 @@ app.post('/register',checkNotAuthenticated, async (req, res)=>{
             throw err;
         }
         currentlyRegisteredUser = myobj;
-        sendOTPVerfificationEmail(currentlyRegisteredUser)
+        sendOTPVerificationEmail(currentlyRegisteredUser)
         res.render('verifyMail.ejs',{isfalse:false})
         //res.redirect('/login')
     }catch(err){
@@ -170,37 +170,61 @@ function checkNotAuthenticated(req, res, next){
 
 
 
-app.get('/eventlist', function(req, res) {
+app.get('/eventlist', async function(req, res) {
     // User.find({}, function(err, users) {
     //    res.render('/usersList', {users: users});
     // });
-    
-    Eventinfo.find({}, function(err, eventdetails) {
-        let  currUserDom = getDomainFromEmail(currUser.email)
-        if(currUser.profType=='Organisation'){
-            currUserDom = currUser.domain;
-        }
-        res.render('eventlist.ejs', {eventdetails:eventdetails,currDomain:currUserDom})
-        //console.log("sending the page");
-        // for(const i in eventdetails[0]){
-        //     console.log(i)
-        // }
-        // console.log(eventdetails)
-     });
+    let eventList = await Eventinfo.find({});
+    console.log(eventList)
+    let eventdetails = []
+    eventList.forEach((event,ind,arr)=>{
+        if(event.eventJoinType=='outside' || event.organisationDomain==getDomainFromEmail(currUser.email)) {
+            eventdetails.push(event)
+        } 
+        
+    })
+    // let  currUserDom = getDomainFromEmail(currUser.email)
+    //     if(currUser.profType=='Organisation'){
+    //         currUserDom = currUser.domain;
+    //     }
+        res.render('eventlist.ejs', {eventdetails:eventdetails});
 });
 
-app.get('/pasteventlist', function(req, res) {
+app.get('/pasteventlist', async function(req, res) {
     
-    PastEventinfo.find({}, function(err, pasteventdetails) {
-        res.render('pasteventlist.ejs', {pasteventdetails:pasteventdetails});
-     });
+    // PastEventinfo.find({}, function(err, pasteventdetails) {
+    //     res.render('pasteventlist.ejs', {pasteventdetails:pasteventdetails});
+    //  });
+
+     let eventList = await PastEventinfo.find({});
+     console.log(eventList)
+     let pasteventdetails = []
+     eventList.forEach((event,ind,arr)=>{
+         if(event.eventJoinType=='outside' || event.organisationDomain==getDomainFromEmail(currUser.email)) {
+            pasteventdetails.push(event)
+         } 
+         
+     })
+     res.render('pasteventlist.ejs', {pasteventdetails:pasteventdetails});
 });
 
-app.get('/ongoingeventlist', function(req, res) {
+app.get('/ongoingeventlist', async function(req, res) {
     
-    OngoingEventinfo.find({}, function(err, ongoingeventdetails) {
-        res.render('ongoingeventlist.ejs', {ongoingeventdetails:ongoingeventdetails});
-     });
+    // OngoingEventinfo.find({}, function(err, ongoingeventdetails) {
+    //     res.render('ongoingeventlist.ejs', {ongoingeventdetails:ongoingeventdetails});
+    //  });
+
+     let eventList = await OngoingEventinfo.find({});
+    console.log(eventList)
+    let ongoingeventdetails = []
+    eventList.forEach((event,ind,arr)=>{
+        if(event.eventJoinType=='outside' || event.organisationDomain==getDomainFromEmail(currUser.email)) {
+            ongoingeventdetails.push(event)
+        } 
+        
+    })
+    res.render('ongoingeventlist.ejs', {ongoingeventdetails:ongoingeventdetails});
+
 });
 
 
@@ -413,11 +437,11 @@ let transporter = nodemailer.createTransport({
 
 
 // sending otp
-const sendOTPVerfificationEmail = async(student,res)=>{
+const sendOTPVerificationEmail = async(student,res)=>{
     try{
         var digits = '0123456789';
         var OTP = '';
-        for (let i = 0; i < 4; i++ ) {
+        for (let i = 0; i < 6; i++ ) {
              OTP += digits[Math.floor(Math.random() * 10)];
         }
         const otp = OTP;
@@ -614,7 +638,7 @@ app.post('/orgRegister',checkNotAuthenticated, async (req, res)=>{
         const student = new Student(orgObj);
         await student.save();
         //currentlyRegisteredUser = orgObj;
-        //sendOTPVerfificationEmail(currentlyRegisteredUser)
+        //sendOTPVerificationEmail(currentlyRegisteredUser)
         //res.render('verifyMail.ejs',{isfalse:false})
         res.redirect('/login');
     }catch(err){

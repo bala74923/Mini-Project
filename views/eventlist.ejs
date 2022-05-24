@@ -82,19 +82,14 @@
         </h3>
         <div class="event-box" , id="customers">
             <table>
-                <%if((eventdetails[i]["_doc"]["eventJoinType"]=="outside")||(eventdetails[i]["_doc"]["organisationDomain"]==
-                    currDomain)){%>
                     <tr>
                         <th>title</th>
                         <th>
                             <%=eventdetails[i]["_doc"]["title"]%>
                         </th>
                     </tr>
-                    <%}%>
                         <% for (const det in eventdetails[i]["_doc"]) {%>
                             <%if(det!="__v" & det!="_id" & det!="title" ){%>
-                                <%if((eventdetails[i]["_doc"]["eventJoinType"]=="outside")||(eventdetails[i]["_doc"]["organisationDomain"]==
-                                    currDomain)){%>
                                     <tr>
                                         <td id="event-details-attributes">
                                             <%=det%>
@@ -103,9 +98,8 @@
                                             <%=eventdetails[i]["_doc"][det]%>
                                         </td>
                                     </tr>
-                                    <%}%>
-                                        <%}%>
-                                            <%}%>
+                            <%}%>
+                        <%}%>
             </table>
             <hr>
         </div>
