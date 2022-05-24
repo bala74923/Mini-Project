@@ -647,15 +647,7 @@ app.get("/regImg", (req, res)=>{
 })
 
 // Bootstrap
-app.get("/bootstrapCss", (req, res)=>{
-    res.sendFile(__dirname+"/views/css/bootstrap.css")
-})
-app.get("/bootstrapJquery", (req, res)=>{
-    res.sendFile(__dirname+"/views/js/jquery.js")
-})
-app.get("/bootstrapMin", (req, res)=>{
-    res.sendFile(__dirname+"/views/js/bootstrap.min.js")
-})
+
 
 // 404 Page Not Found
 app.get("/pageNotFound", (req, res)=>{
