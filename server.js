@@ -573,9 +573,7 @@ app.get("/style", (req, res)=>{
 })
 
 
-app.get("/image", (req, res)=>{
-    res.sendFile(__dirname+"/views/Assets/logo.png")
-})
+
 
 app.get("/profile", (req, res)=>{
     res.render("profile.ejs", {user :currUser})
@@ -626,8 +624,10 @@ app.post('/orgRegister',checkNotAuthenticated, async (req, res)=>{
     //console.log(users)
 })
 app.get('/server.js', (req, res)=>{
-    let name = req.query.uname, newName = req.query.newName;
-    res.send(newName);
+
+    console.log("Old UserName "+req.query.oldName)
+    console.log("New UserName "+req.query.newName)
+    res.send(req.query.newName)
 })
 
 app.get('/manageAdmin', (req, res)=>{
@@ -636,6 +636,27 @@ app.get('/manageAdmin', (req, res)=>{
 app.get('/reactjs', (req, res)=>{
     res.sendFile(__dirname+'/views/reactjs.jsx');
 })
+
+// Images Get
+app.get("/image", (req, res)=>{
+    res.sendFile(__dirname+"/views/Assets/logo.png")
+})
+
+app.get("/regImg", (req, res)=>{
+    res.sendFile(__dirname+"/views/Assets/regImg.png")
+})
+
+// Bootstrap
+app.get("/bootstrapCss", (req, res)=>{
+    res.sendFile(__dirname+"/views/css/bootstrap.css")
+})
+app.get("/bootstrapJquery", (req, res)=>{
+    res.sendFile(__dirname+"/views/js/jquery.js")
+})
+app.get("/bootstrapMin", (req, res)=>{
+    res.sendFile(__dirname+"/views/js/bootstrap.min.js")
+})
+
 // 404 Page Not Found
 app.get("/pageNotFound", (req, res)=>{
     res.render('pageNotFound.ejs');

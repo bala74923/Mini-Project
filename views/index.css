@@ -1,8 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&display=swap');
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
-
+/* =================================================================
+                Root 
+====================================================================*/
 :root {
-    --primaryTheme: #EFF6FB
+    --primaryTheme: #EFF6FB;
+    --bg-color0:#e6eafe;
+    --bg-color1:#ccd5ff;
+    --bg-color2:#99acff;
+    --bg-color3:#6682ff;
+    --bg-color4:#3358ff;
+    --bg-color5:#002fff;
+
+    /* Shadow color */
+    --shadow-color0:rgba(38, 38, 115, 0.3);
+    --shadow-color1:rgba(223, 223, 231, 0.859);
 }
 
 
@@ -11,6 +23,7 @@
     padding: 0px 5px;
     margin: 0px;
     background-color: var(--primaryTheme);
+    margin: 1px;
 }
 
 body {
@@ -19,28 +32,41 @@ body {
     text-align: center;
 }
 
-.logo {
-    width: 100px;
-}
-
+/* =================================================================
+                Header 
+====================================================================*/
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* =================================================================
+                Links 
+====================================================================*/
+a {
+    text-decoration: none;
+}
+.logo {
+    width: 100px;
+}
+
 .nav-links {
     display: flex;
 }
 
+
+/* =================================================================
+                List 
+====================================================================*/
 .list li {
     list-style: none;
     display: inline-block;
 }
 
-a {
-    text-decoration: none;
-}
+/* =================================================================
+                Nav Bar 
+====================================================================*/
 
 .logo-title {
     display: flex;
@@ -101,7 +127,9 @@ a {
     text-align: center;
     color: #000000;
 }
-
+/* =================================================================
+                Form 
+====================================================================*/
 .login-form,
 .event-form {
     margin: 2rem;
@@ -109,6 +137,7 @@ a {
     flex-direction: column;
     align-items: center;
     padding: 0px;
+    background-color: transparent;
 }
 
 .submit-btn {
@@ -122,6 +151,7 @@ a {
     border-radius: 8px;
     color: white;
     transition: background 0.5s, padding 0.5s, color 0.5s;
+    
 }
 
 .submit-btn:hover {
@@ -338,12 +368,14 @@ a {
 
 @keyframes demoAni {
     0% {
+        visibility: hidden;
         color: var(--primaryTheme);
         left: 0px;
         top: 0px;
     }
 
     100% {
+        visibility: visible;
         color: black;
         left: 0px;
         top: 0px;
@@ -363,3 +395,103 @@ a {
     display: flex;
     flex-direction: row-reverse;
 }
+
+input{
+    width: 30%;
+    height: 2rem;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: transparent;
+    width: 400px;
+}
+
+.registerBox{
+    float: left;
+    background-color: var(--bg-color0);
+    margin:2rem;
+    padding: 5rem;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    box-shadow: 0px 0px 5px 5px var(--shadow-color0);
+}
+label, h1,h2, h3,h4, h5, h6{
+    background-color: transparent;
+}
+
+.registerImage{
+    vertical-align: baseline;
+    align-items: center;
+    justify-content: center;
+}
+.outerRegisterBox{
+    display: flex;
+    flex-direction: row;
+    flex: 50%;
+}
+
+#regImg{
+    width: 400px;
+    height: 400px;
+    margin: 10rem 5rem 10rem 5rem;
+    align-items: center;
+    overflow: auto;
+    animation-name: demoAni;
+    animation-duration: 4s;
+}
+
+input:hover{
+    box-shadow: 0 0 2px 2px var(--shadow-color0);
+}
+
+.fliterBox{
+    display: flex;
+    flex-direction: row;
+    column-gap: 3rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+.filterOption{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    width: 20%;
+}
+
+.filter-btn{
+    align-items: center;
+    justify-content: center;
+    background-color: #04AA6D;
+    padding: 1rem;
+    margin: 0.5rem;
+    color: white;
+    border: 1px solid darkgreen;
+    border-radius: 1rem;
+}
+
+.filter-btn:hover{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+select{
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    overflow:auto;
+}
+select:hover{
+    /* box-shadow: 0px 0px 5px 5px var(--shadow-color1); */
+    filter: drop-shadow(0px 0px 10px rgb(158, 156, 156));
+}
+
+label{
+    color: #002fff;
+}
+

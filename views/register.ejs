@@ -21,31 +21,38 @@
             </nav>
             <a href="/main"><i class="bi bi-house-door-fill"></i>Home</a>
         </nav>
-      </header>
+    </header>
     <!-- NavBarEnd -->
-    <h1 class="login-title">Register</h1>
-    <link rel="stylesheet" href="/style">
-    <% if (isDuplicateEmail) { %>
-        <h4 style="color: red; margin : 1rem;">Email already taken</h4>
-        <% } %>
+    <div class="outerRegisterBox">
+        <div class="registerBox">
+            <h1 class="login-title">Register</h1>
+            <link rel="stylesheet" href="/style">
+            <% if (isDuplicateEmail) { %>
+                <h4 style="color: red; margin : 1rem;">Email already taken</h4>
+            <% } %>
             <form action="/register" method="POST" class="login-form">
-
+    
                 <label for="name">Name</label>
                 <input type="text" name="name" id="name" required>
-
+    
                 <label for="email">Email</label>
                 <input type="email" name="email" id="email" required>
-
+    
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required>
-
-
+    
+    
                 <label for="college">College/University</label>
                 <input type="text" name="college" id="college" required>
-
+    
                 <button type="submit" class="submit-btn">Submit</button>
             </form>
             <a class="centerLink" href="/login">Login</a>
+        </div>
+        <div class="registerImage">
+            <img id="regImg" src="/regImg" alt="" srcset="">
+        </div>
+    </div>
 </body>
 
 </html>

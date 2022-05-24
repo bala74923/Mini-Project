@@ -25,8 +25,9 @@
     <!-- NavBarEnd -->
     <div class="profileDetails">
         <h3 class="profDet">Profile</h3>
+
         <h4 class="profDet" style="display: inline;"><inline class="profAtr" >Name : </inline > <inline id="userName"><%=user["name"]%> </inline> </h4>
-        <div id="changeNameBox">Hello</div>
+        <div id="changeNameBox"></div>
         <button onclick="openInputBox()">Change Name</button>
         
         
@@ -39,16 +40,17 @@
 </body>
 <script>
     const openInputBox = ()=>{
-        document.getElementById("changeNameBox").innerHTML='<input type="text"><button onclick="changeName()">Submit</button>';
+        document.getElementById("changeNameBox").innerHTML='<input id="newName" type="text"><button onclick="changeName()">Submit</button>';
     }
     const changeName=()=>{
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
             document.getElementById("userName").innerText =this.responseText;
         }
-        let oldName = document.getElementById('userName'), newName;
+        let oldName = document.getElementById('userName').innerText;
+        let newName = document.getElementById('newName').innerText;
     
-        xhttp.open("GET", "server.js?uname=oldName&newName=newName");
+        xhttp.open("GET", `server.js?oldName=${oldName}&newName=${newName}`);
         xhttp.send();
     }
 </script>
