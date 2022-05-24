@@ -28,7 +28,11 @@
         <form action="/events" method="POST" class="event-form"> 
             <!-- Organisation name -->
             <label for="orgName">Your Organisation Name</label>
-            <input type="text" id="orgName" name="orgName" required>
+            <select name="orgName" id="orgName">
+                <option value="SECE">Sri Eshwar College of Engineering</option>
+                <option value="Coimbatore Institute Of Technology">Coimbatore Institute Of Technology</option>
+                <option value="Anna University">Anna University</option>
+            </select>
             <br><br>
 
             <!-- Title -->
@@ -74,13 +78,20 @@
 
             <!-- Related Fields -->
             <label for="fields">Choose the Fields:</label>
-            <select name="fields" id="fields">
+            <select name="fields" id="fields" >
                 <option value="BlockChain">BlockChain</option>
                 <option value="WebDevelopment">WebDevelopment</option>
                 <option value="AppDevelopment">AppDevelopment</option>
                 <option value="MachineLearning">MachineLearning</option>
             </select>
             <br><br>
+
+            <label for="eventType">Choose the Type of the Event:</label>
+                <select name="eventType" id="eventType">
+                <option value="Technical">Technical</option>
+                <option value="Culturals">Culturals</option>
+                <option value="Health">Health</option>
+            </select>
 
             <!-- Related Fields -->
             <label for="eventJoinType">Choose the Event Joining Type:</label>
