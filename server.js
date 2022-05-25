@@ -472,10 +472,11 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
             }
         })
 
-    }catch{
-        res.redirect('/events')
+    }catch(err){
+        console.log(err);
+        return res.redirect('/events')
     }
-    res.redirect('/')
+    return res.redirect('/')
 })
 function split_dates(obj,p) {
     let parts = obj.toString().split(p)
@@ -676,8 +677,9 @@ app.get("/style", (req, res)=>{
     res.sendFile(__dirname+"/views/index.css")
 })
 
-
-
+app.get("/postStyle", (req, res)=>{
+    res.sendFile(__dirname+"/views/postStyle.css")
+})
 
 app.get("/profile", (req, res)=>{
     res.render("profile.ejs", {user :currUser})
