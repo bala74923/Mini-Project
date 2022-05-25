@@ -166,7 +166,30 @@ function checkNotAuthenticated(req, res, next){
     return next()
 }
 
+app.get('/test',(req,res)=>{
+    res.render('test.ejs');
+})
+app.post('/test',(req,res)=>{
+    res.render('test.ejs')
+})
+app.get('/getDomain',async (req,res)=>{
+    try{
+        console.log("org name="+req.query.orgName)
+        let dom = await Student.find({name:req.query.orgName});
+        console.log(dom);
+        if(dom.length>0){
+            console.log(dom[0].domain);
+            if(dom[0].domain==getDomainFromEmail(currUser.email)){
+                res.send('true')
+            }
+            else res.send('false')
+        }
+       res.send('false')
+    }catch(err){
+        console.log(err);
+    }
 
+})
 
 app.get('/eventlist', async function(req, res) {
     // User.find({}, function(err, users) {
@@ -470,8 +493,10 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
             }
         })
 
-    }catch{
+    }catch(err){
+        console.log(err);
         res.redirect('/events')
+        return res.end();
     }
     res.redirect('/')
 })
