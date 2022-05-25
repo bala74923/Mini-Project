@@ -188,6 +188,62 @@ app.get('/eventlist', async function(req, res) {
         res.render('eventlist.ejs', {eventdetails:eventdetails});
 });
 
+function compareDateAndTime(date1,time1,date2,time2){
+    
+    split_dates(time1,":");
+    return getDateByPassingDateAndTime(split_dates(date1,"-"),split_dates(time1,":")).getTime()-getDateByPassingDateAndTime(split_dates(date2,"-"),split_dates(time2,":")).getTime();
+}
+function compareDuration(e1,e2) {
+    for(let i=0;i<3;i++){
+        if(e1[i]!=e2[i]){
+            return e1[i]-e2[i];
+        }
+    }
+    return 0;
+}
+
+app.post('/eventlist',async (req,res)=>{
+    let needObj = {
+        organisation : req.body.organisation,
+        fields: req.body.fields,
+        type: req.body.type,
+        sortBy: req.body.sortBy
+    }
+    let eventlist = await Eventinfo.find({});
+    let eventdetails = []
+    eventlist.forEach((event,ind,arr)=>{
+        if((needObj.organisation=='none'||needObj.organisation==event.organisation)
+            &&(needObj.fields=='none'||needObj.fields==event.fields) && 
+            (needObj.type=='none'||needObj.type==event.eventType))
+        {
+            eventdetails.push(event);
+        }
+    });
+    console.log(needObj);
+    if(needObj.sortBy!='none'){
+        console.log(eventdetails+"will be sorted")
+        eventdetails.sort((event1,event2)=>{
+            if(needObj.sortBy=='Date(Ascending)') {
+                console.log('ascending')
+                return compareDateAndTime(event1.date,event1.time,event2.date,event2.time);
+            }
+            else if(needObj.sortBy=='Date(Descending)') {
+                console.log('descending')
+                return compareDateAndTime(event2.date,event2.time,event1.date,event1.time);
+            }
+            else if(needObj.sortBy=='Duration(Ascending)') {
+                console.log('Duration ascending')
+                return compareDuration(event1.duration,event2.duration);
+            }
+            console.log('Duration Descending')
+            return compareDuration(event2.duration,event1.duration);
+        })
+    }
+
+    res.render('eventlist.ejs', {eventdetails:eventdetails});
+})
+
+
 app.get('/pasteventlist', async function(req, res) {
     
     // PastEventinfo.find({}, function(err, pasteventdetails) {
@@ -330,13 +386,25 @@ function isNotVerifiedFromSameOrganisation(admin,orgObj){
     return adminDom[1]!=orgObj.domain;
 }
 
+
+
 app.post('/events', checkAuthenticated, async(req, res)=>{
     try{
         let givenOrg = await Student.findOne({name:req.body.orgName,profType:"Organisation"});
         if(isNotVerifiedFromSameOrganisation(currUser,givenOrg)){
             throw "not from same orgainsation";
-        }
+        }   
         let orgDom = givenOrg.domain;
+
+
+        let p1 = split_dates(req.body.date,"-");//split_dates(req.body.edate,"-");
+        let p2 = split_dates(req.body.time,":");//split_dates(req.body.etime,":");
+        const when = getDateByPassingDateAndTime(p1,p2);
+        let ep1 = split_dates(req.body.edate,"-");
+        let ep2 = split_dates(req.body.etime,":");
+        const pastwhen = getDateByPassingDateAndTime(ep1,ep2);
+
+     
         const eventObj = {
             id : Date.now().toString(),
             organisation:req.body.orgName,
@@ -344,6 +412,8 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
             title : req.body.title,
             date  : req.body.date,
             time : req.body.time,
+            endDate:req.body.edate,
+            endTime:req.body.etime,
             linkToEvent : req.body.eventlink,
             description: req.body.description,
             fields : req.body.fields,
@@ -351,20 +421,16 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
             constraints : req.body.constraints,
             prizes : req.body.prizes,
             takeaways : req.body.takeaways,
-            sponsers : req.body.sponsers
+            sponsers : req.body.sponsers,
+            eventType: req.body.eventType,
+            duration: getDuration(when.getTime(),pastwhen.getTime())
         }
         if(eventObj.eventJoinType=="inside"){
             eventObj.organisationDomain = givenOrg.domain;
         }
         console.log(eventObj)
         //new Eventinfo(eventObj).save();
-        let p1 = split_dates(eventObj.date,"-");//split_dates(req.body.edate,"-");
-        let p2 = split_dates(eventObj.time,":");//split_dates(req.body.etime,":");
-        const when = new Date(p1[0],p1[1]-1,p1[2],p2[0],p2[1],0,0);
-
-        let ep1 = split_dates(req.body.edate,"-");
-        let ep2 = split_dates(req.body.etime,":");
-        const pastwhen = new Date(ep1[0],ep1[1]-1,ep1[2],ep2[0],ep2[1],0,0);
+        
 
         Eventinfo.create(eventObj, function(err, doc) {
             if (err) return console.error(err); // Handle the error
@@ -422,6 +488,21 @@ function getDomainFromEmail(email){
     let sobj = email.split("@")
     return sobj[1];
 }
+function getDuration(d1,d2){
+    let diff = Math.abs(d1-d2)
+    let val = []
+    val.push(float2int((diff/(1000 * 3600 * 24))))
+    val.push(float2int((diff/36e5)%24))
+    val.push(float2int((diff/60000)%60))
+    return val
+  }
+function float2int (value) {
+      return value | 0;
+}
+function getDateByPassingDateAndTime(date,time){
+    return new Date(date[0],date[1]-1,date[2],time[0],time[1],0,0);
+}
+
 
 // node mailer transporter creation
 let transporter = nodemailer.createTransport({
