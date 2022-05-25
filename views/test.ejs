@@ -12,7 +12,12 @@
         $(document).ready(function(){
           $("#orgName").click(function(){
               console.log(domainName);
-              
+              var dom = '<%= domain %>'
+            //   if(dom!=$(this).val()){
+            //       alert("you cannot create event with other organisation name");
+            //   }
+            $.get('getDomain')
+
           });
         });
         </script>

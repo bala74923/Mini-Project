@@ -166,7 +166,9 @@ function checkNotAuthenticated(req, res, next){
     return next()
 }
 
-
+app.get('/test',(req,res)=>{
+    res.render('test.ejs',{domain:getDomainFromEmail(currUser.email)});
+})
 
 app.get('/eventlist', async function(req, res) {
     // User.find({}, function(err, users) {
