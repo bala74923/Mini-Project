@@ -168,8 +168,6 @@ function checkNotAuthenticated(req, res, next){
 
 
 
-
-
 app.get('/eventlist', async function(req, res) {
     // User.find({}, function(err, users) {
     //    res.render('/usersList', {users: users});
@@ -180,7 +178,7 @@ app.get('/eventlist', async function(req, res) {
     eventList.forEach((event,ind,arr)=>{
         if(event.eventJoinType=='outside' || event.organisationDomain==getDomainFromEmail(currUser.email)) {
             eventdetails.push(event)
-        } 
+        }
         
     })
     // let  currUserDom = getDomainFromEmail(currUser.email)
@@ -434,18 +432,18 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
         
 
         Eventinfo.create(eventObj, function(err, doc) {
-        if (err) return console.error(err); // Handle the error
-        // // var when = new Date(now).setHours(now.getHours() + 1);
-        // schedule.scheduleJob(when, function() {
-        //     // This callback will fire in one hour
-        //     Eventinfo.find({ id:eventObj.id }).remove().exec();
-        // });
-        
-        console.log(when+" is the time the post will be go to ongoing")
-        schedule.scheduleJob(when, ()=> {
-            // This callback will fire in one hour
-            Eventinfo.find({ id:eventObj.id }).remove().exec();
-        });
+            if (err) return console.error(err); // Handle the error
+            // // var when = new Date(now).setHours(now.getHours() + 1);
+            // schedule.scheduleJob(when, function() {
+            //     // This callback will fire in one hour
+            //     Eventinfo.find({ id:eventObj.id }).remove().exec();
+            // });
+            
+            console.log(when+" is the time the post will be go to ongoing")
+            schedule.scheduleJob(when, ()=> {
+                // This callback will fire in one hour
+                Eventinfo.find({ id:eventObj.id }).remove().exec();
+            });
         })
         let flag1= true;
         schedule.scheduleJob(when,()=>{
@@ -536,46 +534,45 @@ const sendOTPVerificationEmail = async(student,res)=>{
         }
 
 
-    const saltRounds = 10;
-    const hashedOTP =  await bcrypt.hash(otp,saltRounds);
-    
-    const newOTPVerification = await new UserOTPVerification({ 
-        userId: student.id,
-        otp: hashedOTP,
-        createdAt : Date.now(),
-        expiresAt : Date.now() + 3600000,
-        }
+        const saltRounds = 10;
+        const hashedOTP =  await bcrypt.hash(otp,saltRounds);
+        
+        const newOTPVerification = await new UserOTPVerification(
+            { 
+                userId: student.id,
+                otp: hashedOTP,
+                createdAt : Date.now(),
+                expiresAt : Date.now() + 3600000,
+            }
         );
 
-    console.log(otp);
+        console.log(otp);
 
-    await newOTPVerification.save();
-    //await transporter.sendMail(mailOptions);
-    // while(sendMailUntilSuccess(mailOptions)==false){
-    //     console.log("worked multiple times to send mail");
-    // }
-    transporter.sendMail(mailOptions, async function(error, info){
-        if (error) {
-        try{
-           // await Student.findOneAndDelete({id:student.id}); 
-            console.log(student.name+" is deleted successfully");
-            
-            
-        }catch(err){
-            console.log("cannot delete"+student.name);
-            console.log(err);
-        }
-          currentlyRegisteredUser = null;
-          
-          console.log(error +" is while transporting");
-          res.render('register.ejs',{isDuplicateEmail:false})
-        } else {
-          console.log('Email sent: ' + info.response);
-          flag = true;
-        }
-      });
-      
-
+        await newOTPVerification.save();
+        //await transporter.sendMail(mailOptions);
+        // while(sendMailUntilSuccess(mailOptions)==false){
+        //     console.log("worked multiple times to send mail");
+        // }
+        transporter.sendMail(mailOptions, async function(error, info){
+            if (error) {
+                try{
+                // await Student.findOneAndDelete({id:student.id}); 
+                    console.log(student.name+" is deleted successfully");
+                    
+                    
+                }catch(err){
+                    console.log("cannot delete"+student.name);
+                    console.log(err);
+                }
+                currentlyRegisteredUser = null;
+                
+                console.log(error +" is while transporting");
+                res.render('register.ejs',{isDuplicateEmail:false})
+            } else {
+                console.log('Email sent: ' + info.response);
+                flag = true;
+            }
+        });
     }catch(error){
         console.log(error);
         //Student.deleteOne({id:student.id});
@@ -752,15 +749,7 @@ app.get("/regImg", (req, res)=>{
 })
 
 // Bootstrap
-app.get("/bootstrapCss", (req, res)=>{
-    res.sendFile(__dirname+"/views/css/bootstrap.css")
-})
-app.get("/bootstrapJquery", (req, res)=>{
-    res.sendFile(__dirname+"/views/js/jquery.js")
-})
-app.get("/bootstrapMin", (req, res)=>{
-    res.sendFile(__dirname+"/views/js/bootstrap.min.js")
-})
+
 
 // 404 Page Not Found
 app.get("/pageNotFound", (req, res)=>{

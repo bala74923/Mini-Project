@@ -23,7 +23,6 @@
     padding: 0px 5px;
     margin: 0px;
     background-color: var(--primaryTheme);
-    margin: 1px;
 }
 
 body {
@@ -188,6 +187,9 @@ a {
 .login-box {
     align-items: center;
     align-content: center;
+    justify-content: center;
+    background-color: var(--bg-color0);
+    width: 100%;
 }
 
 .event-box {
@@ -419,6 +421,9 @@ input{
     justify-content: center;
     border-radius: 2rem;
     box-shadow: 0px 0px 5px 5px var(--shadow-color0);
+    animation-name: imageLeftToRight;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
 }
 label, h1,h2, h3,h4, h5, h6{
     background-color: transparent;
@@ -435,15 +440,7 @@ label, h1,h2, h3,h4, h5, h6{
     flex: 50%;
 }
 
-#regImg{
-    width: 400px;
-    height: 400px;
-    margin: 10rem 5rem 10rem 5rem;
-    align-items: center;
-    overflow: auto;
-    animation-name: demoAni;
-    animation-duration: 4s;
-}
+
 
 input:hover{
     box-shadow: 0 0 2px 2px var(--shadow-color0);
@@ -495,3 +492,59 @@ label{
     color: #002fff;
 }
 
+.navBox{
+    filter: drop-shadow(0px 0px 10px  rgb(158, 156, 156));
+    padding: 0.7rem;
+    width: 100%;
+    margin-bottom: 1rem;
+    animation-name:topToBottom; 
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    border-radius: 0.5rem;
+}
+
+#regImg{
+    width: 400px;
+    height: 400px;
+    margin: 10rem 5rem 10rem 5rem;
+    align-items: center;
+    overflow: auto;
+    animation-name: imageRightToLeft;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes imageRightToLeft {
+
+    0%{
+        position: relative;
+        right: -100px;
+    }
+    100%{
+        position: relative;
+        right: 0px;
+    }
+}
+
+@keyframes imageLeftToRight {
+
+    0%{
+        position: relative;
+        left: -100px;
+    }
+    100%{
+        position: relative;
+        left: 0px;
+    }
+}
+
+@keyframes topToBottom {
+    0%{
+        position: relative;
+        top: inherit;
+    }
+    100%{
+        position: initial;
+        top: 100px;
+    }
+}
