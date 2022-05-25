@@ -266,8 +266,7 @@ app.get('/ongoingeventlist', async function(req, res) {
     
     // OngoingEventinfo.find({}, function(err, ongoingeventdetails) {
     //     res.render('ongoingeventlist.ejs', {ongoingeventdetails:ongoingeventdetails});
-    //  });
-
+    //  }); 
      let eventList = await OngoingEventinfo.find({});
     console.log(eventList)
     let ongoingeventdetails = []
