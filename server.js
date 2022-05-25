@@ -168,8 +168,6 @@ function checkNotAuthenticated(req, res, next){
 
 
 
-
-
 app.get('/eventlist', async function(req, res) {
     // User.find({}, function(err, users) {
     //    res.render('/usersList', {users: users});
@@ -180,7 +178,7 @@ app.get('/eventlist', async function(req, res) {
     eventList.forEach((event,ind,arr)=>{
         if(event.eventJoinType=='outside' || event.organisationDomain==getDomainFromEmail(currUser.email)) {
             eventdetails.push(event)
-        } 
+        }
         
     })
     // let  currUserDom = getDomainFromEmail(currUser.email)
@@ -363,23 +361,24 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
         let p1 = split_dates(eventObj.date,"-");//split_dates(req.body.edate,"-");
         let p2 = split_dates(eventObj.time,":");//split_dates(req.body.etime,":");
         const when = new Date(p1[0],p1[1]-1,p1[2],p2[0],p2[1],0,0);
+
         let ep1 = split_dates(req.body.edate,"-");
         let ep2 = split_dates(req.body.etime,":");
         const pastwhen = new Date(ep1[0],ep1[1]-1,ep1[2],ep2[0],ep2[1],0,0);
 
         Eventinfo.create(eventObj, function(err, doc) {
-        if (err) return console.error(err); // Handle the error
-        // // var when = new Date(now).setHours(now.getHours() + 1);
-        // schedule.scheduleJob(when, function() {
-        //     // This callback will fire in one hour
-        //     Eventinfo.find({ id:eventObj.id }).remove().exec();
-        // });
-        
-        console.log(when+" is the time the post will be go to ongoing")
-        schedule.scheduleJob(when, ()=> {
-            // This callback will fire in one hour
-            Eventinfo.find({ id:eventObj.id }).remove().exec();
-        });
+            if (err) return console.error(err); // Handle the error
+            // // var when = new Date(now).setHours(now.getHours() + 1);
+            // schedule.scheduleJob(when, function() {
+            //     // This callback will fire in one hour
+            //     Eventinfo.find({ id:eventObj.id }).remove().exec();
+            // });
+            
+            console.log(when+" is the time the post will be go to ongoing")
+            schedule.scheduleJob(when, ()=> {
+                // This callback will fire in one hour
+                Eventinfo.find({ id:eventObj.id }).remove().exec();
+            });
         })
         let flag1= true;
         schedule.scheduleJob(when,()=>{
@@ -455,46 +454,45 @@ const sendOTPVerificationEmail = async(student,res)=>{
         }
 
 
-    const saltRounds = 10;
-    const hashedOTP =  await bcrypt.hash(otp,saltRounds);
-    
-    const newOTPVerification = await new UserOTPVerification({ 
-        userId: student.id,
-        otp: hashedOTP,
-        createdAt : Date.now(),
-        expiresAt : Date.now() + 3600000,
-        }
+        const saltRounds = 10;
+        const hashedOTP =  await bcrypt.hash(otp,saltRounds);
+        
+        const newOTPVerification = await new UserOTPVerification(
+            { 
+                userId: student.id,
+                otp: hashedOTP,
+                createdAt : Date.now(),
+                expiresAt : Date.now() + 3600000,
+            }
         );
 
-    console.log(otp);
+        console.log(otp);
 
-    await newOTPVerification.save();
-    //await transporter.sendMail(mailOptions);
-    // while(sendMailUntilSuccess(mailOptions)==false){
-    //     console.log("worked multiple times to send mail");
-    // }
-    transporter.sendMail(mailOptions, async function(error, info){
-        if (error) {
-        try{
-           // await Student.findOneAndDelete({id:student.id}); 
-            console.log(student.name+" is deleted successfully");
-            
-            
-        }catch(err){
-            console.log("cannot delete"+student.name);
-            console.log(err);
-        }
-          currentlyRegisteredUser = null;
-          
-          console.log(error +" is while transporting");
-          res.render('register.ejs',{isDuplicateEmail:false})
-        } else {
-          console.log('Email sent: ' + info.response);
-          flag = true;
-        }
-      });
-      
-
+        await newOTPVerification.save();
+        //await transporter.sendMail(mailOptions);
+        // while(sendMailUntilSuccess(mailOptions)==false){
+        //     console.log("worked multiple times to send mail");
+        // }
+        transporter.sendMail(mailOptions, async function(error, info){
+            if (error) {
+                try{
+                // await Student.findOneAndDelete({id:student.id}); 
+                    console.log(student.name+" is deleted successfully");
+                    
+                    
+                }catch(err){
+                    console.log("cannot delete"+student.name);
+                    console.log(err);
+                }
+                currentlyRegisteredUser = null;
+                
+                console.log(error +" is while transporting");
+                res.render('register.ejs',{isDuplicateEmail:false})
+            } else {
+                console.log('Email sent: ' + info.response);
+                flag = true;
+            }
+        });
     }catch(error){
         console.log(error);
         //Student.deleteOne({id:student.id});
