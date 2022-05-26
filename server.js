@@ -393,8 +393,6 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
             throw "not from same orgainsation";
         }   
         let orgDom = givenOrg.domain;
-
-
         let p1 = split_dates(req.body.date,"-");//split_dates(req.body.edate,"-");
         let p2 = split_dates(req.body.time,":");//split_dates(req.body.etime,":");
         const when = getDateByPassingDateAndTime(p1,p2);
@@ -468,7 +466,8 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
                 flag2 = false;
             }
         })
-    }catch{
+    }catch(err){
+        console.log(err)
         return res.redirect('/events')
     }
     return res.redirect('/')
