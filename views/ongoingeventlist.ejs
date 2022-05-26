@@ -29,27 +29,19 @@
     <% } else{%>
         <h1>No events in progress</h1>
     <% } %>
-    
-    <% for(let i=0; i < ongoingeventdetails.length; i++) { %>
-        <h3 class="centerLink">Event <%= i+1%> </h3>
-        <div class="event-box", id="customers">
-            <table>
-                <tr>
-                    <th>title</th>
-                    <th><%=ongoingeventdetails[i]["_doc"]["title"]%> </th>
-                </tr>
-                <% for (const det in ongoingeventdetails[i]["_doc"]) {%>  
-                    <%if(det!="__v" & det!="_id" & det!="title"){%> 
-                    <tr>
-                        <td id="event-details-attributes"><%=det%> </td>
-                        <td> <%=ongoingeventdetails[i]["_doc"][det]%> </td>
-                    </tr>
-                    <%}%>
-                <%}%>
-            </table>
-            <hr>
-        </div>
-    <% } %>
+    <div class="eventListOuterBox">
+        <% for(let i=0; i < ongoingeventdetails.length; i++) { %>
+            <div class="eventListInnerBox">
+                <div class="titleBox">
+                    <h1>Title </h1>
+                    <h1><%=ongoingeventdetails[i]["_doc"]["title"]%></h1>
+                </div>
+                <div class="descriptionBox">
+                    <p><%=ongoingeventdetails[i]["_doc"]["description"]%></p>
+                </div>
+            </div>
+        <%}%>
+    </div>
 </body>
 </html>
 
