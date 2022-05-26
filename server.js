@@ -9,10 +9,9 @@ date --set 2022-05-20
 date --set hrs:min
 
 */
-
-
 if(process.env.NODE_ENV !== 'production'){
     require('dotenv').config()
+
 }
  
 // create Student model
@@ -132,7 +131,8 @@ app.post('/register',checkNotAuthenticated, async (req, res)=>{
             email : req.body.email,
             college : req.body.college,
             profType : "Student",//req.body.profType,
-            password : hashedPassword
+            password : hashedPassword,
+            domain: getDomainFromEmail(req.body.email)
         };
         //users.push(myobj)
         console.log(myobj)
@@ -172,6 +172,17 @@ app.get('/test',(req,res)=>{
 app.post('/test',(req,res)=>{
     res.render('test.ejs')
 })
+
+app.get('/showUsers',async (req,res)=>{
+    try{
+        let users = await Student.find({domain:currUser.domain})
+        res.render('showUsers.ejs',{users:users});
+    }catch(err){
+        res
+        res.render('manageAdmin.ejs')
+    }
+})
+
 app.get('/getDomain',async (req,res)=>{
     try{
         console.log("org name="+req.query.orgName)
@@ -207,6 +218,7 @@ app.get('/eventlist', async function(req, res) {
     //     if(currUser.profType=='Organisation'){
     //         currUserDom = currUser.domain;
     //     }
+        console.log(eventdetails)
         res.render('eventlist.ejs', {eventdetails:eventdetails});
 });
 
@@ -728,12 +740,15 @@ app.post('/verifyMailForReset', async (req, res) => {
                 //Student.find({ id:currentlyRegisteredUser.id }).remove().exec();
             } else {
                 //console.log(UserOTPVerification)
+                console.log("no error")
                 const validOTP = await bcrypt.compare(gotOtp, hashedOTP);
+                console.log("error")
                 if (!validOTP) {
+                    console.log("no error")
                     //throw new Error("Invalid code");
                     // erase registered email
-                    console.log("not valid so removed");
-                    res.render('verifyMailForReset', { isfalse: true })
+                    //console.log("not valid so removed");
+                    res.render('verifyMailForReset.ejs  ', { isfalse: true })
                     // Student.find({ id:currentlyRegisteredUser.id }).remove().exec();
                 } else {
                     //await User.updateOne({_id:userId},{verified: true});
