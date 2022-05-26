@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style">
     <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;" />
+    <link rel="stylesheet" href="/postStyle">
     <title>EventLists</title>
 </head>
 
@@ -69,7 +70,7 @@
                 </select>
             </div>
             <div class="filterOption">
-                <button type="submit" class="filter-btn">Filter<i class="bi bi-filter"></i></button>
+                <button type="submit" class="filter-btn">Apply Changes<i class="bi bi-filter"></i></button>
             </div>
         </div>
     </form>
@@ -77,38 +78,63 @@
     <!-- Filter Box End -->
 
     <!-- Show Event Details -->
-    <% for(let i=0; i < eventdetails.length; i++) { %>
-        <h3 class="centerLink">Event <%= i+1%>
-        </h3>
-        <div class="event-box" , id="customers">
-            <table>
-                    <tr>
-                        <th>title</th>
-                        <th>
-                            <%=eventdetails[i]["_doc"]["title"]%>
-                        </th>
-                    </tr>
-                        <% for (const det in eventdetails[i]["_doc"]) {%>
-                            <%if(det!="__v" & det!="_id" & det!="title" ){%>
-                                    <tr>
-                                        <td id="event-details-attributes">
-                                            <%=det%>
-                                        </td>
-                                        <td>
-                                            <%=eventdetails[i]["_doc"][det]%>
-                                        </td>
-                                    </tr>
-                            <%}%>
-                        <%}%>
-            </table>
-            <hr>
-        </div>
-        <% } %>
-
-            <!-- No Event Details -->
-            <%if(eventdetails.length==0){%>
-                <h1>No upcoming events</h1>
-                <% } %>
+    <%if(eventdetails.length==0){%>
+        <h1>No upcoming events</h1>
+    <% } %>
+    <div class="eventListOuterBox">
+        <% for(let i=0; i < eventdetails.length; i++) { %>
+            <div class="eventListInnerBox">
+                <div class="orgName">
+                    <h2><%=eventdetails[i]["_doc"]["organisation"]%></h2>
+                    <h6>Id : <span><%=eventdetails[i]["_doc"]["id"]%></span></h6>
+                </div>
+                <div class="titleBox">
+                    <h1><%=eventdetails[i]["_doc"]["title"]%></h1>
+                </div>
+                <div class="descriptionBox">
+                    <p><%=eventdetails[i]["_doc"]["description"]%></p>
+                </div>
+                <div class="otherAtr">
+                    <table>
+                        <tr>
+                            <td>Type : </td>
+                            <td>Join Type :</td>
+                            <td>Field : </td>
+                            <td>Eligiblity : </td>
+                            <td>Constraints : </td>
+                            <td>Prizes : </td>
+                            <td>OutComes : </td>
+                            <td>sponsers : </td>
+                        </tr>
+                        <tr>
+                            <td><%=eventdetails[i]["_doc"]["eventType"]%></td>
+                            <td><%=eventdetails[i]["_doc"]["eventJoinType"]%></td>
+                            <td><%=eventdetails[i]["_doc"]["fields"]%></td>
+                            <td><%=eventdetails[i]["_doc"]["eligiblity"]%></td>
+                            <td><%=eventdetails[i]["_doc"]["constraints"]%></td>
+                            <td><%=eventdetails[i]["_doc"]["prizes"]%></td>
+                            <td><%=eventdetails[i]["_doc"]["takeaways"]%></td>
+                            <td><%=eventdetails[i]["_doc"]["takeaways"]%></td>
+                            <td><%=eventdetails[i]["_doc"]["sponsers"]%></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="times">
+                    <div class="timeBox">
+                        <h4>Start Date & Time</h4>
+                        <h4><%=eventdetails[i]["_doc"]["date"]%> <%=eventdetails[i]["_doc"]["time"]%></h4>
+                    </div>
+                    <div class="timeBox">
+                        <h4>End Date & Time</h4>
+                        <h4><%=eventdetails[i]["_doc"]["endDate"]%> <%=eventdetails[i]["_doc"]["endTime"]%></h4>
+                    </div>
+                    <div class="timeBox">
+                        <h4>Duration</h4>
+                        <h4><%=eventdetails[i]["_doc"]["duration"][0]%>Days <%=eventdetails[i]["_doc"]["duration"][1]%>Hrs <%=eventdetails[i]["_doc"]["duration"][1]%>Mins</h4>
+                    </div>
+                </div>
+            </div>
+        <%}%>
+    </div>            
 </body>
-
 </html>

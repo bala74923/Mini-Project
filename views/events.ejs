@@ -36,7 +36,7 @@
     }
 
         $(document).ready(function(){
-            $("#submit").click(function(){
+            $("#description").click(function(){
                 
                 split_dates($('#time').val())
                 let sd = split_dates($('#date').val(),"-")
@@ -47,10 +47,26 @@
                 let d2 = getDateByPassingDateAndTime(ed,et)
                if(d1.getTime()>d2.getTime()){
                    alert("check the date and time");
-                   $('formObject').trigger("reset");
+                   $("#date").val("")
+                   $("#time").val("")
+                   $("#edate").val("")
+                   $("#etime").val("")
                }
                 //alert('submitted'+st)
                 console.log(typeof(st))
+            })
+        })
+
+        $(document).ready(function(){
+            $("#mode").click(function(){
+                if($(this).val()=='online'){
+                    $("#venueName").hide();
+                    $("#venue").hide();
+                }else{
+                    $("#venueName").show();
+                    $("#venue").show();
+                    $("#venue").prop('required',true);
+                }
             })
         })
     </script>
@@ -74,13 +90,14 @@
         <h1 class="login-title">Create New Event!</h1>
         <form action="/events" id="formObject" method="POST" class="event-form"> 
             <!-- Organisation name -->
-            <label for="orgName">Your Organisation Name</label>
+            <!-- <label for="orgName">Your Organisation Name</label>
             <select name="orgName" id="orgName">
+                <option value="1234org">1234org</option>
                 <option value="SECE">Sri Eshwar College of Engineering</option>
                 <option value="Coimbatore Institute Of Technology">Coimbatore Institute Of Technology</option>
                 <option value="Anna University">Anna University</option>
             </select>
-            <br><br>
+            <br><br> -->
 
             <!-- Title -->
             <label for="title">Title</label>
@@ -141,12 +158,26 @@
             </select>
 
             <!-- Related Fields -->
-            <label for="eventJoinType">Choose the Event Joining Type:</label>
+            <label for="eventJoinType">Choose the Even Joining Type:</label>
             <select name="eventJoinType" id="eventJoinType">
                 <option value="inside">Inside Organisation</option>
                 <option value="outside">Open to All</option>
             </select>
             <br><br>
+
+            <label for="mode">Choose the Event Mode:</label>
+            <select name="mode" id="mode">
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+            </select>
+            <br><br>
+            
+            <!-- <div id = "venueDiv">
+                
+            <br><br>
+            </div> -->
+            <label for="venue" id = "venueName">Venue</label>
+            <input type="text" name="venue" id="venue" >
 
             <!-- Eligiblity -->
             <label for="eligiblity">Eligiblity Criteria</label>
@@ -172,6 +203,7 @@
             <label for="sponsers">Sponsors</label>
             <input name="sponsers" id="sponsers" type="text"></input>
             <br><br>
+
 
             <!-- submit -->
             <input type="submit" id = "submit" value="submit" class="submit-btn">
