@@ -496,6 +496,7 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
     }catch(err){
         console.log(err);
         res.redirect('/events')
+        return res.end();
     }
     res.redirect('/')
 })

@@ -9,8 +9,6 @@
     <title>Events</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-
-
         $(document).ready(function(){
           $("#orgName").click(function(){
                let givenDomain = $(this).val();
@@ -25,7 +23,37 @@
               //alert()
           });
         });
-        </script>
+        function split_dates(obj,p) {
+        let parts = obj.toString().split(p)
+        console.log(parts+"=>"+p)
+        for(let i=0;i<parts.length;i++){
+        parts[i] = parseInt(parts[i])
+        }
+        return parts
+    }
+    function getDateByPassingDateAndTime(date,time){
+        return new Date(date[0],date[1]-1,date[2],time[0],time[1],0,0);
+    }
+
+        $(document).ready(function(){
+            $("#submit").click(function(){
+                
+                split_dates($('#time').val())
+                let sd = split_dates($('#date').val(),"-")
+                let st = split_dates($('#time').val(),":")
+                let ed = split_dates($("#edate").val(),"-")
+                let et = split_dates($("#etime").val(),":")
+                let d1 = getDateByPassingDateAndTime(sd,st)
+                let d2 = getDateByPassingDateAndTime(ed,et)
+               if(d1.getTime()>d2.getTime()){
+                   alert("check the date and time");
+                   $('formObject').trigger("reset");
+               }
+                //alert('submitted'+st)
+                console.log(typeof(st))
+            })
+        })
+    </script>
 </head>
 <body>
     <!-- NavBarStart -->
@@ -44,7 +72,7 @@
     <!-- NavBarEnd -->
     <div class="login-box">
         <h1 class="login-title">Create New Event!</h1>
-        <form action="/events" method="POST" class="event-form"> 
+        <form action="/events" id="formObject" method="POST" class="event-form"> 
             <!-- Organisation name -->
             <label for="orgName">Your Organisation Name</label>
             <select name="orgName" id="orgName">
@@ -146,8 +174,9 @@
             <br><br>
 
             <!-- submit -->
-            <input type="submit" value="submit" class="submit-btn">
+            <input type="submit" id = "submit" value="submit" class="submit-btn">
         </form>
     </div>
 </body>
+
 </html>
