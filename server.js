@@ -202,7 +202,6 @@ app.get('/eventlist', async function(req, res) {
         if(event.eventJoinType=='outside' || event.organisationDomain==getDomainFromEmail(currUser.email)) {
             eventdetails.push(event)
         }
-        
     })
     // let  currUserDom = getDomainFromEmail(currUser.email)
     //     if(currUser.profType=='Organisation'){
@@ -262,7 +261,6 @@ app.post('/eventlist',async (req,res)=>{
             return compareDuration(event2.duration,event1.duration);
         })
     }
-
     res.render('eventlist.ejs', {eventdetails:eventdetails});
 })
 
@@ -417,8 +415,6 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
             throw "not from same orgainsation";
         }   
         let orgDom = givenOrg.domain;
-
-
         let p1 = split_dates(req.body.date,"-");//split_dates(req.body.edate,"-");
         let p2 = split_dates(req.body.time,":");//split_dates(req.body.etime,":");
         const when = getDateByPassingDateAndTime(p1,p2);
@@ -492,13 +488,11 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
                 flag2 = false;
             }
         })
-
     }catch(err){
-        console.log(err);
-        res.redirect('/events')
-        return res.end();
+        console.log(err)
+        return res.redirect('/events')
     }
-    res.redirect('/')
+    return res.redirect('/')
 })
 function split_dates(obj,p) {
     let parts = obj.toString().split(p)
@@ -688,8 +682,115 @@ app.post('/changeName',async(req,res)=>{
     }
 })
 
+//---------------------------------------------
+//  FORGOT PASSWORD START
+//---------------------------------------------
 
 
+let currGivenEmail;
+app.get('/forgotPassword', (req, res) => {
+    res.render('forgotPassword.ejs')
+})
+
+app.post('/forgotPassword', async (req, res) => {
+    try {
+        let email = req.body.email
+        currGivenEmail = email;
+        OTPEnteredUser = await Student.findOne({ email: email })
+        sendOTPVerificationEmail(OTPEnteredUser)
+        res.render('verifyMailForReset.ejs', { isfalse: false })
+    } catch (err) {
+        console.log(err + " is the error in forgetPassword")
+    }
+})
+
+
+app.post('/verifyMailForReset', async (req, res) => {
+    try {
+        let gotOtp = req.body.otp; //need form
+        console.log(gotOtp + " this is user giving otp");
+        //let userId = currentlyRegisteredUser.id;
+        console.log(OTPEnteredUser.id + " is the currently reigistered user id")
+        const UserOTPVerificationRecords = await UserOTPVerification.find({ userId: OTPEnteredUser.id })//find({id:userId});
+        console.log("records found are")
+        //        console.log(UserOTPVerificationRecords);
+        if (UserOTPVerificationRecords.length <= 0) {
+            throw new Error(
+                "Account record doesn't exist or has been verified already.Please sign up or log in"
+            );
+        } else {
+            const { expiresAt } = UserOTPVerificationRecords[0];
+            const hashedOTP = UserOTPVerificationRecords[0].otp;
+            if (expiresAt < Date.now()) {
+                await UserOTPVerification.deleteMany({ userId: OTPEnteredUser.id });
+                // erase registered mail from db
+                console.log("expired");
+                //Student.find({ id:currentlyRegisteredUser.id }).remove().exec();
+            } else {
+                //console.log(UserOTPVerification)
+                const validOTP = await bcrypt.compare(gotOtp, hashedOTP);
+                if (!validOTP) {
+                    //throw new Error("Invalid code");
+                    // erase registered email
+                    console.log("not valid so removed");
+                    res.render('verifyMailForReset', { isfalse: true })
+                    // Student.find({ id:currentlyRegisteredUser.id }).remove().exec();
+                } else {
+                    //await User.updateOne({_id:userId},{verified: true});
+                    await UserOTPVerification.deleteMany({ userId: OTPEnteredUser.id });
+                    // res.json({
+                    //     status:"VERIFIED"
+                    //     message:"User email verified"
+                    // });
+                    //await new Student(OTPEnteredUser).save();
+                    console.log("email verified successfully");
+                    res.redirect('/resetPassword')
+                }
+            }
+        }
+    } catch (error) {
+        // res.json({
+        //     status:"FAILED"
+        //     message:error message,
+        // });
+        OTPEnteredUser = null
+        res.render('forgotPassword.ejs', { isDuplicateEmail: false })
+        console.log(error)
+        console.log("failed due to some error");
+    }
+
+})
+
+
+//reset password
+app.get('/resetPassword', (req, res, next) => {
+    res.render('resetPassword.ejs', { entered: 0 })
+})
+
+app.post('/resetPassword', async (req, res) => {
+    let p1 = req.body.password
+    let p2 = req.body.password2
+    if (p1.length <= 0 || p2.length <= 0) {
+        res.render('resetPassword.ejs', { entered: 1 })
+    }
+    if (p1 != p2) {
+        res.render('resetPassword.ejs', { entered: 2 })
+    }
+    if (p1 == p2) {
+        console.log("set success")
+        res.render('setSuccess.ejs', { entered: true })
+    }
+    // let email=UserOTPVerification[0]
+    console.log(currGivenEmail)
+    const newHashedPassword = await bcrypt.hash(p1, 10);
+    await Student.findOneAndUpdate({email:currGivenEmail},{password:newHashedPassword});
+    currGivenEmail = null
+})
+
+
+//---------------------------------------------
+//  FORGOT PASSWORD END
+//---------------------------------------------
 
 app.get("/main", (req, res)=>{
     res.render("main.ejs")
