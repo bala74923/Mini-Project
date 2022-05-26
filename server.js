@@ -416,7 +416,7 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
         // if(isNotVerifiedFromSameOrganisation(currUser,givenOrg)){
         //     throw "not from same orgainsation";
         // }   
-        let orgDom = givenOrg.domain;
+        //let orgDom = givenOrg.domain;
         let currOrg = await Student.findOne({profType:"Organisation",domain:getDomainFromEmail(currUser.email)})
 
         let p1 = split_dates(req.body.date,"-");//split_dates(req.body.edate,"-");
@@ -443,7 +443,7 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
             constraints : req.body.constraints,
             prizes : req.body.prizes,
             takeaways : req.body.takeaways,
-            mode : req.body.mod,
+            mode : req.body.mode,
             sponsers : req.body.sponsers,
             eventType: req.body.eventType,
             duration: getDuration(when.getTime(),pastwhen.getTime())

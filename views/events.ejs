@@ -36,7 +36,7 @@
     }
 
         $(document).ready(function(){
-            $("#submit").click(function(){
+            $("#description").click(function(){
                 
                 split_dates($('#time').val())
                 let sd = split_dates($('#date').val(),"-")
@@ -47,7 +47,10 @@
                 let d2 = getDateByPassingDateAndTime(ed,et)
                if(d1.getTime()>d2.getTime()){
                    alert("check the date and time");
-                   $('formObject').trigger("reset");
+                   $("#date").val("")
+                   $("#time").val("")
+                   $("#edate").val("")
+                   $("#etime").val("")
                }
                 //alert('submitted'+st)
                 console.log(typeof(st))
@@ -55,7 +58,7 @@
         })
 
         $(document).ready(function(){
-            $("#mode").change(function(){
+            $("#mode").click(function(){
                 if($(this).val()=='online'){
                     $("#venueName").hide();
                     $("#venue").hide();
@@ -133,7 +136,7 @@
             <br><br>
 
             <!-- Organizer -->
-            <label for="organizer">Venue</label>
+            <label for="organizer">Organizer</label>
             <input type="text" name="organizer" id="organizer" required>
             <br><br>
 
@@ -155,14 +158,14 @@
             </select>
 
             <!-- Related Fields -->
-            <label for="eventJoinType">Choose the Event Mode:</label>
+            <label for="eventJoinType">Choose the Even Joining Type:</label>
             <select name="eventJoinType" id="eventJoinType">
                 <option value="inside">Inside Organisation</option>
                 <option value="outside">Open to All</option>
             </select>
             <br><br>
 
-            <label for="mode">Choose the Event Joining Type:</label>
+            <label for="mode">Choose the Event Mode:</label>
             <select name="mode" id="mode">
                 <option value="online">Online</option>
                 <option value="offline">Offline</option>
