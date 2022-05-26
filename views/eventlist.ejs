@@ -9,9 +9,10 @@
     <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;" />
     <link rel="stylesheet" href="/postStyle">
     <title>EventLists</title>
+
 </head>
 
-<body>
+<body class="mainBody">
     <!-- NavBarStart -->
     <header>
         <nav class="navContainer">
@@ -85,52 +86,81 @@
         <% for(let i=0; i < eventdetails.length; i++) { %>
             <div class="eventListInnerBox">
                 <div class="orgName">
-                    <h2><%=eventdetails[i]["_doc"]["organisation"]%></h2>
-                    <h6>Id : <span><%=eventdetails[i]["_doc"]["id"]%></span></h6>
+                    <h2><i class="bi bi-building"></i><%=eventdetails[i]["_doc"]["organisation"]%></h2>
+                    <h6>Event Id : <span><%=eventdetails[i]["_doc"]["id"]%></span></h6>
                 </div>
                 <div class="titleBox">
                     <h1><%=eventdetails[i]["_doc"]["title"]%></h1>
                 </div>
                 <div class="descriptionBox">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam dolorem placeat voluptatem minima nisi animi, porro dicta quidem voluptatum aspernatur, eveniet harum excepturi praesentium et quia provident. Quidem, ratione. Sapiente?
+                    </p>
                     <p><%=eventdetails[i]["_doc"]["description"]%></p>
                 </div>
-                <div class="otherAtr">
-                    <table>
-                        <tr>
-                            <td>Type : </td>
-                            <td>Join Type :</td>
-                            <td>Field : </td>
-                            <td>Eligiblity : </td>
-                            <td>Constraints : </td>
-                            <td>Prizes : </td>
-                            <td>OutComes : </td>
-                            <td>sponsers : </td>
-                        </tr>
-                        <tr>
-                            <td><%=eventdetails[i]["_doc"]["eventType"]%></td>
-                            <td><%=eventdetails[i]["_doc"]["eventJoinType"]%></td>
-                            <td><%=eventdetails[i]["_doc"]["fields"]%></td>
-                            <td><%=eventdetails[i]["_doc"]["eligiblity"]%></td>
-                            <td><%=eventdetails[i]["_doc"]["constraints"]%></td>
-                            <td><%=eventdetails[i]["_doc"]["prizes"]%></td>
-                            <td><%=eventdetails[i]["_doc"]["takeaways"]%></td>
-                            <td><%=eventdetails[i]["_doc"]["takeaways"]%></td>
-                            <td><%=eventdetails[i]["_doc"]["sponsers"]%></td>
-                        </tr>
-                    </table>
+                <div class="tableBox">
+                    <div class="tableCol">
+                        <h4><i class="bi bi-megaphone-fill"></i></h4>
+                        <h4>Type : </h4>
+                        <h5><%=eventdetails[i]["_doc"]["eventType"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-arrow-bar-right"></i></h4>
+                        <h4>Join Type :</h4>
+                        <h5><%=eventdetails[i]["_doc"]["eventType"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-cpu"></i></h4>
+                        <h4>Field : </h4>
+                        <h5><%=eventdetails[i]["_doc"]["fields"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-person-check"></i></h4>
+                        <h4>Eligiblity : </h4>
+                        <h5><%=eventdetails[i]["_doc"]["eligiblity"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-x-octagon-fill"></i></h4>
+                        <h4>Constraints : </h4>
+                        <h5><%=eventdetails[i]["_doc"]["consdtraints"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-trophy"></i></h4>
+                        <h4>Prizes : </h4> 
+                        <h5><%=eventdetails[i]["_doc"]["prizes"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-arrow-bar-up"></i></h4>
+                        <h4>OutComes : </h4>
+                        <h5><%=eventdetails[i]["_doc"]["takeaways"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-people-fill"></i></h4>
+                        <h4>Sponsers : </h4>
+                        <h5><%=eventdetails[i]["_doc"]["sponsers"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-globe2"></i></h4>
+                        <h4>Mode : </h4>
+                        <h5><%=eventdetails[i]["_doc"]["sponsers"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-geo-alt-fill"></i></h4>
+                        <h4>Location / Platform: </h4>
+                        <h5><%=eventdetails[i]["_doc"]["sponsers"]%></h5>
+                    </div>
                 </div>
                 <div class="times">
-                    <div class="timeBox">
+                    <div class="timeBox">   
                         <h4>Start Date & Time</h4>
-                        <h4><%=eventdetails[i]["_doc"]["date"]%> <%=eventdetails[i]["_doc"]["time"]%></h4>
+                        <h4><i class="bi bi-clock"></i><%=eventdetails[i]["_doc"]["date"]%> <%=eventdetails[i]["_doc"]["time"]%></h4>
                     </div>
                     <div class="timeBox">
-                        <h4>End Date & Time</h4>
-                        <h4><%=eventdetails[i]["_doc"]["endDate"]%> <%=eventdetails[i]["_doc"]["endTime"]%></h4>
+                        <h4></i>End Date & Time</h4>
+                        <h4><i class="bi bi-clock"></i><%=eventdetails[i]["_doc"]["endDate"]%> <%=eventdetails[i]["_doc"]["endTime"]%></h4>
                     </div>
                     <div class="timeBox">
                         <h4>Duration</h4>
-                        <h4><%=eventdetails[i]["_doc"]["duration"][0]%>Days <%=eventdetails[i]["_doc"]["duration"][1]%>Hrs <%=eventdetails[i]["_doc"]["duration"][1]%>Mins</h4>
+                        <h4><i class="bi bi-hourglass-split"></i><%=eventdetails[i]["_doc"]["duration"][0]%>Days <%=eventdetails[i]["_doc"]["duration"][1]%>Hrs <%=eventdetails[i]["_doc"]["duration"][1]%>Mins</h4>
                     </div>
                 </div>
             </div>

@@ -36,7 +36,7 @@
     }
 
         $(document).ready(function(){
-            $("#submit").click(function(){
+            $("#description").click(function(){
                 
                 split_dates($('#time').val())
                 let sd = split_dates($('#date').val(),"-")
@@ -47,7 +47,11 @@
                 let d2 = getDateByPassingDateAndTime(ed,et)
                if(d1.getTime()>d2.getTime()){
                    alert("check the date and time");
-                   $('formObject').trigger("reset");
+                   //$('formObject').trigger("reset");
+                   $('#date').val("")
+                   $('#time').val("")
+                   $('#edate').val("")
+                   $('#etime').val("")
                }
                 //alert('submitted'+st)
                 console.log(typeof(st))
