@@ -651,6 +651,8 @@ app.get('/removeAdmin',(req, res)=>{
     res.render('removeAdmin.ejs')
 })
 
+
+
 app.post('/removeAdmin',async (req,res)=>{
     try{
         let mail=req.body.email;
