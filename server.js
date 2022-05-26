@@ -226,44 +226,50 @@ function compareDuration(e1,e2) {
 }
 
 app.post('/eventlist',async (req,res)=>{
-    let needObj = {
-        organisation : req.body.organisation,
-        fields: req.body.fields,
-        type: req.body.type,
-        sortBy: req.body.sortBy
-    }
-    let eventlist = await Eventinfo.find({});
-    let eventdetails = []
-    eventlist.forEach((event,ind,arr)=>{
-        if((needObj.organisation=='none'||needObj.organisation==event.organisation)
-            &&(needObj.fields=='none'||needObj.fields==event.fields) && 
-            (needObj.type=='none'||needObj.type==event.eventType))
-        {
-            eventdetails.push(event);
+    try{
+        let needObj = {
+            organisation : req.body.organisation,
+            fields: req.body.fields,
+            type: req.body.type,
+            sortBy: req.body.sortBy
         }
-    });
-    console.log(needObj);
-    if(needObj.sortBy!='none'){
-        console.log(eventdetails+"will be sorted")
-        eventdetails.sort((event1,event2)=>{
-            if(needObj.sortBy=='Date(Ascending)') {
-                console.log('ascending')
-                return compareDateAndTime(event1.date,event1.time,event2.date,event2.time);
+        let eventlist = await Eventinfo.find({});
+        let eventdetails = []
+        eventlist.forEach((event,ind,arr)=>{
+            if((needObj.organisation=='none'||needObj.organisation==event.organisation)
+                &&(needObj.fields=='none'||needObj.fields==event.fields) && 
+                (needObj.type=='none'||needObj.type==event.eventType))
+            {
+                eventdetails.push(event);
             }
-            else if(needObj.sortBy=='Date(Descending)') {
-                console.log('descending')
-                return compareDateAndTime(event2.date,event2.time,event1.date,event1.time);
-            }
-            else if(needObj.sortBy=='Duration(Ascending)') {
-                console.log('Duration ascending')
-                return compareDuration(event1.duration,event2.duration);
-            }
-            console.log('Duration Descending')
-            return compareDuration(event2.duration,event1.duration);
-        })
+        });
+        console.log(needObj);
+        if(needObj.sortBy!='none'){
+            console.log(eventdetails+"will be sorted")
+            eventdetails.sort((event1,event2)=>{
+                if(needObj.sortBy=='Date(Ascending)') {
+                    console.log('ascending')
+                    return compareDateAndTime(event1.date,event1.time,event2.date,event2.time);
+                }
+                else if(needObj.sortBy=='Date(Descending)') {
+                    console.log('descending')
+                    return compareDateAndTime(event2.date,event2.time,event1.date,event1.time);
+                }
+                else if(needObj.sortBy=='Duration(Ascending)') {
+                    console.log('Duration ascending')
+                    return compareDuration(event1.duration,event2.duration);
+                }
+                console.log('Duration Descending')
+                return compareDuration(event2.duration,event1.duration);
+            })
+        }
+    
+        res.render('eventlist.ejs', {eventdetails:eventdetails});
+    }catch(err){
+        console.log(err)
+        res.redirect('/')
     }
 
-    res.render('eventlist.ejs', {eventdetails:eventdetails});
 })
 
 
@@ -754,10 +760,12 @@ app.post('/orgRegister',checkNotAuthenticated, async (req, res)=>{
     }
     //console.log(users)
 })
-app.get('/server.js', (req, res)=>{
+app.get('/server.js', async (req, res)=>{
 
-    console.log("Old UserName "+req.query.oldName)
+    //console.log("Old UserName "+req.query.oldName)
     console.log("New UserName "+req.query.newName)
+    currUser.name = req.query.newName;
+    await Student.findOneAndUpdate({email:currUser.email},{name:currUser.name});
     res.send(req.query.newName)
 })
 
