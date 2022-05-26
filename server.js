@@ -710,6 +710,7 @@ app.get("/profile", (req, res)=>{
 })
 
 app.get('/logout', function (req, res){
+    currUser = null;
   req.session.destroy(function (err) {
     res.redirect('/'); //Inside a callback… bulletproof!
   });
