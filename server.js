@@ -130,6 +130,7 @@ app.post('/register',checkNotAuthenticated, async (req, res)=>{
             id : Date.now().toString(),
             name : req.body.name,
             email : req.body.email,
+            domain : getDomainFromEmail(req.body.email),
             college : req.body.college,
             profType : "Student",//req.body.profType,
             password : hashedPassword
@@ -172,6 +173,11 @@ app.get('/test',(req,res)=>{
 app.post('/test',(req,res)=>{
     res.render('test.ejs')
 })
+
+app.get('/getUserDomain',(req,res)=>{
+    res.send(getDomainFromEmail(currUser.email));
+})
+
 app.get('/getDomain',async (req,res)=>{
     try{
         console.log("org name="+req.query.orgName)
@@ -657,10 +663,10 @@ app.post('/removeAdmin',async (req,res)=>{
         await Student.findOneAndUpdate({email:mail},{profType:"Student"});
         
     } catch(err) {
-        console.log("cannot update")
-        console.log(err+" is the error")
+        console.log("cannot update");
+        console.log(err+" is the error");
     }
-    res.render('manageAdmin.ejs');
+    return res.render('manageAdmin.ejs');
 })
 
 app.get('/showAdmin',async(req,res)=>{

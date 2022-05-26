@@ -7,6 +7,25 @@
     <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;" />
 
     <title>Remove Admin</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $("#email").change(function(){
+               let givenEmail = $("#email").val();
+               let givenDomain = givenEmail.split("@")[1];
+               //alert(givenDomain);
+              $.get('getUserDomain',function(data,status){
+                  if(data!=givenDomain){
+                      alert("cannot be allowed")
+                      //$("#form").resetForm();
+                     $("#email").val("")
+                  }
+              })
+            //alert(givenDomain)
+              //alert()
+          });
+        });
+    </script>
 </head>
 <body>
     <!-- NavBarStart -->
@@ -23,15 +42,15 @@
       </header>
     <!-- NavBarEnd -->
     <div class="login-box">
-        <h1 class="login-title">Enter mail to add</h1>
-        <form action="/removeAdmin" method="POST" class="event-form"> 
+        <h1 class="login-title">Enter mail to Remove</h1>
+        <form action="/removeAdmin" method="POST" class="event-form" id = "form"> 
             <!-- Email to add admin -->
             <label for="title">Enter email</label>
             <input type="email" id="email" name="email" required>
             <br><br>
 
             <!-- submit -->
-            <input type="submit" value="submit" class="submit-btn">
+            <button type="submit" value="submit" id = "submit" class="submit-btn">Submit</button>
         </form>
     </div>
     

@@ -9,20 +9,20 @@
     <title>Events</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        $(document).ready(function(){
-          $("#orgName").click(function(){
-               let givenDomain = $(this).val();
-              $.get('getDomain?orgName='+givenDomain,function(data,status){
-                  if(data=='false'){
-                    $("#orgName  option:selected").remove();
-                    alert("cannot be allowed")
+        // $(document).ready(function(){
+        //   $("#orgName").click(function(){
+        //        let givenDomain = $(this).val();
+        //       $.get('getDomain?orgName='+givenDomain,function(data,status){
+        //           if(data=='false'){
+        //             $("#orgName  option:selected").remove();
+        //             alert("cannot be allowed")
                      
-                  }
-              })
-            //alert(givenDomain)
-              //alert()
-          });
-        });
+        //           }
+        //       })
+        //     //alert(givenDomain)
+        //       //alert()
+        //   });
+        // });
         function split_dates(obj,p) {
         let parts = obj.toString().split(p)
         console.log(parts+"=>"+p)
