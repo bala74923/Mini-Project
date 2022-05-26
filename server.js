@@ -226,44 +226,50 @@ function compareDuration(e1,e2) {
 }
 
 app.post('/eventlist',async (req,res)=>{
-    let needObj = {
-        organisation : req.body.organisation,
-        fields: req.body.fields,
-        type: req.body.type,
-        sortBy: req.body.sortBy
-    }
-    let eventlist = await Eventinfo.find({});
-    let eventdetails = []
-    eventlist.forEach((event,ind,arr)=>{
-        if((needObj.organisation=='none'||needObj.organisation==event.organisation)
-            &&(needObj.fields=='none'||needObj.fields==event.fields) && 
-            (needObj.type=='none'||needObj.type==event.eventType))
-        {
-            eventdetails.push(event);
+    try{
+        let needObj = {
+            organisation : req.body.organisation,
+            fields: req.body.fields,
+            type: req.body.type,
+            sortBy: req.body.sortBy
         }
-    });
-    console.log(needObj);
-    if(needObj.sortBy!='none'){
-        console.log(eventdetails+"will be sorted")
-        eventdetails.sort((event1,event2)=>{
-            if(needObj.sortBy=='Date(Ascending)') {
-                console.log('ascending')
-                return compareDateAndTime(event1.date,event1.time,event2.date,event2.time);
+        let eventlist = await Eventinfo.find({});
+        let eventdetails = []
+        eventlist.forEach((event,ind,arr)=>{
+            if((needObj.organisation=='none'||needObj.organisation==event.organisation)
+                &&(needObj.fields=='none'||needObj.fields==event.fields) && 
+                (needObj.type=='none'||needObj.type==event.eventType))
+            {
+                eventdetails.push(event);
             }
-            else if(needObj.sortBy=='Date(Descending)') {
-                console.log('descending')
-                return compareDateAndTime(event2.date,event2.time,event1.date,event1.time);
-            }
-            else if(needObj.sortBy=='Duration(Ascending)') {
-                console.log('Duration ascending')
-                return compareDuration(event1.duration,event2.duration);
-            }
-            console.log('Duration Descending')
-            return compareDuration(event2.duration,event1.duration);
-        })
+        });
+        console.log(needObj);
+        if(needObj.sortBy!='none'){
+            console.log(eventdetails+"will be sorted")
+            eventdetails.sort((event1,event2)=>{
+                if(needObj.sortBy=='Date(Ascending)') {
+                    console.log('ascending')
+                    return compareDateAndTime(event1.date,event1.time,event2.date,event2.time);
+                }
+                else if(needObj.sortBy=='Date(Descending)') {
+                    console.log('descending')
+                    return compareDateAndTime(event2.date,event2.time,event1.date,event1.time);
+                }
+                else if(needObj.sortBy=='Duration(Ascending)') {
+                    console.log('Duration ascending')
+                    return compareDuration(event1.duration,event2.duration);
+                }
+                console.log('Duration Descending')
+                return compareDuration(event2.duration,event1.duration);
+            })
+        }
+    
+        res.render('eventlist.ejs', {eventdetails:eventdetails});
+    }catch(err){
+        console.log(err)
+        res.redirect('/')
     }
 
-    res.render('eventlist.ejs', {eventdetails:eventdetails});
 })
 
 
@@ -412,12 +418,12 @@ function isNotVerifiedFromSameOrganisation(admin,orgObj){
 
 app.post('/events', checkAuthenticated, async(req, res)=>{
     try{
-        let givenOrg = await Student.findOne({name:req.body.orgName,profType:"Organisation"});
-        if(isNotVerifiedFromSameOrganisation(currUser,givenOrg)){
-            throw "not from same orgainsation";
-        }   
-        let orgDom = givenOrg.domain;
-
+        // let givenOrg = await Student.findOne({name:req.body.orgName,profType:"Organisation"});
+        // if(isNotVerifiedFromSameOrganisation(currUser,givenOrg)){
+        //     throw "not from same orgainsation";
+        // }   
+        //let orgDom = givenOrg.domain;
+        let currOrg = await Student.findOne({profType:"Organisation",domain:getDomainFromEmail(currUser.email)})
 
         let p1 = split_dates(req.body.date,"-");//split_dates(req.body.edate,"-");
         let p2 = split_dates(req.body.time,":");//split_dates(req.body.etime,":");
@@ -429,7 +435,7 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
      
         const eventObj = {
             id : Date.now().toString(),
-            organisation:req.body.orgName,
+            organisation:currOrg.name,
             eventJoinType: req.body.eventJoinType,
             title : req.body.title,
             date  : req.body.date,
@@ -443,12 +449,15 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
             constraints : req.body.constraints,
             prizes : req.body.prizes,
             takeaways : req.body.takeaways,
+            mode : req.body.mode,
             sponsers : req.body.sponsers,
             eventType: req.body.eventType,
             duration: getDuration(when.getTime(),pastwhen.getTime())
         }
         if(eventObj.eventJoinType=="inside"){
-            eventObj.organisationDomain = givenOrg.domain;
+            eventObj.organisationDomain = currOrg.domain;
+        }if(eventObj.mode=="offline"){
+            eventObj.venue = req.body.venue;
         }
         console.log(eventObj)
         //new Eventinfo(eventObj).save();
@@ -707,6 +716,7 @@ app.get("/profile", (req, res)=>{
 })
 
 app.get('/logout', function (req, res){
+    currUser = null;
   req.session.destroy(function (err) {
     res.redirect('/'); //Inside a callback… bulletproof!
   });
@@ -750,10 +760,12 @@ app.post('/orgRegister',checkNotAuthenticated, async (req, res)=>{
     }
     //console.log(users)
 })
-app.get('/server.js', (req, res)=>{
+app.get('/server.js', async (req, res)=>{
 
-    console.log("Old UserName "+req.query.oldName)
+    //console.log("Old UserName "+req.query.oldName)
     console.log("New UserName "+req.query.newName)
+    currUser.name = req.query.newName;
+    await Student.findOneAndUpdate({email:currUser.email},{name:currUser.name});
     res.send(req.query.newName)
 })
 

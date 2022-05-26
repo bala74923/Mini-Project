@@ -87,6 +87,11 @@ eventinfoSchema = mongoose.Schema({
         type: String 
     },sponsers:{
         type: String 
+    },mode:{
+        type: String,
+        required: true
+    }, vanue:{
+        type: String
     }
     // organiser:{
     //     type: String,

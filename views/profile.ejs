@@ -8,6 +8,27 @@
     
     <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;"/>
     <title>Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+                $("#openInputBox").click(function(){
+                    $("#changeNameBox").show();
+                    $("#openInputBox").hide();
+                })
+            })
+        $(document).ready(function(){
+            $("#changeName").click(function(){
+                let newName = $("#newName").val();
+                    $.get('server.js?newName='+newName,function(data,status){
+                        //alert(newName+" is setted successfully");
+                        $("#changeNameBox").hide();
+                        $("#openInputBox").show();
+                        $("#some").html('<h4 class="profDet" id = "some" style="display: inline;"><inline class="profAtr" >Name : </inline > <inline id="userName">'+newName+'</inline> </h4>');
+                    })
+            })
+        })
+    </script>
 </head>
 <body>
     <!-- NavBarStart -->
@@ -26,32 +47,20 @@
     <div class="profileDetails">
         <h3 class="profDet">Profile</h3>
 
-        <h4 class="profDet" style="display: inline;"><inline class="profAtr" >Name : </inline > <inline id="userName"><%=user["name"]%> </inline> </h4>
-        <div id="changeNameBox"></div>
-        <button onclick="openInputBox()">Change Name</button>
+        <h4 class="profDet" id = "some" style="display: inline;"><inline class="profAtr" >Name : </inline > <inline id="userName"><%=user["name"]%> </inline> </h4>
+        <div id="changeNameBox" style="display:none">
+            <input id="newName" type="text" >
+            <button id="changeName" >Submit</button>
+        </div>
+        <button id="openInputBox">Change Name</button>
         
         
 
-        <h4 class="profDet"><inline class="profAtr">College :</inline> <%=user["college"]%></h4>
+        <h4 class="profDet" ><inline class="profAtr">College :</inline> <%=user["college"]%></h4>
         <h4 class="profDet"><inline class="profAtr">email :</inline> <%=user["email"]%></h4>
         <h4 class="profDet"><inline class="profAtr">Profession Type : </inline>  <%=user["profType"]%></h4>
     </div>
     <a href="/edit">Edit Profile</a>
 </body>
-<script>
-    const openInputBox = ()=>{
-        document.getElementById("changeNameBox").innerHTML='<input id="newName" type="text"><button onclick="changeName()">Submit</button>';
-    }
-    const changeName=()=>{
-        const xhttp = new XMLHttpRequest();
-        xhttp.onload = function() {
-            document.getElementById("userName").innerText =this.responseText;
-        }
-        let oldName = document.getElementById('userName').innerText;
-        let newName = document.getElementById('newName').innerText;
-    
-        xhttp.open("GET", `server.js?oldName=${oldName}&newName=${newName}`);
-        xhttp.send();
-    }
-</script>
+
 </html>
