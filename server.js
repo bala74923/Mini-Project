@@ -412,12 +412,12 @@ function isNotVerifiedFromSameOrganisation(admin,orgObj){
 
 app.post('/events', checkAuthenticated, async(req, res)=>{
     try{
-        let givenOrg = await Student.findOne({name:req.body.orgName,profType:"Organisation"});
-        if(isNotVerifiedFromSameOrganisation(currUser,givenOrg)){
-            throw "not from same orgainsation";
-        }   
+        // let givenOrg = await Student.findOne({name:req.body.orgName,profType:"Organisation"});
+        // if(isNotVerifiedFromSameOrganisation(currUser,givenOrg)){
+        //     throw "not from same orgainsation";
+        // }   
         let orgDom = givenOrg.domain;
-
+        let currOrg = await Student.findOne({profType:"Organisation",domain:getDomainFromEmail(currUser.email)})
 
         let p1 = split_dates(req.body.date,"-");//split_dates(req.body.edate,"-");
         let p2 = split_dates(req.body.time,":");//split_dates(req.body.etime,":");
@@ -429,7 +429,7 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
      
         const eventObj = {
             id : Date.now().toString(),
-            organisation:req.body.orgName,
+            organisation:currOrg.name,
             eventJoinType: req.body.eventJoinType,
             title : req.body.title,
             date  : req.body.date,
@@ -443,12 +443,15 @@ app.post('/events', checkAuthenticated, async(req, res)=>{
             constraints : req.body.constraints,
             prizes : req.body.prizes,
             takeaways : req.body.takeaways,
+            mode : req.body.mod,
             sponsers : req.body.sponsers,
             eventType: req.body.eventType,
             duration: getDuration(when.getTime(),pastwhen.getTime())
         }
         if(eventObj.eventJoinType=="inside"){
-            eventObj.organisationDomain = givenOrg.domain;
+            eventObj.organisationDomain = currOrg.domain;
+        }if(eventObj.mode=="offline"){
+            eventObj.venue = req.body.venue;
         }
         console.log(eventObj)
         //new Eventinfo(eventObj).save();

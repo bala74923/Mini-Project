@@ -53,6 +53,19 @@
                 console.log(typeof(st))
             })
         })
+
+        $(document).ready(function(){
+            $("#mode").change(function(){
+                if($(this).val()=='online'){
+                    $("#venueName").hide();
+                    $("#venue").hide();
+                }else{
+                    $("#venueName").show();
+                    $("#venue").show();
+                    $("#venue").prop('required',true);
+                }
+            })
+        })
     </script>
 </head>
 <body>
@@ -74,13 +87,13 @@
         <h1 class="login-title">Create New Event!</h1>
         <form action="/events" id="formObject" method="POST" class="event-form"> 
             <!-- Organisation name -->
-            <label for="orgName">Your Organisation Name</label>
+            <!-- <label for="orgName">Your Organisation Name</label>
             <select name="orgName" id="orgName">
                 <option value="SECE">Sri Eshwar College of Engineering</option>
                 <option value="Coimbatore Institute Of Technology">Coimbatore Institute Of Technology</option>
                 <option value="Anna University">Anna University</option>
             </select>
-            <br><br>
+            <br><br> -->
 
             <!-- Title -->
             <label for="title">Title</label>
@@ -119,7 +132,7 @@
             <br><br>
 
             <!-- Organizer -->
-            <label for="organizer">Organizer</label>
+            <label for="organizer">Venue</label>
             <input type="text" name="organizer" id="organizer" required>
             <br><br>
 
@@ -141,12 +154,26 @@
             </select>
 
             <!-- Related Fields -->
-            <label for="eventJoinType">Choose the Event Joining Type:</label>
+            <label for="eventJoinType">Choose the Event Mode:</label>
             <select name="eventJoinType" id="eventJoinType">
                 <option value="inside">Inside Organisation</option>
                 <option value="outside">Open to All</option>
             </select>
             <br><br>
+
+            <label for="mode">Choose the Event Joining Type:</label>
+            <select name="mode" id="mode">
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+            </select>
+            <br><br>
+            
+            <!-- <div id = "venueDiv">
+                
+            <br><br>
+            </div> -->
+            <label for="venue" id = "venueName">Venue</label>
+            <input type="text" name="venue" id="venue" >
 
             <!-- Eligiblity -->
             <label for="eligiblity">Eligiblity Criteria</label>
@@ -172,6 +199,7 @@
             <label for="sponsers">Sponsors</label>
             <input name="sponsers" id="sponsers" type="text"></input>
             <br><br>
+
 
             <!-- submit -->
             <input type="submit" id = "submit" value="submit" class="submit-btn">
