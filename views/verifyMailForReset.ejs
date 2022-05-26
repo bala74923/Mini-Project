@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style">
+    <title>Verify Email</title>
+</head>
+<body>
+    <header>
+        <nav class="logo-title">
+            <a href="/">
+                <img src="/image" alt="logo" class="logo">
+                <h1 id="page-title">AcTrak</h1>
+            </a>
+        </nav>
+    </header>
+    <div class="login-box">
+        <h1 class="login-title">Enter OTP sent to your email</h1>
+        
+        <% if (isfalse==true) { %>
+            <h4 style="color: red; margin : 1rem;">Pleae enter the right otp</h4>
+          <% } %>
+        <form action="/verifyMailForReset" method="POST" class="event-form">
+            <!-- Title -->
+            <label for="otp">Enter the otp</label>
+            <input type="password" id="otp" name="otp" required>
+            <br><br>
+            <!-- submit -->
+            <input type="submit" value="submit" class="submit-btn">
+        </form>
+
+    </div>
+</body>
+</html>
