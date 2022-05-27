@@ -670,7 +670,7 @@ const sendOTPVerificationEmail = async(student,res)=>{
             from : 'actrak ' + process.env.AUTH_EMAIL,
             to: email, 
             subject: "Verify Your Email",
-            html: `<p>Enter<b>${otpstring}</b> in the app to verfiy your email address and complete the signup</p><p> This code <b>expires in 1 hour</b>.</p>`,
+            html: `<p>Enter<b>${otpstring}</b> in the app to verfiy your email address and complete the signup</p><p> This code <b>expires in 10 minutes</b>.</p>`,
         }
 
 
@@ -682,7 +682,7 @@ const sendOTPVerificationEmail = async(student,res)=>{
                 userId: student.id,
                 otp: hashedOTP,
                 createdAt : Date.now(),
-                expiresAt : Date.now() + 3600000,
+                expiresAt : Date.now() + 600000,
             }
         );
 
