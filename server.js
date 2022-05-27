@@ -826,7 +826,7 @@ app.post('/deleteAccount',async (req,res)=>{
 app.get('/showUsers',async (req,res)=>{
     try{
     //    console.log("in progress")
-        let users = await Student.find({domain:currUser.domain})
+        let users = await Student.find({domain:currUser.domain,profType:{$ne: "Organisation"}});
         res.render('showUsers.ejs',{users:users});
     }catch(err){
         res.render('manageAdmin.ejs')

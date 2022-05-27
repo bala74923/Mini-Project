@@ -16,13 +16,13 @@
         <div class="event-box" , id="customers">
             <table>
                     <tr>
-                        <th>title</th>
+                        <th>Name</th>
                         <th>
-                            <%=users[i]["_doc"]["title"]%>
+                            <%=users[i]["_doc"]["name"]%>
                         </th>
                     </tr>
                         <% for (const det in users[i]["_doc"]) {%>
-                            <%if(det=="name" | det=="email"){%>
+                            <%if(det=="profType" | det=="email" |det =="id"){%>
                                 
                                     <tr>
                                         <td id="event-details-attributes">
