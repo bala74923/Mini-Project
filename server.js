@@ -539,215 +539,211 @@ async function sendMailToGivenArray(users,event){
             subject: "This Event is Suggested for You by your Organisation",
             //html: `<p>Enter<b>${otpstring}</b> in the app to verfiy your email address and complete the signup</p><p> This code <b>expires in 10 minutes</b>.</p>`,
             html: `<!DOCTYPE html>
-            <html lang="en">
-            
-            <head>
-                <meta charset="UTF-8">
-                <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link rel="stylesheet" href="/views/index.css">
-                <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;" />
-                <link rel="stylesheet" href="/views/postStyle.css">
-                <style>
+                                            <html lang="en">
+                                            
+                                            <head>
+                                                <meta charset="UTF-8">
+                                                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                                <style>
 
+                                                        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&family=Roboto&display=swap');
+                                                        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
 
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&family=Roboto&display=swap');
+                                                        :root {
+                                                            --primaryTheme: #EFF6FB;
+                                                            --bg-color0:#e6eafe;
+                                                            --bg-color1:#ccd5ff;
+                                                            --bg-color2:#99acff;
+                                                            --bg-color3:#6682ff;
+                                                            --bg-color4:#3358ff;
+                                                            --bg-color5:#002fff;
 
+                                                            /* Shadow color */
+                                                            --shadow-color0:rgba(38, 38, 115, 0.3);
+                                                            --shadow-color1:rgba(223, 223, 231, 0.859);
 
-:root {
-    --primaryTheme: #EFF6FB;
-    --bg-color0:#e6eafe;
-    --bg-color1:#ccd5ff;
-    --bg-color2:#99acff;
-    --bg-color3:#6682ff;
-    --bg-color4:#3358ff;
-    --bg-color5:#002fff;
+                                                            /* Font Colors */
+                                                            --font-col1 : rgb(27, 65, 190);
+                                                            --font-col2: rgba(15, 171, 232, 0.962);
+                                                        }
 
-    /* Shadow color */
-    --shadow-color0:rgba(38, 38, 115, 0.3);
-    --shadow-color1:rgba(223, 223, 231, 0.859);
+                                                        *{
+                                                            background-color: transparent;   
+                                                        }
+                                                        .eventListInnerBox{
+                                                            background-color:rgb(230, 236, 237);
+                                                            margin: 1rem;
+                                                            border-radius: 0.5rem;
+                                                            box-shadow: 0 0 3px 3px var(--shadow-color1);
+                                                            font-weight: 500;
+                                                            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                                                        }
 
-    /* Font Colors */
-    --font-col1 : rgb(27, 65, 190);
-    --font-col2: rgba(15, 171, 232, 0.962);
-}
+                                                        .orgName{
+                                                            color: var(--font-col1);
+                                                            display: flex;
+                                                            flex-direction: row;
+                                                            column-gap: 5%;
+                                                            padding-top: 1rem;
+                                                            margin: 0.5rem;
+                                                            margin-top: auto;
+                                                        }
 
-*{
-    background-color: transparent;   
-}
-.eventListInnerBox{
-    background-color:rgb(230, 236, 237);
-    margin: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 3px 3px var(--shadow-color1);
-    font-weight: 500;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
+                                                        .orgName h6{
+                                                            color: rgba(0, 0, 0, 0.477);
+                                                            margin-top: auto;
+                                                        }
 
-.orgName{
-    color: var(--font-col1);
-    display: flex;
-    flex-direction: row;
-    column-gap: 5%;
-    padding-top: 1rem;
-    margin: 0.5rem;
-    margin-top: auto;
-}
+                                                        .orgName h2{
+                                                            font-size: 1.2rem;
+                                                        }
 
-.orgName h6{
-    color: rgba(0, 0, 0, 0.477);
-    margin-top: auto;
-}
+                                                        .tableBox{
+                                                            display: flex;
+                                                            flex-direction: column;
+                                                            row-gap: 0.5rem;
+                                                            padding: 1rem;
+                                                            align-items: flex-start;
+                                                            font-size: 1rem;
+                                                        }
+                                                        .tableCol{
+                                                            display: flex;
+                                                            flex-direction: row;
+                                                            column-gap: auto;
+                                                            margin: 0.3rem;
+                                                        }
+                                                        .tableCol h4{
+                                                            font-weight: 700;
+                                                            width: 6rem;
+                                                        }
+                                                        .tableCol h5{
+                                                            color: rgba(18, 121, 231, 0.73);
+                                                            font-weight:bold;
+                                                            margin-top: auto;
+                                                        }
 
-.orgName h2{
-    font-size: 1.2rem;
-}
+                                                        .times{
+                                                            padding: 1rem;
+                                                            display: flex;
+                                                            flex-direction: row;
+                                                            column-gap: 1rem;
+                                                        }
 
-.tableBox{
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.5rem;
-    padding: 1rem;
-    align-items: flex-start;
-    font-size: 1rem;
-}
-.tableCol{
-    display: flex;
-    flex-direction: row;
-    column-gap: auto;
-    margin: 0.3rem;
-}
-.tableCol h4{
-    font-weight: 700;
-}
-.tableCol h5{
-    color: rgba(18, 121, 231, 0.73);
-    font-weight:bold;
-    margin-top: auto;
-}
+                                                        .timeBox h4:nth-child(2){
+                                                            color: var(--font-col2);
+                                                            font-weight: 400;
+                                                            
+                                                        }   
 
-.times{
-    padding: 1rem;
-    display: flex;
-    flex-direction: row;
-    column-gap: 1rem;
-}
+                                                        .titleBox{
+                                                            text-align: center;
+                                                            font-family: 'Courier New', Courier, monospace;
+                                                            text-transform: capitalize; 
+                                                            padding: 1rem;
+                                                            color: #6682ff;
+                                                        }
 
-.timeBox h4:nth-child(2){
-    color: var(--font-col2);
-    font-weight: 400;
-    
-}   
+                                                        .descriptionBox{
+                                                            font-family: 'Comic Neue', cursive;
 
-.titleBox{
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    text-transform: capitalize; 
-    padding: 1rem;
-    color: #6682ff;
-}
+                                                            color: black;
+                                                        }
+                                                        .timeBox h4{
+                                                            padding: 0.2rem;
+                                                        }
+                                                </style>
+                                </head>
+                                <body class="mainBody">
 
-.descriptionBox{
-    font-family: 'Comic Neue', cursive;
-
-    color: black;
-}
-.timeBox h4{
-    padding: 0.2rem;
-}
-                </style>
-            </head>
-            <body class="mainBody">
-            
-                <!-- Filter Box End -->
-                <div class="eventListOuterBox" >
-                        <div class="eventListInnerBox">
-                            <div class="orgName">
-                                <h2><i class="bi bi-building"></i>${event.organisation}</h2>
-                                <h6>Event Id : <span>${event.id}</span></h6>
-                            </div>
-                            <div class="titleBox">
-                                <h1>${event.title}</h1>
-                            </div>
-                            <div class="descriptionBox">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam dolorem placeat voluptatem minima nisi animi, porro dicta quidem voluptatum aspernatur, eveniet harum excepturi praesentium et quia provident. Quidem, ratione. Sapiente?
-                                </p>
-                                <p>${event.description}</p>
-                            </div>
-                            <div class="tableBox" style="display:flex; flex-direction:column; width:200px">
-                                <div class="tableCol">
-                                     
-                                    <h4>Type : </h4>
-                                    <h5>${event.eventType}</h5>
-            
+                                <!-- Filter Box End -->
+                                <div class="eventListOuterBox" >
+                                <div class="eventListInnerBox">
+                                <div class="orgName">
+                                    <h2><i class="bi bi-building"></i>${event.organisation}</h2>
+                                    <h6>Event Id : <span>${event.id}</span></h6>
                                 </div>
-                                <div class="tableCol">
-                                     
-                                    <h4>Join Type :</h4>
-                                    <h5>${event.eventJoinType}</h5>
-            
+                                <div class="titleBox">
+                                    <h1>${event.title}</h1>
                                 </div>
-                                <div class="tableCol">
-                                    
-                                    <h4>Field : </h4>
-                                    <h5>${event.fields}</h5>
-            
+                                <div class="descriptionBox">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam dolorem placeat voluptatem minima nisi animi, porro dicta quidem voluptatum aspernatur, eveniet harum excepturi praesentium et quia provident. Quidem, ratione. Sapiente?
+                                    </p>
+                                    <p>${event.description}</p>
                                 </div>
-                                <div class="tableCol">
-                                    
-                                    <h4>Eligiblity : </h4>
-                                    <h5>${event.eligiblity}</h5>
-            
+                                <div class="tableBox" style="display:flex; flex-direction:column; width:200px">
+                                    <div class="tableCol">
+                                        
+                                        <h4>Type : </h4>
+                                        <h5>${event.eventType}</h5>
+
+                                    </div>
+                                    <div class="tableCol">
+                                        
+                                        <h4>Join Type :</h4>
+                                        <h5>${event.eventJoinType}</h5>
+
+                                    </div>
+                                    <div class="tableCol">
+                                        
+                                        <h4>Field : </h4>
+                                        <h5>${event.fields}</h5>
+
+                                    </div>
+                                    <div class="tableCol">
+                                        
+                                        <h4>Eligiblity : </h4>
+                                        <h5>${event.eligiblity}</h5>
+
+                                    </div>
+                                    <div class="tableCol">
+                                        
+                                        <h4>Constraints : </h4>
+                                        <h5>${event.constraints}</h5>
+                                    </div>
+                                    <div class="tableCol">
+                                        
+                                        <h4>Prizes : </h4> 
+                                        <h5>${event.prizes}</h5>
+                                    </div>
+                                    <div class="tableCol">
+                                        
+                                        <h4>OutComes : </h4>
+                                        <h5>${event.takeaways}</h5>
+                                    </div>
+                                    <div class="tableCol">
+                                        
+                                        <h4>Sponsers : </h4>
+                                        <h5>${event.sponsers}</h5>
+                                    </div>
+                                    <div class="tableCol">
+                                        
+                                        <h4>Mode : </h4>
+                                        <h5>${event.mode}</h5>
+                                    </div>
+                                    <div class="tableCol">
+                                        <h4>Location / Platform: </h4>
+                                        <h5>${event.venue}</h5>
+                                    </div>
                                 </div>
-                                <div class="tableCol">
-                                     
-                                    <h4>Constraints : </h4>
-                                    <h5>${event.constraints}</h5>
+                                <div class="times">
+                                    <div class="timeBox">   
+                                        <h4>Start Date & Time</h4>
+                                        <h4><i class="bi bi-clock"></i>${event.date} ${event.time}</h4>
+                                    </div>
+                                    <div class="timeBox">
+                                        <h4></i>End Date & Time</h4>
+                                        <h4><i class="bi bi-clock"></i>${event.endDate}  ${event.endTime} </h4>
+                                    </div>
+                                    <div class="timeBox">
+                                        <h4>Duration</h4>
+                                        <h4><i class="bi bi-hourglass-split"></i>${event.duration[0]} Days ${event.duration[1]} Hrs ${event.duration[2]} Mins</h4>  
+                                    </div>
                                 </div>
-                                <div class="tableCol">
-                                    
-                                    <h4>Prizes : </h4> 
-                                    <h5>${event.prizes}</h5>
                                 </div>
-                                <div class="tableCol">
-                                    
-                                    <h4>OutComes : </h4>
-                                    <h5>${event.takeaways}</h5>
-                                </div>
-                                <div class="tableCol">
-                                     
-                                    <h4>Sponsers : </h4>
-                                    <h5>${event.sponsers}</h5>
-                                </div>
-                                <div class="tableCol">
-                                    
-                                    <h4>Mode : </h4>
-                                    <h5>${event.mode}</h5>
-                                </div>
-                                <div class="tableCol">
-                                     
-                                    <h4>Location / Platform: </h4>
-                                    <h5>${event.venue}</h5>
-                                </div>
-                            </div>
-                            <div class="times">
-                                <div class="timeBox">   
-                                    <h4>Start Date & Time</h4>
-                                    <h4><i class="bi bi-clock"></i>${event.date} ${event.time}</h4>
-                                </div>
-                                <div class="timeBox">
-                                    <h4></i>End Date & Time</h4>
-                                    <h4><i class="bi bi-clock"></i>${event.endDate}  ${event.endTime} </h4>
-                                </div>
-                                <div class="timeBox">
-                                    <h4>Duration</h4>
-                                    <h4><i class="bi bi-hourglass-split"></i>${event.duration[0]} Days ${event.duration[1]} Hrs ${event.duration[2]} Mins</h4>  
-                                </div>
-                            </div>
-                        </div>
-                </div>            
-            </body>
-            </html>`,
+                                </div>            
+                                            </body>
+                                            </html>`,
         }
 
         transporter.sendMail(mailOptions, async function(error, info){
