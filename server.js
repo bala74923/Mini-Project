@@ -299,6 +299,57 @@ app.get('/pasteventlist', async function(req, res) {
      res.render('pasteventlist.ejs', {pasteventdetails:pasteventdetails});
 });
 
+app.post('/pasteventlist',async (req,res)=>{
+    try{
+        let needObj = {
+            organisation : req.body.organisation,
+            fields: req.body.fields,
+            type: req.body.type,
+            sortBy: req.body.sortBy,
+            eventId: req.body.eventId
+        }
+        let eventlist = await PastEventinfo.find({});
+        let pasteventdetails = []
+        eventlist.forEach((event,ind,arr)=>{
+            if((needObj.eventId=='none'||needObj.eventId==event.id)&&
+                (needObj.organisation=='none'||needObj.organisation==event.organisation)
+                &&(needObj.fields=='none'||needObj.fields==event.fields) && 
+                (needObj.type=='none'||needObj.type==event.eventType))
+            {
+                if(event.eventJoinType=='outside' || event.organisationDomain==getDomainFromEmail(currUser.email)) {
+                    pasteventdetails.push(event)
+                }
+            }
+        });
+        console.log(needObj);
+        if(needObj.sortBy!='none'){
+            console.log(pasteventdetails+"will be sorted")
+            pasteventdetails.sort((event1,event2)=>{
+                if(needObj.sortBy=='Date(Ascending)') {
+                    console.log('ascending')
+                    return compareDateAndTime(event1.date,event1.time,event2.date,event2.time);
+                }
+                else if(needObj.sortBy=='Date(Descending)') {
+                    console.log('descending')
+                    return compareDateAndTime(event2.date,event2.time,event1.date,event1.time);
+                }
+                else if(needObj.sortBy=='Duration(Ascending)') {
+                    console.log('Duration ascending')
+                    return compareDuration(event1.duration,event2.duration);
+                }
+                console.log('Duration Descending')
+                return compareDuration(event2.duration,event1.duration);
+            })
+        }
+    
+        res.render('pasteventlist.ejs', {pasteventdetails:pasteventdetails});
+    }catch(err){
+        console.log(err)
+        res.redirect('/')
+    }
+})
+
+
 app.get('/ongoingeventlist', async function(req, res) {
     
     // OngoingEventinfo.find({}, function(err, ongoingeventdetails) {
@@ -316,7 +367,55 @@ app.get('/ongoingeventlist', async function(req, res) {
     res.render('ongoingeventlist.ejs', {ongoingeventdetails:ongoingeventdetails});
 
 });
-
+app.post('/ongoingeventlist',async (req,res)=>{
+    try{
+        let needObj = {
+            organisation : req.body.organisation,
+            fields: req.body.fields,
+            type: req.body.type,
+            sortBy: req.body.sortBy,
+            eventId: req.body.eventId
+        }
+        let eventlist = await OngoingEventinfo.find({});
+        let ongoingeventdetails = []
+        eventlist.forEach((event,ind,arr)=>{
+            if((needObj.eventId=='none'||needObj.eventId==event.id)&&
+                (needObj.organisation=='none'||needObj.organisation==event.organisation)
+                &&(needObj.fields=='none'||needObj.fields==event.fields) && 
+                (needObj.type=='none'||needObj.type==event.eventType))
+            {
+                if(event.eventJoinType=='outside' || event.organisationDomain==getDomainFromEmail(currUser.email)) {
+                    ongoingeventdetails.push(event)
+                }
+            }
+        });
+        console.log(needObj);
+        if(needObj.sortBy!='none'){
+            console.log(ongoingeventdetails+"will be sorted")
+            ongoingeventdetails.sort((event1,event2)=>{
+                if(needObj.sortBy=='Date(Ascending)') {
+                    console.log('ascending')
+                    return compareDateAndTime(event1.date,event1.time,event2.date,event2.time);
+                }
+                else if(needObj.sortBy=='Date(Descending)') {
+                    console.log('descending')
+                    return compareDateAndTime(event2.date,event2.time,event1.date,event1.time);
+                }
+                else if(needObj.sortBy=='Duration(Ascending)') {
+                    console.log('Duration ascending')
+                    return compareDuration(event1.duration,event2.duration);
+                }
+                console.log('Duration Descending')
+                return compareDuration(event2.duration,event1.duration);
+            })
+        }
+    
+        res.render('ongoingeventlist.ejs', {ongoingeventdetails:ongoingeventdetails});
+    }catch(err){
+        console.log(err)
+        res.redirect('/')
+    }
+})
 
 // app.get('/verifyMail',(req,res)=>{
 //     res.render('verifyMail.ejs')
