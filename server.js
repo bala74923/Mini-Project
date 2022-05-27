@@ -720,6 +720,7 @@ app.post('/forgotPassword', async (req, res) => {
         res.render('verifyMailForReset.ejs', { isfalse: false })
     } catch (err) {
         console.log(err + " is the error in forgetPassword")
+        res.redirect('/')
     }
 })
 
@@ -752,7 +753,7 @@ app.post('/verifyMailForReset', async (req, res) => {
                     //throw new Error("Invalid code");
                     // erase registered email
                     console.log("not valid so removed");
-                    res.render('verifyMailForReset', { isfalse: true })
+                    res.render('verifyMailForReset.ejs', { isfalse: true })
                     // Student.find({ id:currentlyRegisteredUser.id }).remove().exec();
                 } else {
                     //await User.updateOne({_id:userId},{verified: true});
