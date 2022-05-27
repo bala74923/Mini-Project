@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style">
+    <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;" />
     <title>Ongoing Events</title>
 </head>
 <body>
@@ -20,15 +21,8 @@
             <a href="/main"><i class="bi bi-house-door-fill"></i>Home</a>
         </nav>
     </header>
-    <hr>
-    <!-- NavBarEnd -->   
-    <hr>
     
-    <%if(ongoingeventdetails.length!=0){%>
-        <h1>Events in Progress...</h1>
-    <% } else{%>
-        <h1>No events in progress</h1>
-    <% } %>
+    
     <!--Filter Start-->
     <form  action="/eventlist" method="post" >
         <div class="fliterBox">
@@ -71,11 +65,20 @@
                 </select>
             </div>
             <div class="filterOption">
+                <label for="eventId">Search By Id</label>
+                <input type="text" name="eventId" id="eventId" value="none">    
+            </div>
+            <div class="filterOption">
                 <button type="submit" class="filter-btn">Filter<i class="bi bi-filter"></i></button>
             </div>
         </div>
     </form>
     <!--Filter End-->
+    <%if(ongoingeventdetails.length!=0){%>
+        <h1>Events in Progress...</h1>
+    <% } else{%>
+        <h1>No events in progress</h1>
+    <% } %>
     
     <% for(let i=0; i < ongoingeventdetails.length; i++) { %>
         <h3 class="centerLink">Event <%= i+1%> </h3>
