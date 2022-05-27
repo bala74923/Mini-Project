@@ -131,7 +131,7 @@ app.post('/register',checkNotAuthenticated, async (req, res)=>{
             name : req.body.name,
             email : req.body.email,
             domain : getDomainFromEmail(req.body.email),
-            college : req.body.college,
+            // college : req.body.college,
             profType : "Student",//req.body.profType,
             password : hashedPassword
         };
