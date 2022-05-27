@@ -16,7 +16,7 @@
                //alert(givenDomain);
               $.get('getUserDomain',function(data,status){
                   if(data!=givenDomain){
-                      alert("cannot be allowed")
+                    alert("given user mail id is not from your organisation")
                       //$("#form").resetForm();
                      $("#email").val("")
                   }
