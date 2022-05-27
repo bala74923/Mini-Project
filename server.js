@@ -77,6 +77,7 @@ let currentlyRegisteredUser;
 const initializePassport = require('./passport-config');
 const res = require('express/lib/response');
 const student = require('./models/student')
+const { findOneAndDelete } = require('./models/student')
 initializePassport(
     passport,
      //email => users.find(user => user.email === email),
@@ -443,6 +444,7 @@ app.post('/verifyMail',async (req,res)=>{
                     await UserOTPVerification.deleteMany({userId:currentlyRegisteredUser.id});
                     // erase registered mail from db
                     console.log("expired");
+                    throw "link expired";
                     //Student.find({ id:currentlyRegisteredUser.id }).remove().exec();
                 } else {
                         const validOTP = await bcrypt.compare(gotOtp,hashedOTP);
@@ -803,6 +805,19 @@ app.post('/changeName',async(req,res)=>{
         console.log(err)
         res.render('changeName.ejs')
     }
+})
+app.get('/deleteAccount',(req,res)=>{
+    res.render('deleteAccount.ejs');
+})
+app.post('/deleteAccount',async (req,res)=>{
+   try{
+        await Student.findOneAndDelete({email:currUser.email});
+        currUser = null;
+        res.redirect('/logout');
+   }catch(err){
+       console.log(err);
+       res.redirect('/');
+   }
 })
 
 //---------------------------------------------
