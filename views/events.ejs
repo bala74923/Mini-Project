@@ -36,7 +36,7 @@
     }
 
         $(document).ready(function(){
-            $("#description").click(function(){
+            $("#submit").click(function(){
                 
                 split_dates($('#time').val())
                 let sd = split_dates($('#date').val(),"-")
@@ -58,10 +58,11 @@
         })
 
         $(document).ready(function(){
-            $("#mode").click(function(){
+            $("#mode").change(function(){
                 if($(this).val()=='online'){
-                    $("#venueName").hide();
-                    $("#venue").hide();
+                    //$("#venueName").hide();
+                   // $("#venue").hide();
+                   $("#venue").prop('required',false);
                 }else{
                     $("#venueName").show();
                     $("#venue").show();
