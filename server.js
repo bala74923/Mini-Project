@@ -776,13 +776,13 @@ app.post('/removeAdmin',async (req,res)=>{
 
 app.get('/showAdmin',async(req,res)=>{
     try{
-        Student.find({profType:"Admin"}, function(err, adminDetails) {
-            res.render('adminList.ejs', {adminDetails:adminDetails})
+        Student.find({profType:"Admin",domain:currUser.domain}, function(err, adminDetails) {
+            res.render('adminList.ejs', {adminDetails:adminDetails});
          });
     }catch(err){
         console.log("some error while showing admins");
         console.log(err);
-        res.render('manageAdmin.ejs')
+        res.render('manageAdmin.ejs');
     }
 })
 
