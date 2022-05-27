@@ -236,16 +236,20 @@ app.post('/eventlist',async (req,res)=>{
             organisation : req.body.organisation,
             fields: req.body.fields,
             type: req.body.type,
-            sortBy: req.body.sortBy
+            sortBy: req.body.sortBy,
+            eventId: req.body.eventId
         }
         let eventlist = await Eventinfo.find({});
         let eventdetails = []
         eventlist.forEach((event,ind,arr)=>{
-            if((needObj.organisation=='none'||needObj.organisation==event.organisation)
+            if((needObj.eventId=='none'||needObj.eventId==event.id)&&
+                (needObj.organisation=='none'||needObj.organisation==event.organisation)
                 &&(needObj.fields=='none'||needObj.fields==event.fields) && 
                 (needObj.type=='none'||needObj.type==event.eventType))
             {
-                eventdetails.push(event);
+                if(event.eventJoinType=='outside' || event.organisationDomain==getDomainFromEmail(currUser.email)) {
+                    eventdetails.push(event)
+                }
             }
         });
         console.log(needObj);
