@@ -287,7 +287,7 @@ app.post('/eventlist',async (req,res)=>{
 })
 
 
-app.get('/pasteventlist', async function(req, res) {
+app.get('/pasteventlist',checkAuthenticated, async function(req, res) {
     
     // PastEventinfo.find({}, function(err, pasteventdetails) {
     //     res.render('pasteventlist.ejs', {pasteventdetails:pasteventdetails});
@@ -305,7 +305,7 @@ app.get('/pasteventlist', async function(req, res) {
      res.render('pasteventlist.ejs', {pasteventdetails:pasteventdetails});
 });
 
-app.post('/pasteventlist',async (req,res)=>{
+app.post('/pasteventlist',checkAuthenticated,async (req,res)=>{
     try{
         let needObj = {
             organisation : req.body.organisation,
@@ -356,7 +356,7 @@ app.post('/pasteventlist',async (req,res)=>{
 })
 
 
-app.get('/ongoingeventlist', async function(req, res) {
+app.get('/ongoingeventlist', checkAuthenticated,async function(req, res) {
     
     // OngoingEventinfo.find({}, function(err, ongoingeventdetails) {
     //     res.render('ongoingeventlist.ejs', {ongoingeventdetails:ongoingeventdetails});
@@ -373,7 +373,7 @@ app.get('/ongoingeventlist', async function(req, res) {
     res.render('ongoingeventlist.ejs', {ongoingeventdetails:ongoingeventdetails});
 
 });
-app.post('/ongoingeventlist',async (req,res)=>{
+app.post('/ongoingeventlist',checkAuthenticated,async (req,res)=>{
     try{
         let needObj = {
             organisation : req.body.organisation,
@@ -427,7 +427,7 @@ app.post('/ongoingeventlist',async (req,res)=>{
 //     res.render('verifyMail.ejs')
 // })
 
-app.post('/verifyMail',async (req,res)=>{
+app.post('/verifyMail',checkAuthenticated,async (req,res)=>{
 
     try {
         let gotOtp = req.body.otp; //need form
@@ -773,10 +773,10 @@ async function sendMailToGivenArray(users,event){
     })
 
 }
-app.get('/notifyEventToAll',(req,res)=>{
+app.get('/notifyEventToAll',checkAuthenticated,(req,res)=>{
     res.render('notifyEventToAll.ejs',{isfalse:false,pass:true});
 })
-app.post('/notifyEventToAll',async (req,res)=>{
+app.post('/notifyEventToAll',checkAuthenticated,async (req,res)=>{
     try{
             let valid = await bcrypt.compareSync(req.body.password,currUser.password);
             if(valid){
@@ -1016,11 +1016,11 @@ app.get("/resendOTPVerificationCode", async(req,res)=> {
 })
 
 //add admin
-app.get('/addAdmin',(req, res)=>{
+app.get('/addAdmin',checkAuthenticated,(req, res)=>{
     res.render('addAdmin.ejs');
 })
 
-app.post('/addAdmin',async (req,res)=>{
+app.post('/addAdmin',checkAuthenticated,async (req,res)=>{
     try{
         let mail=req.body.email;
         await Student.findOneAndUpdate({email:mail},{profType:"Admin"});
@@ -1033,13 +1033,13 @@ app.post('/addAdmin',async (req,res)=>{
 })
 
 //remove admin
-app.get('/removeAdmin',(req, res)=>{
+app.get('/removeAdmin',checkAuthenticated,(req, res)=>{
     res.render('removeAdmin.ejs')
 })
 
 
 
-app.post('/removeAdmin',async (req,res)=>{
+app.post('/removeAdmin',checkAuthenticated,async (req,res)=>{
     try{
         let mail=req.body.email;
         await Student.findOneAndUpdate({email:mail},{profType:"Student"});
@@ -1051,7 +1051,7 @@ app.post('/removeAdmin',async (req,res)=>{
     return res.render('manageAdmin.ejs');
 })
 
-app.get('/showAdmin',async(req,res)=>{
+app.get('/showAdmin',checkAuthenticated,async(req,res)=>{
     try{
         Student.find({profType:"Admin",domain:currUser.domain}, function(err, adminDetails) {
             res.render('adminList.ejs', {adminDetails:adminDetails});
@@ -1063,11 +1063,11 @@ app.get('/showAdmin',async(req,res)=>{
     }
 })
 
-app.get('/changeName',(req,res)=>{
+app.get('/changeName',checkAuthenticated,(req,res)=>{
     res.render('changeName.ejs')
 })
 
-app.post('/changeName',async(req,res)=>{
+app.post('/changeName',checkAuthenticated,async(req,res)=>{
     try{
         let newName = req.body.name;
         let bodyEmail = req.body.email;
@@ -1080,10 +1080,10 @@ app.post('/changeName',async(req,res)=>{
         res.render('changeName.ejs')
     }
 })
-app.get('/deleteAccount',(req,res)=>{
+app.get('/deleteAccount',checkAuthenticated,(req,res)=>{
     res.render('deleteAccount.ejs',{isfalse:false});
 })
-app.post('/deleteAccount',async (req,res)=>{
+app.post('/deleteAccount',checkAuthenticated,async (req,res)=>{
    try{
         try{
             let p1 = req.body.password;
@@ -1112,7 +1112,7 @@ app.post('/deleteAccount',async (req,res)=>{
 })
 
 //SHOW USERS
-app.get('/showUsers',async (req,res)=>{
+app.get('/showUsers',checkAuthenticated,async (req,res)=>{
     try{
     //    console.log("in progress")
         let users = await Student.find({domain:currUser.domain,profType:{$ne: "Organisation"}});
@@ -1128,11 +1128,11 @@ app.get('/showUsers',async (req,res)=>{
 
 
 let currGivenEmail;
-app.get('/forgotPassword', (req, res) => {
+app.get('/forgotPassword', checkAuthenticated,(req, res) => {
     res.render('forgotPassword.ejs')
 })
 
-app.post('/forgotPassword', async (req, res) => {
+app.post('/forgotPassword', checkAuthenticated,async (req, res) => {
     try {
         let email = req.body.email
         currGivenEmail = email;
@@ -1146,7 +1146,7 @@ app.post('/forgotPassword', async (req, res) => {
 })
 
 
-app.post('/verifyMailForReset', async (req, res) => {
+app.post('/verifyMailForReset', checkAuthenticated,async (req, res) => {
     try {
         let gotOtp = req.body.otp; //need form
         console.log(gotOtp + " this is user giving otp");
@@ -1204,11 +1204,11 @@ app.post('/verifyMailForReset', async (req, res) => {
 
 
 //reset password
-app.get('/resetPassword', (req, res, next) => {
+app.get('/resetPassword', checkAuthenticated,(req, res, next) => {
     res.render('resetPassword.ejs', { entered: 0 })
 })
 
-app.post('/resetPassword', async (req, res) => {
+app.post('/resetPassword', checkAuthenticated,async (req, res) => {
     let p1 = req.body.password
     let p2 = req.body.password2
     if (p1.length <= 0 || p2.length <= 0) {
