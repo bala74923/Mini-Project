@@ -197,7 +197,7 @@ app.get('/getDomain',async (req,res)=>{
 
 })
 
-app.get('/eventlist', async function(req, res) {
+app.get('/eventlist', checkAuthenticated, async function(req, res) {
     // User.find({}, function(err, users) {
     //    res.render('/usersList', {users: users});
     // });
@@ -912,7 +912,6 @@ app.get("/pageNotFound", (req, res)=>{
 app.use((req, res, next)=>{
     res.status(404).redirect('/pageNotFound');
 })
-
 
 
 app.listen(5000);
