@@ -33,14 +33,20 @@
             <link rel="stylesheet" href="/style">
 
             <% if (isfalse==true) { %>
-                <h4 style="color: red; margin : 1rem;">Pleae enter the right Password</h4>
+                <h4 style="color: red; margin : 1rem;">Event Id is Invalid</h4>
               <% } %>
-            <form action="/deleteAccount" method="POST" class="login-form">
-    
+              <% if (pass==false) { %>
+                <h4 style="color: red; margin : 1rem;">Please Enter correct password</h4>
+              <% } %>
+            <form action="/notifyEventToAll" method="POST" class="login-form">
+
+                <label for="password">Event Id</label>
+                <input type="text" name="eventId" id="eventId" required>
+
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" required>
     
-                <button type="submit" class="submit-btn" class="logout-btn" id = "submit">Delete Account</button>
+                <button type="submit" class="submit-btn" class="logout-btn" id = "submit">Send to all</button>
             </form>
             <!-- <a class="centerLink" href="/login">Login</a> -->
         </div>

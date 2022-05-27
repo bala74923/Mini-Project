@@ -90,7 +90,7 @@ eventinfoSchema = mongoose.Schema({
     },mode:{
         type: String,
         required: true
-    }, vanue:{
+    }, venue:{
         type: String
     }
     // organiser:{
