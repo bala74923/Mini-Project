@@ -197,6 +197,8 @@ app.get('/getDomain',async (req,res)=>{
 
 })
 
+
+
 app.get('/eventlist', checkAuthenticated, async function(req, res) {
     // User.find({}, function(err, users) {
     //    res.render('/usersList', {users: users});
@@ -803,6 +805,13 @@ app.post('/changeName',async(req,res)=>{
         res.render('changeName.ejs')
     }
 })
+
+app.get('/showUsers',async(req,res)=>{
+    let email = getDomainFromEmail(currUser.email)
+    let users = await Student.find({email:email})
+    res.render('showUsers.ejs',{users:users})
+})
+
 
 //---------------------------------------------
 //  FORGOT PASSWORD START
