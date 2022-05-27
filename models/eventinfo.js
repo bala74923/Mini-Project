@@ -1,33 +1,6 @@
 const mongoose  = require('mongoose')
 
 eventinfoSchema = mongoose.Schema({
-    /*
-        main
-        =====
-        
-        title
-        description
-        oragniser
-        date
-        time
-        related field
-
-        viewmore
-        =========
-            op
-            ---
-            eligiblity
-            constraints / guidelines
-            prices /credits
-            reviews
-            sponsors
-
-            must
-            ---
-            link
-
-    */
-    //Before view more
     id:{
         type: String,
         required: true
@@ -93,38 +66,6 @@ eventinfoSchema = mongoose.Schema({
     }, venue:{
         type: String
     }
-    // organiser:{
-    //     type: String,
-    //     required: true
-    // },
-    // relatedFields:{
-    //     type: String,
-    //     required: true
-    // },
-    
-    //optional in view more
-    // eligibility:{
-    //     type: String,
-    //     required: false
-    // },
-    // constraints:{
-    //     type: String,
-    //     required: false
-    // },
-    // prizes:{
-    //     type: String,
-    //     required: false
-    // },
-    // reviews:{
-    //     type: String,
-    //     required: false
-    // },
-    // sponsers:{
-    //     type: String,
-    //     required: false
-    // },
-
-    //must in view more
 
 })
 
