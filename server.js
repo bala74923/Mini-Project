@@ -199,6 +199,8 @@ app.get('/getDomain',async (req,res)=>{
 
 })
 
+
+
 app.get('/eventlist', checkAuthenticated, async function(req, res) {
     // User.find({}, function(err, users) {
     //    res.render('/usersList', {users: users});
@@ -818,6 +820,17 @@ app.post('/deleteAccount',async (req,res)=>{
        console.log(err);
        res.redirect('/');
    }
+})
+
+//SHOW USERS
+app.get('/showUsers',async (req,res)=>{
+    try{
+    //    console.log("in progress")
+        let users = await Student.find({domain:currUser.domain})
+        res.render('showUsers.ejs',{users:users});
+    }catch(err){
+        res.render('manageAdmin.ejs')
+    }
 })
 
 //---------------------------------------------

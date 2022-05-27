@@ -550,7 +550,10 @@ label{
 }
 
 footer{
-    background-color: rgba(0, 0, 0, 0.401);
+    background-color: rgba(204, 167, 167, 0.401);
+    padding-bottom: 0,5rem;
+    padding-top: 0.5rem;
+    line-height: 2;
     margin: 0rem 1rem 0rem 1rem;
     border-radius: 0.5rem;
     box-shadow: 3px 3px 3px 3px white;
