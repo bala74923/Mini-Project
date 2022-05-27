@@ -805,6 +805,17 @@ app.post('/changeName',async(req,res)=>{
     }
 })
 
+//SHOW USERS
+app.get('/showUsers',async (req,res)=>{
+    try{
+    //    console.log("in progress")
+        let users = await Student.find({domain:currUser.domain})
+        res.render('showUsers.ejs',{users:users});
+    }catch(err){
+        res.render('manageAdmin.ejs')
+    }
+})
+
 //---------------------------------------------
 //  FORGOT PASSWORD START
 //---------------------------------------------
