@@ -96,117 +96,110 @@
                 <option value="SECE">Sri Eshwar College of Engineering</option>
                 <option value="Coimbatore Institute Of Technology">Coimbatore Institute Of Technology</option>
                 <option value="Anna University">Anna University</option>
-            </select>
-            <br><br> -->
+            </select> -->
+            <div class="eventBox">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required>
 
-            <!-- Title -->
-            <label for="title">Title</label>
-            <input type="text" id="title" name="title" required>
-            <br><br>
+            </div>
+            <div class="eventBox">
+                <!-- Description -->
+                <label for="description">Description</label>
+                <input type="text" name="description" id="description" required>
+            </div>
+            <div class="eventBox">
+                <!-- Start Date -->
+                <label for="date">Start Date</label>
+                <input type="date" name="date" id="date" required>
 
-            <!-- Start Date -->
-            <label for="date">Start Date</label>
-            <input type="date" name="date" id="date" required>
-            <br><br>
+            </div>
+            <div class="eventBox">
+                <!-- Start Time -->
+                <label for="time">Start Time</label>
+                <input type="time" name="time" id="time" required>
 
-            <!-- Start Time -->
-            <label for="time">Start Time</label>
-            <input type="time" name="time" id="time" required>
-            <br><br>
+            </div>
+            <div class="eventBox">
+                <!-- End Date -->
+                <label for="edate">End Date</label>
+                <input type="date" name="edate" id="edate" required>
 
-            <!-- End Date -->
-            <label for="edate">End Date</label>
-            <input type="date" name="edate" id="edate" required>
-            <br><br>
+            </div>
+            <div class="eventBox">
+                <!-- End Time -->
+                <label for="etime">End Time</label>
+                <input type="time" name="etime" id="etime" required>
 
-            <!-- End Time -->
-            <label for="etime">End Time</label>
-            <input type="time" name="etime" id="etime" required>
-            <br><br>
-
-            <!-- Description -->
-            <label for="description">Description</label>
-            <input type="text" name="description" id="description" required>
+            </div>
             
-            <br><br>
-
-            <!-- Link to event -->
-            <label for="eventlink">Event Link</label>
-            <input type="url" name="eventlink" id="eventlink" required>
-            <br><br>
-
-            <!-- Organizer -->
-            <label for="organizer">Organizer</label>
-            <input type="text" name="organizer" id="organizer" required>
-            <br><br>
-
-            <!-- Related Fields -->
-            <label for="fields">Choose the Fields:</label>
-            <select name="fields" id="fields" >
-                <option value="BlockChain">BlockChain</option>
-                <option value="WebDevelopment">WebDevelopment</option>
-                <option value="AppDevelopment">AppDevelopment</option>
-                <option value="MachineLearning">MachineLearning</option>
-            </select>
-            <br><br>
-
-            <label for="eventType">Choose the Type of the Event:</label>
+            <div class="eventBox">
+                <!-- Link to event -->
+                <label for="eventlink">Event Link</label>
+                <input type="url" name="eventlink" id="eventlink" required>
+            </div>
+            <div class="eventBox">
+                <!-- Organizer -->
+                <label for="organizer">Organizer</label>
+                <input type="text" name="organizer" id="organizer" required>
+            </div>
+            <div class="eventBox">
+                <label for="fields">Choose the Fields:</label>
+                <select name="fields" id="fields" >
+                    <option value="BlockChain">BlockChain</option>
+                    <option value="WebDevelopment">WebDevelopment</option>
+                    <option value="AppDevelopment">AppDevelopment</option>
+                    <option value="MachineLearning">MachineLearning</option>
+                </select>
+            </div>
+            <div class="eventBox">
+                <label for="eventType">Choose the Type of the Event:</label>
                 <select name="eventType" id="eventType">
-                <option value="Technical">Technical</option>
-                <option value="Culturals">Culturals</option>
-                <option value="Health">Health</option>
-            </select>
-
-            <!-- Related Fields -->
-            <label for="eventJoinType">Choose the Even Joining Type:</label>
-            <select name="eventJoinType" id="eventJoinType">
-                <option value="inside">Inside Organisation</option>
-                <option value="outside">Open to All</option>
-            </select>
-            <br><br>
-
-            <label for="mode">Choose the Event Mode:</label>
-            <select name="mode" id="mode">
-                <option value="online">Online</option>
-                <option value="offline">Offline</option>
-            </select>
-            <br><br>
-            
-            <!-- <div id = "venueDiv">
-                
-            <br><br>
-            </div> -->
-            <label for="venue" id = "venueName">Venue</label>
-            <input type="text" name="venue" id="venue" >
-
-            <!-- Eligiblity -->
-            <label for="eligiblity">Eligiblity Criteria</label>
-            <input name="eligiblity" id="eligiblity" type="text"></input>
-            <br><br>
-
-            <!-- Constraints -->
-            <label for="constraints">Constraints Criteria</label>
-            <input name="constraints" id="constraints" type="text"></input>
-            <br><br>
-
-            <!-- Prizes -->
-            <label for="prizes">Prizes</label>
-            <input name="prizes" id="prizes" ></input>
-            <br><br>
-
-            <!-- takeaways -->
-            <label for="takeaways">takeaways</label>
-            <input name="takeaways" id="takeaways" type="text"></input>
-            <br><br>
-
-            <!-- sponsers -->
-            <label for="sponsers">Sponsors</label>
-            <input name="sponsers" id="sponsers" type="text"></input>
-            <br><br>
-
-
-            <!-- submit -->
-            <input type="submit" id = "submit" value="submit" class="submit-btn">
+                    <option value="Technical">Technical</option>
+                    <option value="Culturals">Culturals</option>
+                    <option value="Health">Health</option>
+                </select>
+            </div>
+            <div class="eventBox">
+                <label for="eventJoinType">Choose the Even Joining Type:</label>
+                <select name="eventJoinType" id="eventJoinType">
+                    <option value="inside">Inside Organisation</option>
+                    <option value="outside">Open to All</option>
+                </select>
+            </div>
+            <div class="eventBox">
+                <label for="mode">Choose the Event Mode:</label>
+                <select name="mode" id="mode">
+                    <option value="online">Online</option>
+                    <option value="offline">Offline</option>
+                </select>
+            </div>
+            <div class="eventBox">
+                <label for="venue" id = "venueName">Venue</label>
+                <input type="text" name="venue" id="venue" >
+            </div>
+            <div class="eventBox">
+                <label for="eligiblity">Eligiblity Criteria</label>
+                <input name="eligiblity" id="eligiblity" type="text"></input>
+            </div>
+            <div class="eventBox">
+                <label for="constraints">Constraints Criteria</label>
+                <input name="constraints" id="constraints" type="text"></input>
+            </div>
+            <div class="eventBox">
+                <label for="prizes">Prizes</label>
+                <input name="prizes" id="prizes" ></input>
+            </div>
+            <div class="eventBox">
+                <label for="takeaways">takeaways</label>
+                <input name="takeaways" id="takeaways" type="text"></input>
+            </div>
+            <div class="eventBox">
+                <label for="sponsers">Sponsors</label>
+                <input name="sponsers" id="sponsers" type="text"></input>
+            </div>
+            <div class="eventBox">
+                <button type="submit" id = "submit" value="submit" class="eventBtn">Submit Event</button>
+            </div> 
         </form>
     </div>
 </body>

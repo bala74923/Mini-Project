@@ -150,8 +150,7 @@ a {
     background: #3A5AFE;
     border-radius: 8px;
     color: white;
-    transition: background 0.5s, padding 0.5s, color 0.5s;
-    
+    transition: background 0.5s, padding 0.5s, color 0.5s;  
 }
 
 .submit-btn:hover {
@@ -324,7 +323,7 @@ a {
     margin: 0.2rem;
 }
 
-.inputBox input {
+.inputBox input, inputBox select {
     margin: 02.rem;
     padding: 0.2rem;
     border-radius: 0.3rem;
@@ -339,10 +338,10 @@ a {
     background-color: chocolate;
 }
 
-select {
+/* select {
     padding: 0.5rem;
     font-size: 1rem;
-}
+} */
 
 .bi {
     background-color: transparent;
@@ -399,7 +398,7 @@ a {
     flex-direction: row-reverse;
 }
 
-input{
+input, select{
     width: 30%;
     height: 2rem;
     padding: 12px 20px;
@@ -704,4 +703,46 @@ background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
     outline: none;
   }
     
-  
+select{
+    padding: 0.1rem;
+    text-align: center;
+}
+.event-form{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 3rem;
+    row-gap: 1rem;
+    column-count: 2;
+    flex: 50% 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.eventBox{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.1rem;
+    flex-wrap: wrap ;
+}
+.eventBtn{
+    display: block;
+    padding: 0.7rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    background-color: #04AA6D;
+    color: white;
+    border: 0px;
+    border-radius: 3px;
+    /* width: 100%; */
+    transition: background 0.5s, padding 0.5s, color 0.5s;
+}
+
+.eventBtn:hover{
+    background-color: white;
+    color: #04AA6D;
+}
+
+.fliterBox select{
+    width: 100%;
+}
