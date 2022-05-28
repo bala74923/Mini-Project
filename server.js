@@ -528,9 +528,7 @@ function isNotVerifiedFromSameOrganisation(admin,orgObj){
     return adminDom[1]!=orgObj.domain;
 }
 
-
 async function sendMailToGivenArray(users,event){
-    
     users.forEach((user,index,arr)=>{
         console.log(user.email)
         const mailOptions = {
@@ -640,7 +638,6 @@ async function sendMailToGivenArray(users,event){
             </body>
             </html>`,
         }
-
         transporter.sendMail(mailOptions, async function(error, info){
             if (error) {
                 try{
