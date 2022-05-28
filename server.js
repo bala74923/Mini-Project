@@ -427,7 +427,7 @@ app.post('/ongoingeventlist',checkAuthenticated,async (req,res)=>{
 //     res.render('verifyMail.ejs')
 // })
 
-app.post('/verifyMail',checkAuthenticated,async (req,res)=>{
+app.post('/verifyMail',async (req,res)=>{
 
     try {
         let gotOtp = req.body.otp; //need form
@@ -994,7 +994,7 @@ const sendOTPVerificationEmail = async(student,res)=>{
         //Student.deleteOne({id:student.id});
         console.log("some error otp cannot send")   
         console.log(error +" is while transporting"); 
-        res.render('register.ejs',{isDuplicateEmail:false})
+        return res.render('register.ejs',{isDuplicateEmail:false})
         
     }
 }
@@ -1128,11 +1128,11 @@ app.get('/showUsers',checkAuthenticated,async (req,res)=>{
 
 
 let currGivenEmail;
-app.get('/forgotPassword', checkAuthenticated,(req, res) => {
+app.get('/forgotPassword',(req, res) => {
     res.render('forgotPassword.ejs')
 })
 
-app.post('/forgotPassword', checkAuthenticated,async (req, res) => {
+app.post('/forgotPassword',async (req, res) => {
     try {
         let email = req.body.email
         currGivenEmail = email;
@@ -1146,7 +1146,7 @@ app.post('/forgotPassword', checkAuthenticated,async (req, res) => {
 })
 
 
-app.post('/verifyMailForReset', checkAuthenticated,async (req, res) => {
+app.post('/verifyMailForReset',async (req, res) => {
     try {
         let gotOtp = req.body.otp; //need form
         console.log(gotOtp + " this is user giving otp");
@@ -1204,11 +1204,11 @@ app.post('/verifyMailForReset', checkAuthenticated,async (req, res) => {
 
 
 //reset password
-app.get('/resetPassword', checkAuthenticated,(req, res, next) => {
+app.get('/resetPassword',(req, res, next) => {
     res.render('resetPassword.ejs', { entered: 0 })
 })
 
-app.post('/resetPassword', checkAuthenticated,async (req, res) => {
+app.post('/resetPassword',async (req, res) => {
     let p1 = req.body.password
     let p2 = req.body.password2
     if (p1.length <= 0 || p2.length <= 0) {
