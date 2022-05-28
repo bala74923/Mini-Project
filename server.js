@@ -539,209 +539,100 @@ async function sendMailToGivenArray(users,event){
             subject: "This Event is Suggested for You by your Organisation",
             //html: `<p>Enter<b>${otpstring}</b> in the app to verfiy your email address and complete the signup</p><p> This code <b>expires in 10 minutes</b>.</p>`,
             html: `<!DOCTYPE html>
-            <html lang="en">
+            <html lang="en" style="background-color: transparent;">
             
-            <head>
-                <meta charset="UTF-8">
-                <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link rel="stylesheet" href="/views/index.css">
-                <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;" />
-                <link rel="stylesheet" href="/views/postStyle.css">
-                <style>
-
-
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&family=Roboto&display=swap');
-
-
-:root {
-    --primaryTheme: #EFF6FB;
-    --bg-color0:#e6eafe;
-    --bg-color1:#ccd5ff;
-    --bg-color2:#99acff;
-    --bg-color3:#6682ff;
-    --bg-color4:#3358ff;
-    --bg-color5:#002fff;
-
-    /* Shadow color */
-    --shadow-color0:rgba(38, 38, 115, 0.3);
-    --shadow-color1:rgba(223, 223, 231, 0.859);
-
-    /* Font Colors */
-    --font-col1 : rgb(27, 65, 190);
-    --font-col2: rgba(15, 171, 232, 0.962);
-}
-
-*{
-    background-color: transparent;   
-}
-.eventListInnerBox{
-    background-color:rgb(230, 236, 237);
-    margin: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 3px 3px var(--shadow-color1);
-    font-weight: 500;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
-
-.orgName{
-    color: var(--font-col1);
-    display: flex;
-    flex-direction: row;
-    column-gap: 5%;
-    padding-top: 1rem;
-    margin: 0.5rem;
-    margin-top: auto;
-}
-
-.orgName h6{
-    color: rgba(0, 0, 0, 0.477);
-    margin-top: auto;
-}
-
-.orgName h2{
-    font-size: 1.2rem;
-}
-
-.tableBox{
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.5rem;
-    padding: 1rem;
-    align-items: flex-start;
-    font-size: 1rem;
-}
-.tableCol{
-    display: flex;
-    flex-direction: row;
-    column-gap: auto;
-    margin: 0.3rem;
-}
-.tableCol h4{
-    font-weight: 700;
-}
-.tableCol h5{
-    color: rgba(18, 121, 231, 0.73);
-    font-weight:bold;
-    margin-top: auto;
-}
-
-.times{
-    padding: 1rem;
-    display: flex;
-    flex-direction: row;
-    column-gap: 1rem;
-}
-
-.timeBox h4:nth-child(2){
-    color: var(--font-col2);
-    font-weight: 400;
-    
-}   
-
-.titleBox{
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    text-transform: capitalize; 
-    padding: 1rem;
-    color: #6682ff;
-}
-
-.descriptionBox{
-    font-family: 'Comic Neue', cursive;
-
-    color: black;
-}
-.timeBox h4{
-    padding: 0.2rem;
-}
-                </style>
+            <head style="background-color: transparent;">
+                <meta charset="UTF-8" style="background-color: transparent;">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" style="background-color: transparent;">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" style="background-color: transparent;">
+                
+                <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px;width: 10px;background-color: transparent;">
+                
+                
             </head>
-            <body class="mainBody">
+            <body class="mainBody" style="background-color: transparent;">
             
                 <!-- Filter Box End -->
-                <div class="eventListOuterBox" >
-                        <div class="eventListInnerBox">
-                            <div class="orgName">
-                                <h2><i class="bi bi-building"></i>${event.organisation}</h2>
-                                <h6>Event Id : <span>${event.id}</span></h6>
+                <div class="eventListOuterBox" style="background-color: transparent;">
+                        <div class="eventListInnerBox" style="background-color: rgb(230, 236, 237);margin: 1rem;border-radius: 0.5rem;box-shadow: 0 0 3px 3px var(--shadow-color1);font-weight: 500;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;width:50rem;">
+                            <div class="orgName" style="background-color: transparent;color: var(--font-col1);display: flex;flex-direction: row;column-gap: 5%;padding-top: 1rem;margin: 0.5rem;margin-top: auto;">
+                                <h2 style="background-color: transparent;font-size: 1.2rem;"><i class="bi bi-building" style="background-color: transparent;"></i>${event.organisation}</h2>
+                                <h6 style="background-color: transparent;color: rgba(0, 0, 0, 0.477);margin-top: auto;">Event Id : <span style="background-color: transparent;">${event.id}</span></h6>
                             </div>
-                            <div class="titleBox">
-                                <h1>${event.title}</h1>
+                            <div class="titleBox" style="background-color: transparent;text-align: center;font-family: 'Courier New', Courier, monospace;text-transform: capitalize;padding: 1rem;color: #6682ff;">
+                                <h1 style="background-color: transparent;">${event.title}</h1>
                             </div>
-                            <div class="descriptionBox">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam dolorem placeat voluptatem minima nisi animi, porro dicta quidem voluptatum aspernatur, eveniet harum excepturi praesentium et quia provident. Quidem, ratione. Sapiente?
-                                </p>
-                                <p>${event.description}</p>
+                            <div class="descriptionBox" style="background-color: transparent;font-family: 'Comic Neue', cursive;color: black;">
+                                
+                                <p style="background-color: transparent;">${event.description}</p>
                             </div>
-                            <div class="tableBox" style="display:flex; flex-direction:column; width:200px">
-                                <div class="tableCol">
+                            <div class="tableBox" style="width: 50rem;background-color: transparent;row-gap: 0.5rem;padding: 1rem;align-items: flex-start;font-size: 1rem;">
+                                <div class="tableCol" style="background-color: transparent;width:50rem;display: flex;flex-direction: row;column-gap: auto;margin: 0.3rem;">
                                      
-                                    <h4>Type : </h4>
-                                    <h5>${event.eventType}</h5>
+                                    <h4 style="background-color: transparent;font-weight: 700;width: 5rem;">Type : </h4>
+                                    <h5 style="background-color: transparent;color: rgba(18, 121, 231, 0.73);font-weight: bold;margin-top: auto;">${event.eventType}</h5>
             
                                 </div>
-                                <div class="tableCol">
+                                <div class="tableCol" style="background-color: transparent;width:50rem;display: flex;flex-direction: row;column-gap: auto;margin: 0.3rem;">
                                      
-                                    <h4>Join Type :</h4>
-                                    <h5>${event.eventJoinType}</h5>
+                                    <h4 style="background-color: transparent;font-weight: 700;width: 5rem;">Join Type :</h4>
+                                    <h5 style="background-color: transparent;color: rgba(18, 121, 231, 0.73);font-weight: bold;margin-top: auto;">${event.eventJoinType}</h5>
             
                                 </div>
-                                <div class="tableCol">
+                                <div class="tableCol" style="background-color: transparent;width:50rem;display: flex;flex-direction: row;column-gap: auto;margin: 0.3rem;">
                                     
-                                    <h4>Field : </h4>
-                                    <h5>${event.fields}</h5>
+                                    <h4 style="background-color: transparent;font-weight: 700;width: 5rem;">Field : </h4>
+                                    <h5 style="background-color: transparent;color: rgba(18, 121, 231, 0.73);font-weight: bold;margin-top: auto;">${event.fields}</h5>
             
                                 </div>
-                                <div class="tableCol">
+                                <div class="tableCol" style="background-color: transparent;width:50rem;display: flex;flex-direction: row;column-gap: auto;margin: 0.3rem;">
                                     
-                                    <h4>Eligiblity : </h4>
-                                    <h5>${event.eligiblity}</h5>
+                                    <h4 style="background-color: transparent;font-weight: 700;width: 5rem;">Eligiblity : </h4>
+                                    <h5 style="background-color: transparent;color: rgba(18, 121, 231, 0.73);font-weight: bold;margin-top: auto;">${event.eligiblity}</h5>
             
                                 </div>
-                                <div class="tableCol">
+                                <div class="tableCol" style="background-color: transparent;width:50rem;display: flex;flex-direction: row;column-gap: auto;margin: 0.3rem;">
                                      
-                                    <h4>Constraints : </h4>
-                                    <h5>${event.constraints}</h5>
+                                    <h4 style="background-color: transparent;font-weight: 700;width: 5rem;">Constraints : </h4>
+                                    <h5 style="background-color: transparent;color: rgba(18, 121, 231, 0.73);font-weight: bold;margin-top: auto;">${event.constraints}</h5>
                                 </div>
-                                <div class="tableCol">
+                                <div class="tableCol" style="background-color: transparent;width:50rem;display: flex;flex-direction: row;column-gap: auto;margin: 0.3rem;">
                                     
-                                    <h4>Prizes : </h4> 
-                                    <h5>${event.prizes}</h5>
+                                    <h4 style="background-color: transparent;font-weight: 700;width: 5rem;">Prizes : </h4> 
+                                    <h5 style="background-color: transparent;color: rgba(18, 121, 231, 0.73);font-weight: bold;margin-top: auto;">${event.prizes}</h5>
                                 </div>
-                                <div class="tableCol">
+                                <div class="tableCol" style="background-color: transparent;width:50rem;display: flex;flex-direction: row;column-gap: auto;margin: 0.3rem;">
                                     
-                                    <h4>OutComes : </h4>
-                                    <h5>${event.takeaways}</h5>
+                                    <h4 style="background-color: transparent;font-weight: 700;width: 5rem;">OutComes : </h4>
+                                    <h5 style="background-color: transparent;color: rgba(18, 121, 231, 0.73);font-weight: bold;margin-top: auto;">${event.takeaways}</h5>
                                 </div>
-                                <div class="tableCol">
+                                <div class="tableCol" style="background-color: transparent;width:50rem;display: flex;flex-direction: row;column-gap: auto;margin: 0.3rem;">
                                      
-                                    <h4>Sponsers : </h4>
-                                    <h5>${event.sponsers}</h5>
+                                    <h4 style="background-color: transparent;font-weight: 700;width: 5rem;">Sponsers : </h4>
+                                    <h5 style="background-color: transparent;color: rgba(18, 121, 231, 0.73);font-weight: bold;margin-top: auto;">${event.sponsers}</h5>
                                 </div>
-                                <div class="tableCol">
+                                <div class="tableCol" style="background-color: transparent;width:50rem;display: flex;flex-direction: row;column-gap: auto;margin: 0.3rem;">
                                     
-                                    <h4>Mode : </h4>
-                                    <h5>${event.mode}</h5>
+                                    <h4 style="background-color: transparent;font-weight: 700;width: 5rem;">Mode : </h4>
+                                    <h5 style="background-color: transparent;color: rgba(18, 121, 231, 0.73);font-weight: bold;margin-top: auto;">${event.mode}</h5>
                                 </div>
-                                <div class="tableCol">
-                                     
-                                    <h4>Location / Platform: </h4>
-                                    <h5>${event.venue}</h5>
+                                <div class="tableCol" style="background-color: transparent;width:50rem;display: flex;flex-direction: row;column-gap: auto;margin: 0.3rem;">
+                                    <h4 style="background-color: transparent;font-weight: 700;width: 5rem;">Location / Platform: </h4>
+                                    <h5 style="background-color: transparent;color: rgba(18, 121, 231, 0.73);font-weight: bold;margin-top: auto;">${event.venue}</h5>
                                 </div>
                             </div>
-                            <div class="times">
-                                <div class="timeBox">   
-                                    <h4>Start Date & Time</h4>
-                                    <h4><i class="bi bi-clock"></i>${event.date} ${event.time}</h4>
+                            <div class="times" style="background-color: transparent;padding: 1rem;width:50rem;display: flex;flex-direction: row;column-gap: 1rem;">
+                                <div class="timeBox" style="background-color: transparent;">   
+                                    <h4 style="background-color: transparent;padding: 0.2rem;">Start Date & Time</h4>
+                                    <h4 style="background-color: transparent;padding: 0.2rem;color: var(--font-col2);font-weight: 400;"><i class="bi bi-clock" style="background-color: transparent;"></i>${event.date} ${event.time}</h4>
                                 </div>
-                                <div class="timeBox">
-                                    <h4></i>End Date & Time</h4>
-                                    <h4><i class="bi bi-clock"></i>${event.endDate}  ${event.endTime} </h4>
+                                <div class="timeBox" style="background-color: transparent;">
+                                    <h4 style="background-color: transparent;padding: 0.2rem;">End Date & Time</h4>
+                                    <h4 style="background-color: transparent;padding: 0.2rem;color: var(--font-col2);font-weight: 400;"><i class="bi bi-clock" style="background-color: transparent;"></i>${event.endDate}  ${event.endTime} </h4>
                                 </div>
-                                <div class="timeBox">
-                                    <h4>Duration</h4>
-                                    <h4><i class="bi bi-hourglass-split"></i>${event.duration[0]} Days ${event.duration[1]} Hrs ${event.duration[2]} Mins</h4>  
+                                <div class="timeBox" style="background-color: transparent;">
+                                    <h4 style="background-color: transparent;padding: 0.2rem;">Duration</h4>
+                                    <h4 style="background-color: transparent;padding: 0.2rem;color: var(--font-col2);font-weight: 400;"><i class="bi bi-hourglass-split" style="background-color: transparent;"></i>${event.duration[0]} Days ${event.duration[1]} Hrs ${event.duration[2]} Mins</h4>  
                                 </div>
                             </div>
                         </div>
