@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style">
+    <link rel="stylesheet" href="/postStyle">
     <link rel="shortcut icon" type="image/x-icon" href="/image" style="height: 10px; width: 10px;"/>
     <title>Past Event List</title>
 </head>
@@ -24,7 +25,7 @@
     <!-- NavBarEnd -->  
     
     <!--Filter Start-->
-    <form  action="/eventlist" method="post">
+    <form  action="/pasteventlist" method="post">
         <div class="fliterBox">
             <div class="filterOption">
                 <label for="organisation">Organisation</label>
@@ -76,7 +77,8 @@
     <!--Filter End-->
     <hr>
     <h1>Past Events</h1>
-    <% for(let i=0; i < pasteventdetails.length; i++) { %>
+
+    <!-- <% for(let i=0; i < pasteventdetails.length; i++) { %>
         <h3 class="centerLink">Event <%= i+1%> </h3>
         <div class="event-box", id="customers">
             <table>
@@ -95,7 +97,91 @@
             </table>
             <hr>
         </div>
-    <% } %>
+    <% } %> -->
+    <div class="eventListOuterBox">
+        <% for(let i=0; i < pasteventdetails.length; i++) { %>
+            <div class="eventListInnerBox">
+                <div class="orgName">
+                    <h2><i class="bi bi-building"></i><%=pasteventdetails[i]["_doc"]["organisation"]%></h2>
+                    <h6>Event Id : <span><%=pasteventdetails[i]["_doc"]["id"]%></span></h6>
+                </div>
+                <div class="titleBox">
+                    <h1><%=pasteventdetails[i]["_doc"]["title"]%></h1>
+                </div>
+                <div class="descriptionBox">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam dolorem placeat voluptatem minima nisi animi, porro dicta quidem voluptatum aspernatur, eveniet harum excepturi praesentium et quia provident. Quidem, ratione. Sapiente?
+                    </p>
+                    <p><%=pasteventdetails[i]["_doc"]["description"]%></p>
+                </div>
+                <div class="tableBox">
+                    <div class="tableCol">
+                        <h4><i class="bi bi-megaphone-fill"></i></h4>
+                        <h4>Type : </h4>
+                        <h5><%=pasteventdetails[i]["_doc"]["eventType"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-arrow-bar-right"></i></h4>
+                        <h4>Join Type :</h4>
+                        <h5><%=pasteventdetails[i]["_doc"]["eventType"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-cpu"></i></h4>
+                        <h4>Field : </h4>
+                        <h5><%=pasteventdetails[i]["_doc"]["fields"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-person-check"></i></h4>
+                        <h4>Eligiblity : </h4>
+                        <h5><%=pasteventdetails[i]["_doc"]["eligiblity"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-x-octagon-fill"></i></h4>
+                        <h4>Constraints : </h4>
+                        <h5><%=pasteventdetails[i]["_doc"]["consdtraints"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-trophy"></i></h4>
+                        <h4>Prizes : </h4> 
+                        <h5><%=pasteventdetails[i]["_doc"]["prizes"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-arrow-bar-up"></i></h4>
+                        <h4>OutComes : </h4>
+                        <h5><%=pasteventdetails[i]["_doc"]["takeaways"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-people-fill"></i></h4>
+                        <h4>Sponsers : </h4>
+                        <h5><%=pasteventdetails[i]["_doc"]["sponsers"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-globe2"></i></h4>
+                        <h4>Mode : </h4>
+                        <h5><%=pasteventdetails[i]["_doc"]["mode"]%></h5>
+                    </div>
+                    <div class="tableCol">
+                        <h4><i class="bi bi-geo-alt-fill"></i></h4>
+                        <h4>Location / Platform: </h4>
+                        <h5><%=pasteventdetails[i]["_doc"]["venue"]%></h5>
+                    </div>
+                </div>
+                <div class="times">
+                    <div class="timeBox">   
+                        <h4>Start Date & Time</h4>
+                        <h4><i class="bi bi-clock"></i><%=pasteventdetails[i]["_doc"]["date"]%> <%=pasteventdetails[i]["_doc"]["time"]%></h4>
+                    </div>
+                    <div class="timeBox">
+                        <h4></i>End Date & Time</h4>
+                        <h4><i class="bi bi-clock"></i><%=pasteventdetails[i]["_doc"]["endDate"]%> <%=pasteventdetails[i]["_doc"]["endTime"]%></h4>
+                    </div>
+                    <div class="timeBox">
+                        <h4>Duration</h4>
+                        <h4><i class="bi bi-hourglass-split"></i><%=pasteventdetails[i]["_doc"]["duration"][0]%>Days <%=pasteventdetails[i]["_doc"]["duration"][1]%>Hrs <%=pasteventdetails[i]["_doc"]["duration"][2]%>Mins</h4>
+                    </div>
+                </div>
+            </div>
+        <%}%>
+    </div> 
     <%if(pasteventdetails.length==0){%>
         <h1>No past events found</h1>
     <% } %>
